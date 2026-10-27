@@ -19,7 +19,7 @@ import numpy as np
 
 from .bot_descriptions import BOT_DESCRIPTIONS
 from .data import load_library
-from .fitting import fit_all
+from .fitting import fit_all, fit_binomial
 from .openrouter import make_client, query_action
 from .prompt import build_prompt
 from .reporting import format_report
@@ -57,6 +57,8 @@ def run_pipeline(config: RunConfig) -> Path:
     raw_responses: dict[str, list[dict[str, str | None]]] = {}
     x = np.empty(library.n, dtype=float)
 
+    c, valid = np.zeros(library.n), np.zeros(library.n)
+
     for i, bot in enumerate(library.bots):
         prompt = build_prompt(bot, BOT_DESCRIPTIONS[bot])
         results = [query_action(client, config.model, prompt, config.temperature)
@@ -65,9 +67,11 @@ def run_pipeline(config: RunConfig) -> Path:
 
         actions = [a for a, _ in results if a is not None]
         x[i] = actions.count("C") / len(actions) if actions else float("nan")
+        c[i], valid[i] = actions.count("C"), len(actions)
         print(f"  {bot}: P(C) = {x[i]:.3f}  ({len(actions)}/{config.n} valid)")
 
     fits = fit_all(library.R, x)
+    fits.append(fit_binomial(library.R, c, valid))
     report = format_report(library, fits, x)
 
     run_dir = _write_outputs(config, library.bots, x, raw_responses, report)

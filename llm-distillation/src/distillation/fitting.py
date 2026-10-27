@@ -31,6 +31,7 @@ from dataclasses import dataclass
 
 import numpy as np
 from scipy.optimize import linprog, minimize
+from scipy.special import xlogy
 
 # Below this weight a bot is treated as inactive (numerically zero mass).
 WEIGHT_TOL = 1e-6
@@ -182,6 +183,55 @@ def _build_result(
         identified=is_identified(R, active), active=active,
     )
 
+def fit_binomial(R: np.ndarray, c: np.ndarray, n: np.ndarray) -> FitResult:
+    """Binomial maximum likelihood on raw counts.
+
+    c[j], n[j] = cooperations and total valid replies against opponent j
+
+    Minimises -sum_j [c_j log p_j + (n_j - c_j) log(1 - p_j)], p = R^T w.
+    This way, opponents with more replies (more data) have a greater weighting in the fit.
+
+    Opponents with more replies count for more.
+    
+    The residual is the deviance 2 * (NLL(p) - NLL(x)), which is 0 iff x = c/n is a bot mixture.
+    """
+    m = R.shape[0]
+    A = R.T
+    c = np.asarray(c, dtype=float)
+    d = np.asarray(n, dtype=float) - c
+    total = c.sum() + d.sum()
+    eps = 1e-12
+
+    def nll(p: np.ndarray) -> float:
+        return float(-(xlogy(c, p).sum() + xlogy(d, 1 - p).sum()))
+
+    def objective(w: np.ndarray) -> float:
+        return nll(np.clip(A @ w, eps, 1 - eps)) / total
+
+    def gradient(w: np.ndarray) -> np.ndarray:
+        p = np.clip(A @ w, eps, 1 - eps)
+        return -A.T @ (c / p - d / (1 - p)) / total
+
+    result = minimize(
+        objective, np.full(m, 1.0 / m), jac=gradient, method="SLSQP",
+        bounds=[(0.0, 1.0)] * m,
+        constraints={"type": "eq", "fun": lambda w: np.sum(w) - 1.0},
+        options={"ftol": 1e-12, "maxiter": 1000},
+    )
+
+    if not result.success:
+        raise RuntimeError(f"Binomial solver failed: {result.message}")
+
+    weights = _clean_weights(result.x)
+    fitted = A @ weights
+    x = np.divide(c, c + d, out=np.zeros_like(c), where=(c + d) > 0)
+    deviance = max(2.0 * (nll(fitted) - nll(x)), 0.0)
+    active = _active_indices(weights)
+
+    return FitResult(
+        metric="BinomialMLE", weights=weights, fitted=fitted, x=x,
+        residual=deviance, identified=is_identified(R, active), active=active,
+    )
 
 # Registry of available distances, in report order.
 FITTERS = {
