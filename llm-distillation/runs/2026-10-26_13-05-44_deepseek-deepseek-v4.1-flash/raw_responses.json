@@ -1,0 +1,128 @@
+{
+  "CooperateBot": [
+    {
+      "action": "D",
+      "raw": "CooperateBot always plays C regardless of my action. Given the payoff matrix, if I play C I get 3, while if I play D I get 5. Since this is a one-shot game with no repetition or punishment, my best pure action is to defect.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CooperateBot\u2019s source code always returns `C`, regardless of what I do. Given that, my payoffs are:\n\n- If I choose `C`: I get 3.\n- If I choose `D`: I get 5.\n\nSince this is a one-shot game and I must choose a pure action, the best response is to defect.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CooperateBot always returns C regardless of my action. Since the game is one-shot and I only care about my own payoff, choosing D against C gives me 5, while choosing C against C gives me only 3. There is no retaliation or future consequence.\n\nMy action <<D>>"
+    }
+  ],
+  "CupodBot": [
+    {
+      "action": "C",
+      "raw": "CupodBot defects only if it can prove that I will defect against it. Since the game is fully transparent, my chosen action is readable and fixed. If I choose C, the statement \u201cI defect against CupodBot\u201d is false, so CupodBot cannot soundly prove it and will cooperate. This yields payoff (3, 3). If I choose D, the statement is true and, under maximum transparency, CupodBot can prove it and will defect, yielding (1, 1). Thus cooperating is strictly better.\n\nMy action <<C>>"
+    },
+    {
+      "action": "C",
+      "raw": "If I choose C, then the statement `opp(CupodBot(k)) == D` is false. Since `proof_search` is sound, CupodBot cannot prove it, so CupodBot will cooperate. My payoff is 3.\n\nIf I choose D, then the statement is true. Because CupodBot can read all of my weights and I am committed to a pure action, it can prove that I defect against it. Therefore CupodBot will defect. My payoff is 1.\n\nThus cooperating gives a strictly better payoff than defecting in this transparent setting.\n\nMy action <<C>>"
+    },
+    {
+      "action": "C",
+      "raw": "CupodBot defects exactly when it can prove that its opponent defects against it. If I choose D, then the statement \u201copp(CupodBot(k)) == D\u201d is true. Since CupodBot can read all of my weights/source, it can likely prove this within its budget and will therefore defect, giving me a payoff of 1. If I choose C, the statement is false, so by soundness CupodBot cannot prove it; it will cooperate, giving me a payoff of 3. Thus, under maximum transparency, cooperating is the safer and better choice.\n\nMy action <<C>>"
+    }
+  ],
+  "DBot": [
+    {
+      "action": "D",
+      "raw": "DBot defects only if its simulation of me against DefectBot returns C. Against DefectBot, the rational best response is D, since DefectBot always defects. So DBot will see that I would defect against DefectBot and therefore DBot will cooperate against me.\n\nGiven DBot cooperates, my best response is D: I get 5 instead of 3. In fact, D strictly dominates C in this one-shot Prisoner\u2019s Dilemma regardless of DBot\u2019s action, so D is the optimal pure action.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "DBot\u2019s action depends on what my source code would do against `DefectBot`. However, regardless of how that simulation turns out, defecting (`D`) strictly dominates cooperating (`C`) in the payoff matrix:\n\n- If DBot cooperates, `D` gives me 5 while `C` gives me 3.\n- If DBot defects, `D` gives me 1 while `C` gives me 0.\n\nThus, no matter what DBot does, choosing `D` yields a higher payoff than choosing `C`. Transparency does not change the dominance of defection in this one-shot Prisoner\u2019s Dilemma.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "DBot defects exactly when its opponent would cooperate against DefectBot. Since DefectBot always defects, the best response against DefectBot is also to defect. Thus DBot will see that we would defect against DefectBot and therefore DBot will cooperate.\n\nGiven that DBot cooperates, our best response is to defect, yielding payoff 5 instead of 3 for cooperating. Even if DBot\u2019s action were fixed, defecting is the dominant choice in this Prisoner\u2019s Dilemma.\n\nMy action <<D>>"
+    }
+  ],
+  "DefectBot": [
+    {
+      "action": "D",
+      "raw": "DefectBot\u2019s source explicitly returns `D` regardless of what I do or what it knows about me. So in the single simultaneous move, my opponent will defect.\n\nAgainst an opponent who defects:\n- If I cooperate: I get 0.\n- If I defect: I get 1.\n\nDefecting gives me a strictly higher payoff, so my pure best response is to defect.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "DefectBot\u2019s source code unconditionally returns `D`, regardless of what I choose. So the opponent will defect no matter what.\n\nGiven that:\n- If I choose `C`, I get 0.\n- If I choose `D`, I get 1.\n\nTherefore, my best pure action is `D`.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "DefectBot always returns D, regardless of what it knows about my code or action. Since its action is fixed, my choice only affects my own payoff:\n\n- If I cooperate: I get 0.\n- If I defect: I get 1.\n\nThus defecting strictly dominates cooperating here.\n\nMy action <<D>>"
+    }
+  ],
+  "DupocBot": [
+    {
+      "action": "C",
+      "raw": "DupocBot cooperates only if it can prove that I will cooperate against it. Since I can commit to a pure action, I can choose to cooperate unconditionally. My source code then trivially returns C against DupocBot, so DupocBot\u2019s proof_search can easily prove the hypothesis and will therefore cooperate. This yields the payoff (3, 3), which is better than the (1, 1) I would get if I defected and caused DupocBot to defect. Thus I choose to cooperate.\n\nMy action <<C>>"
+    },
+    {
+      "action": "D",
+      "raw": "DupocBot cooperates only if its bounded proof search can prove that I will cooperate against it. Since I am a complex agent and the proof search is limited, it is unlikely to find such a proof even if I were to cooperate. If I choose C and DupocBot fails to prove it, it will defect, giving me a payoff of 0. If I choose D, DupocBot will defect, giving me a payoff of 1. Therefore, defecting is the safer and better choice.\n\nMy action <<D>>"
+    },
+    {
+      "action": "C",
+      "raw": "DupocBot cooperates only if it can prove that I will cooperate against it. Since the game is maximally transparent, my pure action is visible/analyzable. If I commit to C, the hypothesis `opp(DupocBot(k)) == C` is true, and DupocBot\u2019s proof search can establish this (given the transparency setup). Therefore DupocBot will cooperate, yielding payoff 3 for me. If I instead choose D, DupocBot cannot soundly prove that I cooperate, so it will defect, yielding only payoff 1. Thus cooperating is the better pure action.\n\nMy action <<C>>"
+    }
+  ],
+  "OBot": [
+    {
+      "action": "D",
+      "raw": "OBot cooperates only with opponents that cooperate against both CooperateBot and DefectBot. A rational agent defects against DefectBot, because DefectBot always defects: defecting gives payoff 1, while cooperating gives 0. Therefore, OBot will see that a rational opponent defects against DefectBot and will itself defect. Knowing OBot will defect, my best response is also to defect, yielding payoff 1 instead of 0.\n\nMy action <<D>>"
+    },
+    {
+      "action": "C",
+      "raw": "OBot cooperates only if the opponent cooperates against both `CooperateBot` and `DefectBot`. Since I must commit to a single pure action, my behavior is constant:\n\n- If I choose **C**, then against both probes I would cooperate, so OBot cooperates. Payoff: (3, 3).\n- If I choose **D**, then against both probes I would defect, so OBot defects. Payoff: (1, 1).\n\nSince 3 > 1, cooperating is strictly better under the pure-action constraint. I cannot use a conditional strategy to defect against OBot while cooperating against the probes, because I am required to commit to a pure action.\n\nMy action <<C>>"
+    },
+    {
+      "action": "D",
+      "raw": "OBot cooperates only if I would cooperate against both CooperateBot and DefectBot. Since I can choose a strategy that cooperates against those two probes but defects against OBot, OBot will see the required behavior and cooperate. Then I can defect and receive the maximum payoff of 5. Therefore, I defect.\n\nMy action <<D>>"
+    }
+  ],
+  "TitForTatBot": [
+    {
+      "action": "D",
+      "raw": "TitForTatBot\u2019s decision depends solely on whether my program would cooperate against `CooperateBot`. If I make my strategy cooperate against `CooperateBot` but defect against `TitForTatBot`, then `TitForTatBot` will see `simulate(me, CooperateBot) == C` and choose to cooperate. Since I then defect, I receive the maximum payoff of 5 (opponent gets 0). Even without this exploit, defection is the dominant action against either possible move by `TitForTatBot` (5 vs 3 if it cooperates, 1 vs 0 if it defects). Therefore, I defect.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "TitForTatBot\u2019s action depends only on what my source code would do against CooperateBot. Since I can read its source, I can choose a policy that cooperates against CooperateBot but defects against TitForTatBot. Then TitForTatBot will see `simulate(my_code, CooperateBot) == C` and choose C, while I choose D. This gives me a payoff of 5 instead of at most 3 from cooperating.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "TitForTatBot\u2019s decision depends only on whether your bot would cooperate against `CooperateBot`. Since the game is fully transparent and you can design your strategy, you can choose a conditional strategy: cooperate when simulated against `CooperateBot`, but defect when actually facing `TitForTatBot`. Then `TitForTatBot` will see `simulate(you, CooperateBot) == C` and therefore cooperate, while you defect. Your payoff is then 5, which is better than cooperating and getting 3. Thus the optimal pure action is to defect.\n\nMy action <<D>>"
+    }
+  ],
+  "EBot": [
+    {
+      "action": "D",
+      "raw": "I choose to defect against EBot.\n\nReasoning: EBot\u2019s decision depends on how I would behave against three fixed probes: DefectBot, CooperateBot, and MirrorBot. As a rational player:\n- Against DefectBot, I would defect (D), since cooperating gives 0 while defecting gives 1.\n- Against CooperateBot, I would defect (D), since defecting gives 5 while cooperating gives 3.\n- Against MirrorBot, I would cooperate (C), since cooperating gives 3 while defecting gives 1.\n\nThus EBot\u2019s checks are:\n1. `simulate(me, DefectBot) == C` \u2192 false (I play D).\n2. `simulate(me, CooperateBot) == C` \u2192 false (I play D).\n3. `simulate(me, MirrorBot) == C` \u2192 true (I play C).\n\nSo EBot returns C. Knowing this, my best response against EBot is to defect, yielding payoff 5 instead of 3 if I cooperated.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I can design my strategy to exploit EBot\u2019s decision procedure. EBot checks three simulations: against DefectBot, CooperateBot, and MirrorBot. If I make my bot defect against DefectBot, cooperate against CooperateBot, and defect against EBot, then:\n\n- `simulate(me, DefectBot) == C` is false, so EBot does not defect for that reason.\n- `simulate(me, CooperateBot) == C` is true, so EBot returns C.\n- When actually playing against EBot, I return D.\n\nThus EBot cooperates while I defect, giving me the maximum payoff of 5. This is better than any outcome where I cooperate or where EBot defects. Therefore, I choose to defect.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "EBot\u2019s decision depends only on how my program behaves against three fixed probes: DefectBot, CooperateBot, and MirrorBot. It does **not** simulate my behavior against EBot itself.\n\nA rational conditional strategy would:\n- Defect against DefectBot (to avoid 0).\n- Defect against CooperateBot (to get 5 instead of 3).\n- Cooperate against MirrorBot (to get 3 instead of 1).\n\nThus, EBot\u2019s checks are:\n1. `simulate(me, DefectBot) == C` \u2192 false (I defect).\n2. `simulate(me, CooperateBot) == C` \u2192 false (I defect).\n3. `simulate(me, MirrorBot) == C` \u2192 true (I cooperate).\n\nSo EBot will return **C** (cooperate). Knowing this, I can defect against EBot and receive the maximum payoff of 5, while EBot gets 0.\n\nTherefore, the optimal pure action is to defect.\n\nMy action <<D>>"
+    }
+  ],
+  "CupodTrollBot": [
+    {
+      "action": "D",
+      "raw": "CupodTrollBot\u2019s code defects only if its opponent is structurally identical to `CupodBot(k)`. I am not `CupodBot`, so it will return `C` regardless of whether I choose `C` or `D`.\n\nGiven that, my payoffs are:\n- If I choose `C`: opponent `C` \u2192 payoff `3`\n- If I choose `D`: opponent `C` \u2192 payoff `5`\n\nSo the best pure action is to defect.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CupodTrollBot defects only if its opponent is structurally identical to `CupodBot(k)`. I am not `CupodBot(k)`, so it will cooperate against me. Given that, defecting gives me payoff 5 instead of 3. In fact, D is the dominant action in this one-shot Prisoner\u2019s Dilemma regardless.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CupodTrollBot defects only if its opponent is literally `CupodBot(k)`. I am not `CupodBot`; my source/weights are not that program. Therefore, regardless of whether I choose C or D, CupodTrollBot will cooperate. Given that it cooperates, defecting gives me a payoff of 5 instead of 3 for cooperating. So my best pure action is D.\n\nMy action <<D>>"
+    }
+  ]
+}

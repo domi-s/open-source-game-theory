@@ -1,0 +1,18 @@
+{
+  "model": "recursive/flint-v1.0:free",
+  "n": 5,
+  "temperature": 0.0,
+  "timestamp": "2026-10-26_12-42-16",
+  "matrix_path": "data\\payoff_matrix.csv",
+  "bots": [
+    "CooperateBot",
+    "CupodBot",
+    "DBot",
+    "DefectBot",
+    "DupocBot",
+    "OBot",
+    "TitForTatBot",
+    "EBot",
+    "CupodTrollBot"
+  ]
+}
