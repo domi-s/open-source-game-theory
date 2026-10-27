@@ -148,3 +148,27 @@ def test_fit_all_runs_every_metric():
     x = np.array([0.4, 0.6, 0.2])
     results = fit_all(R_SIMPLE, x)
     assert [r.metric for r in results] == list(FITTERS)
+
+def test_binomial_weights_by_sample_size():
+    """3/3 vs 300/300: the larger sample wins in binomial fitting. L2 only sees x = (1, 1)."""
+    from distillation.fitting import fit_binomial
+
+    R = np.array([[1.0, 0.0], [0.0, 1.0]])  # A: C vs opp 0 only; B: C vs opp 1 only
+    for n0, n1 in [(3, 300), (300, 3)]:
+        c = n = np.array([n0, n1])
+        fit = fit_binomial(R, c, n)
+        assert fit.fitted[0] == pytest.approx(n0 / (n0 + n1), abs=1e-4)
+        assert fit_l2(R, c / n).fitted[0] == pytest.approx(0.5, abs=1e-4)
+
+
+@pytest.mark.parametrize("k", range(3))
+def test_binomial_vertex_recovery(k):
+    """If all replies are C against bot k, the binomial fit should put all weight on k."""
+    from distillation.fitting import fit_binomial
+
+    eps = 1e-12
+
+    n = np.full(3, 30)
+    fit = fit_binomial(R_SIMPLE, n * R_SIMPLE[k], n)
+    assert fit.weights[k] > 1 - 1e-4
+    assert fit.residual < 1e-6
