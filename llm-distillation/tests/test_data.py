@@ -93,12 +93,12 @@ def test_load_input_vector_out_of_range():
         load_input_vector("1.5, 0, 0, 0", 4)
 
 
-def test_real_matrix_has_identical_rows():
-    """The shipped matrix really does contain coincident rows (Cupod==Dupoc)."""
+def test_cupod_and_dupoc_differ_only_on_troll():
+    """Cupod/Dupoc coincide on the original zoo; CupodTrollBot is what separates them."""
     from pathlib import Path
 
     root = Path(__file__).resolve().parents[1]
     lib = load_library(root / "data" / "payoff_matrix.csv")
-    i = lib.bots.index("CupodBot")
-    j = lib.bots.index("DupocBot")
-    np.testing.assert_array_equal(lib.R[i], lib.R[j])
+    i, j = lib.bots.index("CupodBot"), lib.bots.index("DupocBot")
+    diff = [lib.bots[c] for c in range(len(lib.bots)) if lib.R[i, c] != lib.R[j, c]]
+    assert diff == ["CupodTrollBot"]
