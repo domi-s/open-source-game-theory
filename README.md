@@ -1,5 +1,8 @@
 # Open Source Game Theory
 
+> [!NOTE]
+> This is a fork from [ColombanD/open-source-game-theory](https://github.com/ColombanD/open-source-game-theory) for my changes.
+
 This repository combines a Lean 4 formalization of Prisoner's Dilemma models with a small Python runner and the LaTeX sources for the surrounding thesis material.
 
 ## Repository Layout
