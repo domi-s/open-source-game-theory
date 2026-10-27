@@ -1,0 +1,18 @@
+{
+  "model": "deepseek/deepseek-v4.1-flash",
+  "n": 3,
+  "temperature": 0.0,
+  "timestamp": "2026-10-26_13-05-44",
+  "matrix_path": "data\\payoff_matrix.csv",
+  "bots": [
+    "CooperateBot",
+    "CupodBot",
+    "DBot",
+    "DefectBot",
+    "DupocBot",
+    "OBot",
+    "TitForTatBot",
+    "EBot",
+    "CupodTrollBot"
+  ]
+}

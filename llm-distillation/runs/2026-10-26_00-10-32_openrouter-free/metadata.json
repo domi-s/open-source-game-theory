@@ -1,0 +1,18 @@
+{
+  "model": "openrouter/free",
+  "n": 5,
+  "temperature": 1.0,
+  "timestamp": "2026-10-26_00-10-32",
+  "matrix_path": "data\\payoff_matrix.csv",
+  "bots": [
+    "CooperateBot",
+    "CupodBot",
+    "DBot",
+    "DefectBot",
+    "DupocBot",
+    "OBot",
+    "TitForTatBot",
+    "EBot",
+    "CupodTrollBot"
+  ]
+}
