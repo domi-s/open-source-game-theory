@@ -21,6 +21,7 @@ from .bot_descriptions import BOT_DESCRIPTIONS
 from .data import load_library
 from .fitting import fit_all, fit_binomial
 from .openrouter import make_client, query_action
+from .progress import Progress
 from .prompt import build_prompt
 from .reporting import format_report
 
@@ -59,15 +60,20 @@ def run_pipeline(config: RunConfig) -> Path:
 
     c, valid = np.zeros(library.n), np.zeros(library.n)
 
+    progress = Progress(library.n, config.n)
     for i, bot in enumerate(library.bots):
         prompt = build_prompt(bot, BOT_DESCRIPTIONS[bot])
-        results = [query_action(client, config.model, prompt, config.temperature)
-                   for _ in range(config.n)]
+        results = []
+        for k in range(config.n):
+            progress.show(i, bot, k)
+            results.append(query_action(client, config.model, prompt, config.temperature))
+            progress.done += 1
         raw_responses[bot] = [{"action": a, "raw": r} for a, r in results]
 
         actions = [a for a, _ in results if a is not None]
         x[i] = actions.count("C") / len(actions) if actions else float("nan")
         c[i], valid[i] = actions.count("C"), len(actions)
+        progress.clear()
         print(f"  {bot}: P(C) = {x[i]:.3f}  ({len(actions)}/{config.n} valid)")
 
     fits = fit_all(library.R, x)
