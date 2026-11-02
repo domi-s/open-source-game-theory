@@ -13,6 +13,11 @@ from openai import OpenAI
 
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 
+OPENROUTER_APP_HEADERS = {
+    "HTTP-Referer": "https://github.com/ColombanD/open-source-game-theory/",
+    "X-Title": "OSGT LLM Distillation",
+}
+
 # Matches the required final marker, e.g. "My action <<C>>" (case-insensitive,
 # tolerant of surrounding whitespace).
 _ACTION_RE = re.compile(r"My action\s*<<\s*([CD])\s*>>", re.IGNORECASE)
@@ -20,7 +25,11 @@ _ACTION_RE = re.compile(r"My action\s*<<\s*([CD])\s*>>", re.IGNORECASE)
 
 def make_client(api_key: str) -> OpenAI:
     """Create an OpenAI SDK client configured for OpenRouter."""
-    return OpenAI(base_url=OPENROUTER_BASE_URL, api_key=api_key)
+    return OpenAI(
+        base_url=OPENROUTER_BASE_URL,
+        api_key=api_key,
+        default_headers=OPENROUTER_APP_HEADERS,
+    )
 
 
 def parse_action(text: str) -> str | None:
