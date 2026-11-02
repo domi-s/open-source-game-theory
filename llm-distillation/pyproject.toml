@@ -19,6 +19,7 @@ test = ["pytest>=7.0"]
 [project.scripts]
 distillation = "distillation.cli:main"
 distillation-llm = "distillation.pipeline_cli:main"
+distillation-stated = "distillation.stated.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

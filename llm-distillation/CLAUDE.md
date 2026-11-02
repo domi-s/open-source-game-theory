@@ -133,6 +133,63 @@ distillation-llm --model openai/gpt-4o --n 100 --temperature 1.0
 Flags: `--model` (required), `--n`, `--temperature`, `--matrix`,
 `--output-root` (default `runs`).
 
+## Stated-strategy pipeline (approach 3, v0) — `distillation-stated`
+
+The revealed pipeline above PLAYS the model against each bot. This one asks the
+model to WRITE its own policy as a `Prog` program, then profiles the written
+programs. Separate code path (`src/distillation/stated/`); the revealed pipeline
+is untouched.
+
+```
+n calls (prompt = PROG_LANGUAGE_SPEC.md + "write the bot that is you")
+  → judge: extract last ```lean block → parse → lint      (invalid samples kept + counted)
+  → profile each valid program vs every library bot      (sound, partial evaluator)
+  → x̄_j = C/(C+D) over DETERMINED cells                   (missing data never imputed)
+  → average-then-fit (all metrics + BinomialMLE)  and  fit-then-average (L2 type mix)
+```
+
+```bash
+distillation-stated --model anthropic/claude-sonnet-4.5 --n 30
+distillation-stated --model … --show-zoo                          # zoo pseudocode in the prompt
+distillation-stated --model … --revealed runs/<revealed-run-dir>  # stated-vs-revealed table
+distillation-stated --reanalyze runs/<stated-run-dir>             # re-analyse, no API calls
+```
+
+Run folder `runs/<ts>_stated_<model>/`: `metadata.json` (incl. spec sha256),
+`prompt.txt`, `raw_responses.json` (written after EVERY call), `programs.json`
+(per sample: source, errors/warnings, expanded program, every cell + provenance),
+`stated_vector.json` (x̄, counts, coverage; same `by_bot` shape as
+`cooperation_vector.json`), `report.txt`.
+
+**Validity = parses into the v0 fragment and passes the lints.** The parser
+(`stated/parse.py`) is arity-directed over the engine's own term syntax:
+`.const .self .opp .bot .sim .ite .search`, formulas `.plays .impl .neg .box .eq`,
+`let`s, helper `def`s, and references to any zoo bot (`stated/zoo.py`, a
+snapshot of `engine/…/Bots/**`, checked against the engine files by a test).
+INVALID: no ```lean block, parse errors, `.tvote/.sys/.selfIdx/.diag`, unknown
+names, non-`Nat` params, a hard-coded budget, `.search` without a budget param.
+WARNING only: a zoo reference not wrapped in `.bot`, no def named `MyBot`.
+There is no Lean compile step in v0 (no toolchain needed).
+
+**The evaluator (`stated/evaluate.py`) is sound but partial.** It mirrors
+`Dynamics.eval` and decides a `.search` guard only when justified: (1) a guard it
+can show FALSE never fires (soundness); (2) a TRUE `.plays`/`.neg .plays`/`.eq`
+over search-free programs fires (structural certificates, large `k`); (3) a frame
+whose two players are library bots (`.bot`-wrappers ignored) falls back to the
+matrix. Everything else — notably Löbian guards about `.self` — is
+`undetermined`. A sample that is syntactically a library bot (after setting
+every budget param to `k`) gets its matrix row ("zoo identity"). Loops are
+detected exactly (`N`). Conventions: SAME-k (every budget param := the
+opponents' `k`), cells read at large `k`. Every cell records its provenance.
+Validated against the Lean outcome export: every cell the evaluator derives by
+its own rules (not via a matrix frame) agrees with the kernel
+(`test_evaluator_agrees_…`).
+
+**v0 non-goals:** Lean compilation of samples; profiling via the engine's prover
+(`app/…/bot_profile.py`) for the undetermined cells; the column half (what the
+zoo does against each sampled program); staggered/multi-budget conventions;
+behavioural dedup beyond the cluster table.
+
 ## Layout
 
 ```
@@ -146,7 +203,9 @@ src/distillation/
   openrouter.py    # OpenAI-SDK client for OpenRouter + `My action <<A>>` parsing
   pipeline.py      # measure x via the LLM, fit, write run folder
   pipeline_cli.py  # `distillation-llm` entry point
-tests/             # parsing + fitting tests
+  stated/          # approach 3: `distillation-stated` (prog, parse, zoo, evaluate,
+                   #   aggregate, prompt, pipeline, cli)
+tests/             # parsing + fitting tests; test_stated.py for approach 3
 data/payoff_matrix.csv
 runs/              # per-run outputs (created at runtime)
 ```
