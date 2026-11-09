@@ -1,0 +1,133 @@
+[
+  {
+    "index": 0,
+    "name": "StatedBot0",
+    "source": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\n\nopen PD\nnamespace PD.Bots\n\n/-- StatedBot0: a behavioral decision tree in the style of EBot. It exploits opponents\n    that cooperate with DefectBot, cooperates with opponents that cooperate with\n    CooperateBot or that mirror-cooperate with me, and defects otherwise. -/\ndef StatedBot0 : Prog :=\n  .ite (.sim .opp (.bot DefectBot)) Action.C\n    (.const Action.D)\n    (.ite (.sim .opp (.bot CooperateBot)) Action.C\n      (.const Action.C)\n      (.ite (.sim .opp (.bot MirrorBot)) Action.C\n        (.const Action.C)\n        (.const Action.D)))\n\nend PD.Bots\n",
+    "valid": true,
+    "budgets": [
+      2,
+      4,
+      6,
+      16
+    ],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": null,
+          "4": "(D, C)",
+          "6": "(D, C)",
+          "16": "(D, C)"
+        },
+        "note": "certified at k \u2208 {4, 6, 16}"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(D, C)",
+          "4": "(D, C)",
+          "6": "(D, C)",
+          "16": "(D, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(D, D)",
+          "4": "(D, D)",
+          "6": "(D, D)",
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "stable",
+        "my_action": "C",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(C, D)",
+          "4": "(C, D)",
+          "6": "(C, D)",
+          "16": "(C, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "stable",
+        "my_action": "C",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(C, D)",
+          "4": "(C, D)",
+          "6": "(C, D)",
+          "16": "(C, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "stable",
+        "my_action": "C",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(C, C)",
+          "4": "(C, C)",
+          "6": "(C, C)",
+          "16": "(C, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(D, C)",
+          "4": "(D, C)",
+          "6": "(D, C)",
+          "16": null
+        },
+        "note": "certified at k \u2208 {2, 4, 6}"
+      }
+    ]
+  }
+]

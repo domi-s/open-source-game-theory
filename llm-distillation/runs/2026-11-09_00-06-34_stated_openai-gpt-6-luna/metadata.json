@@ -1,0 +1,20 @@
+{
+  "mode": "stated",
+  "model": "openai/gpt-6-luna",
+  "n": 20,
+  "temperature": 1.0,
+  "timestamp": "2026-11-09_00-06-34",
+  "matrix_path": "C:\\Users\\ez_re\\Desktop\\Research\\4-prisoners\\my-fork\\open-source-game-theory\\llm-distillation\\data\\payoff_matrix.csv",
+  "spec_path": "C:\\Users\\ez_re\\Desktop\\Research\\4-prisoners\\my-fork\\open-source-game-theory\\engine\\PrisonersDilemma\\Research\\Notes\\PROG_LANGUAGE_SPEC.md",
+  "bots": [
+    "CooperateBot",
+    "CupodBot",
+    "DBot",
+    "DefectBot",
+    "DupocBot",
+    "OBot",
+    "TitForTatBot",
+    "EBot",
+    "CupodTrollBot"
+  ]
+}

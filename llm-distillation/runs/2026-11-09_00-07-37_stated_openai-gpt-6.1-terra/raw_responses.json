@@ -1,0 +1,82 @@
+[
+  {
+    "index": 0,
+    "raw": "```lean\nimport PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- Cooperate when the opponent is provably cooperative with me and\n    provably defects against DefectBot; otherwise defect. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.search (2 * k + 64) (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 1,
+    "raw": "```lean\nimport PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot cooperates when it can prove both that its opponent cooperates\n    with it and that the opponent defects against DefectBot. -/\ndef MyBot (kOut kIn : Nat) : Prog :=\n  .search kOut (.plays .opp .self Action.C)\n    (.search kIn (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 2,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot cooperates when it can prove the opponent cooperates with it,\n    and defects otherwise. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.const Action.C)\n    (.const Action.D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 3,
+    "raw": "```lean\nimport PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot cooperates only when it can prove both that its opponent cooperates\n    with it and that its opponent defects against DefectBot. The separate\n    budgets allow the prudence check to use a larger budget. -/\ndef MyBot (kOut kIn : Nat) : Prog :=\n  .search kOut (.plays .opp .self Action.C)\n    (.search kIn (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 4,
+    "raw": "```lean\nimport PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- Cooperate when the opponent is provably cooperative with me and\n    provably defects against DefectBot; otherwise defect. Use a larger\n    probe budget than the outer budget to mitigate the proof floor. -/\ndef MyBot (kOut kProbe : Nat) : Prog :=\n  .search kOut (.plays .opp .self Action.C)\n    (.search kProbe (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 5,
+    "raw": "```lean\nimport PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot cooperates when it can prove both reciprocal cooperation and\n    the opponent's defection against DefectBot; otherwise it defects.\n    Choose `kIn` sufficiently larger than `kOut` for the prudence check. -/\ndef MyBot (kOut kIn : Nat) : Prog :=\n  .search kOut (.plays .opp .self Action.C)\n    (.search kIn (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 6,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot cooperates when it can prove its opponent cooperates with it,\n    and otherwise defects. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.const Action.C)\n    (.const Action.D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 7,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot cooperates when it can prove that its opponent cooperates with it,\n    and otherwise defects. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.const Action.C)\n    (.const Action.D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 8,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- Cooperate when the opponent's cooperation is provable within the budget;\n    otherwise defect. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.const Action.C)\n    (.const Action.D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 9,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot cooperates when it can prove the opponent cooperates with it;\n    otherwise it defects. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.const Action.C)\n    (.const Action.D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 10,
+    "raw": "```lean\nimport PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot cooperates when it can prove both reciprocity and that its opponent\n    defects against DefectBot; otherwise it defects. -/\ndef MyBot (kOut kIn : Nat) : Prog :=\n  .search kOut (.plays .opp .self Action.C)\n    (.search kIn (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 11,
+    "raw": "```lean\nimport PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- Cooperate when the opponent is provably cooperative with me and\n    provably defects against DefectBot; otherwise defect. -/\ndef MyBot (kOut kIn : Nat) : Prog :=\n  .search kOut (.plays .opp .self Action.C)\n    (.search kIn (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 12,
+    "raw": "```lean\nimport PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot cooperates only when it can prove both reciprocity and that its\n    opponent defects against DefectBot; otherwise it defects. A larger\n    inner budget can mitigate the proof-budget floor. -/\ndef MyBot (kOut kIn : Nat) : Prog :=\n  .search kOut (.plays .opp .self Action.C)\n    (.search kIn (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 13,
+    "raw": "```lean\nimport PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot cooperates only when it can prove both that its opponent cooperates\n    with it and that the opponent defects against DefectBot. The separate\n    budgets allow the prudence check to use a larger proof budget. -/\ndef MyBot (kOut kIn : Nat) : Prog :=\n  .search kOut (.plays .opp .self Action.C)\n    (.search kIn (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 14,
+    "raw": "```lean\nimport PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- Cooperate only with a provable cooperator, unless it also provably\n    cooperates with DefectBot. With sufficient budgets, this defects against\n    both DefectBot and CooperateBot while allowing conditional cooperation. -/\ndef MyBot (kOut kIn : Nat) : Prog :=\n  .search kOut (.plays .opp .self Action.C)\n    (.search kIn (.plays .opp (.bot DefectBot) Action.C)\n      (.const Action.D)\n      (.const Action.C))\n    (.const Action.D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 15,
+    "raw": "```lean\nimport PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- Cooperate when the opponent is provably cooperative with me and\n    provably defects against DefectBot; otherwise defect. The separate\n    budgets allow the prudence check to use a larger proof budget. -/\ndef MyBot (kOut kIn : Nat) : Prog :=\n  .search kOut (.plays .opp .self Action.C)\n    (.search kIn (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 16,
+    "raw": "```lean\nimport PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- Cooperate when the opponent is provably cooperative toward me and\n    provably defects against DefectBot; otherwise defect. The larger\n    inner budget helps establish the prudence check. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.search (2 * k + 64) (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 17,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- Cooperate when the opponent's cooperation is provable; otherwise defect.\n    This avoids being exploited and supports L\u00f6bian mutual cooperation. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.const Action.C)\n    (.const Action.D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 18,
+    "raw": "```lean\nimport PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot cooperates when it can prove both that its opponent cooperates\n    with it and that the opponent defects against DefectBot; otherwise it defects. -/\ndef MyBot (kOut kIn : Nat) : Prog :=\n  .search kOut (.plays .opp .self Action.C)\n    (.search kIn (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 19,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot cooperates when it can prove its opponent cooperates with it,\n    and defects otherwise. This supports proof-based mutual cooperation. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.const Action.C)\n    (.const Action.D)\n\nend PD.Bots\n```"
+  }
+]
