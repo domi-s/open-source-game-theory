@@ -1,0 +1,82 @@
+[
+  {
+    "index": 0,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot defects when it can prove that doing so gets cooperation;\n    otherwise it cooperates only when it can prove cooperation is reciprocated. -/\ndef MyBot (kDefect kCooperate : Nat) : Prog :=\n  .search kDefect\n    (.impl (.plays .self .opp .D) (.plays .opp .self .C))\n    (.const .D)\n    (.search kCooperate\n      (.impl (.plays .self .opp .C) (.plays .opp .self .C))\n      (.const .C)\n      (.const .D))\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 1,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot cooperates if it can prove its opponent cooperates against it, and defects otherwise. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self .C) (.const .C) (.const .D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 2,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot defects against a recognized unconditional cooperator; otherwise it cooperates when it can prove the opponent cooperates, and defects by default. -/\ndef MyBot (k n : Nat) : Prog :=\n  .search k (.eq .opp (.const .C))\n    (.const .D)\n    (.search n (.plays .opp .self .C)\n      (.const .C)\n      (.const .D))\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 3,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot exploits a literal unconditional cooperator; otherwise it cooperates only with proven cooperation. -/\ndef MyBot (k e : Nat) : Prog :=\n  .search e (.eq .opp (.const .C))\n    (.const .D)\n    (.search k (.plays .opp .self .C)\n      (.const .C)\n      (.const .D))\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 4,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot cooperates if it can prove the opponent cooperates against it, and defects otherwise. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self .C) (.const .C) (.const .D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 5,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- Cooperate when the opponent's cooperation is provable, except against a provably literal unconditional cooperator. -/\ndef MyBot (k j : Nat) : Prog :=\n  .search k (.plays .opp .self .C)\n    (.search j (.eq .opp (.const .C))\n      (.const .D)\n      (.const .C))\n    (.const .D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 6,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot exploits provably literal unconditional cooperators and otherwise cooperates only with provable cooperation. -/\ndef MyBot (h k : Nat) : Prog :=\n  .search h (.eq .opp (.const .C))\n    (.const .D)\n    (.search k (.plays .opp .self .C)\n      (.const .C)\n      (.const .D))\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 7,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot exploits a literal unconditional cooperator, otherwise cooperating when it can prove its opponent cooperates. -/\ndef MyBot (n k : Nat) : Prog :=\n  .search n (.eq .opp (.const .C))\n    (.const .D)\n    (.search k (.plays .opp .self .C)\n      (.const .C)\n      (.const .D))\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 8,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot defects against provable cooperators with a defector, and otherwise cooperates when it can prove the opponent cooperates with it. -/\ndef MyBot (kProbe kCoop : Nat) : Prog :=\n  .search kProbe (.plays .opp (.bot (.const .D)) .C)\n    (.const .D)\n    (.search kCoop (.plays .opp .self .C)\n      (.const .C)\n      (.const .D))\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 9,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot defects against a provably cooperative defection probe; otherwise it cooperates only when the opponent's cooperation is provable. -/\ndef MyBot (exploitBudget cooperationBudget : Nat) : Prog :=\n  .search exploitBudget\n    (.plays .opp (.bot (.const .D)) .C)\n    (.const .D)\n    (.search cooperationBudget\n      (.plays .opp .self .C)\n      (.const .C)\n      (.const .D))\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 10,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot exploits literal unconditional cooperation, otherwise cooperates when it can prove the opponent cooperates against it. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.eq .opp (.const .C))\n    (.const .D)\n    (.search k (.plays .opp .self .C)\n      (.const .C)\n      (.const .D))\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 11,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot exploits the literal unconditional cooperator and otherwise cooperates only when it can prove the opponent cooperates against it. -/\ndef MyBot (e k : Nat) : Prog :=\n  .search e (.eq .opp (.const .C))\n    (.const .D)\n    (.search k (.plays .opp .self .C)\n      (.const .C)\n      (.const .D))\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 12,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot defects against a provably literal unconditional cooperator; otherwise it cooperates only if the opponent's cooperation is provable. -/\ndef MyBot (k m : Nat) : Prog :=\n  .search m (.eq .opp (.const .C))\n    (.const .D)\n    (.search k (.plays .opp .self .C)\n      (.const .C)\n      (.const .D))\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 13,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot cooperates if it can prove its opponent cooperates against it, and defects otherwise. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self .C) (.const .C) (.const .D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 14,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- Defect if the opponent provably cooperates against constant defection;\n    otherwise cooperate only if its cooperation against me is provable. -/\ndef MyBot (k n : Nat) : Prog :=\n  .search k (.plays .opp (.bot (.const .D)) .C)\n    (.const .D)\n    (.search n (.plays .opp .self .C)\n      (.const .C)\n      (.const .D))\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 15,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot exploits a recognized unconditional cooperator, otherwise cooperating only when it can prove the opponent cooperates. -/\ndef MyBot (k j : Nat) : Prog :=\n  .search j (.eq .opp (.const .C))\n    (.const .D)\n    (.search k (.plays .opp .self .C)\n      (.const .C)\n      (.const .D))\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 16,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot defects against literal unconditional cooperation, and otherwise\n    cooperates only when it can prove the opponent cooperates with it. -/\ndef MyBot (k n : Nat) : Prog :=\n  .search k (.eq .opp (.const .C))\n    (.const .D)\n    (.search n (.plays .opp .self .C)\n      (.const .C)\n      (.const .D))\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 17,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot exploits a recognized unconditional cooperator, otherwise cooperates only when it can prove the opponent cooperates. -/\ndef MyBot (k n : Nat) : Prog :=\n  .search k (.eq .opp (.const .C))\n    (.const .D)\n    (.search n (.plays .opp .self .C)\n      (.const .C)\n      (.const .D))\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 18,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot defects against a recognized unconditional cooperator, and otherwise cooperates if it can prove the opponent cooperates. -/\ndef MyBot (k l : Nat) : Prog :=\n  .search k (.eq .opp (.const .C))\n    (.const .D)\n    (.search l (.plays .opp .self .C)\n      (.const .C)\n      (.const .D))\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 19,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- Defect against provably exploitable opponents; otherwise cooperate only when their cooperation is provable. -/\ndef MyBot (exploitBudget cooperateBudget : Nat) : Prog :=\n  .search exploitBudget\n    (.plays .opp (.bot (.const .D)) .C)\n    (.const .D)\n    (.search cooperateBudget\n      (.plays .opp .self .C)\n      (.const .C)\n      (.const .D))\n\nend PD.Bots\n```"
+  }
+]

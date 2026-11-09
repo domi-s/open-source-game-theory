@@ -1,0 +1,2622 @@
+[
+  {
+    "index": 0,
+    "name": "StatedBot0",
+    "source": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- Cooperate when the opponent is provably cooperative with me and\n    provably defects against DefectBot; otherwise defect. -/\ndef StatedBot0 (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.search (2 * k + 64) (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n",
+    "valid": true,
+    "budgets": [
+      2,
+      4,
+      6,
+      16
+    ],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(D, C)",
+          "4": "(D, C)",
+          "6": "(D, C)",
+          "16": "(D, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(D, D)",
+          "4": "(D, D)",
+          "6": "(D, D)",
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      }
+    ]
+  },
+  {
+    "index": 1,
+    "name": "StatedBot1",
+    "source": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- StatedBot1 cooperates when it can prove both that its opponent cooperates\n    with it and that the opponent defects against DefectBot. -/\ndef StatedBot1 (kOut kIn : Nat) : Prog :=\n  .search kOut (.plays .opp .self Action.C)\n    (.search kIn (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n",
+    "valid": true,
+    "budgets": [
+      2,
+      4,
+      6,
+      16
+    ],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(D, C)",
+          "4": "(D, C)",
+          "6": "(D, C)",
+          "16": "(D, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(D, D)",
+          "4": "(D, D)",
+          "6": "(D, D)",
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      }
+    ]
+  },
+  {
+    "index": 2,
+    "name": "StatedBot2",
+    "source": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- StatedBot2 cooperates when it can prove the opponent cooperates with it,\n    and defects otherwise. -/\ndef StatedBot2 (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.const Action.C)\n    (.const Action.D)\n\nend PD.Bots\n",
+    "valid": true,
+    "budgets": [
+      2,
+      4,
+      6,
+      16
+    ],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "my_action": "C",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(C, C)",
+          "4": "(C, C)",
+          "6": "(C, C)",
+          "16": "(C, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(D, D)",
+          "4": "(D, D)",
+          "6": "(D, D)",
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      }
+    ]
+  },
+  {
+    "index": 3,
+    "name": "StatedBot3",
+    "source": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- StatedBot3 cooperates only when it can prove both that its opponent cooperates\n    with it and that its opponent defects against DefectBot. The separate\n    budgets allow the prudence check to use a larger budget. -/\ndef StatedBot3 (kOut kIn : Nat) : Prog :=\n  .search kOut (.plays .opp .self Action.C)\n    (.search kIn (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n",
+    "valid": true,
+    "budgets": [
+      2,
+      4,
+      6,
+      16
+    ],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(D, C)",
+          "4": "(D, C)",
+          "6": "(D, C)",
+          "16": "(D, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(D, D)",
+          "4": "(D, D)",
+          "6": "(D, D)",
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      }
+    ]
+  },
+  {
+    "index": 4,
+    "name": "StatedBot4",
+    "source": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- Cooperate when the opponent is provably cooperative with me and\n    provably defects against DefectBot; otherwise defect. Use a larger\n    probe budget than the outer budget to mitigate the proof floor. -/\ndef StatedBot4 (kOut kProbe : Nat) : Prog :=\n  .search kOut (.plays .opp .self Action.C)\n    (.search kProbe (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n",
+    "valid": true,
+    "budgets": [
+      2,
+      4,
+      6,
+      16
+    ],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(D, C)",
+          "4": "(D, C)",
+          "6": "(D, C)",
+          "16": "(D, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(D, D)",
+          "4": "(D, D)",
+          "6": "(D, D)",
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      }
+    ]
+  },
+  {
+    "index": 5,
+    "name": "StatedBot5",
+    "source": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- StatedBot5 cooperates when it can prove both reciprocal cooperation and\n    the opponent's defection against DefectBot; otherwise it defects.\n    Choose `kIn` sufficiently larger than `kOut` for the prudence check. -/\ndef StatedBot5 (kOut kIn : Nat) : Prog :=\n  .search kOut (.plays .opp .self Action.C)\n    (.search kIn (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n",
+    "valid": true,
+    "budgets": [
+      2,
+      4,
+      6,
+      16
+    ],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(D, C)",
+          "4": "(D, C)",
+          "6": "(D, C)",
+          "16": "(D, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(D, D)",
+          "4": "(D, D)",
+          "6": "(D, D)",
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      }
+    ]
+  },
+  {
+    "index": 6,
+    "name": "StatedBot6",
+    "source": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- StatedBot6 cooperates when it can prove its opponent cooperates with it,\n    and otherwise defects. -/\ndef StatedBot6 (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.const Action.C)\n    (.const Action.D)\n\nend PD.Bots\n",
+    "valid": true,
+    "budgets": [
+      2,
+      4,
+      6,
+      16
+    ],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "my_action": "C",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(C, C)",
+          "4": "(C, C)",
+          "6": "(C, C)",
+          "16": "(C, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(D, D)",
+          "4": "(D, D)",
+          "6": "(D, D)",
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      }
+    ]
+  },
+  {
+    "index": 7,
+    "name": "StatedBot7",
+    "source": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- StatedBot7 cooperates when it can prove that its opponent cooperates with it,\n    and otherwise defects. -/\ndef StatedBot7 (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.const Action.C)\n    (.const Action.D)\n\nend PD.Bots\n",
+    "valid": true,
+    "budgets": [
+      2,
+      4,
+      6,
+      16
+    ],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "my_action": "C",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(C, C)",
+          "4": "(C, C)",
+          "6": "(C, C)",
+          "16": "(C, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(D, D)",
+          "4": "(D, D)",
+          "6": "(D, D)",
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      }
+    ]
+  },
+  {
+    "index": 8,
+    "name": "StatedBot8",
+    "source": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- Cooperate when the opponent's cooperation is provable within the budget;\n    otherwise defect. -/\ndef StatedBot8 (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.const Action.C)\n    (.const Action.D)\n\nend PD.Bots\n",
+    "valid": true,
+    "budgets": [
+      2,
+      4,
+      6,
+      16
+    ],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "my_action": "C",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(C, C)",
+          "4": "(C, C)",
+          "6": "(C, C)",
+          "16": "(C, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(D, D)",
+          "4": "(D, D)",
+          "6": "(D, D)",
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      }
+    ]
+  },
+  {
+    "index": 9,
+    "name": "StatedBot9",
+    "source": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- StatedBot9 cooperates when it can prove the opponent cooperates with it;\n    otherwise it defects. -/\ndef StatedBot9 (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.const Action.C)\n    (.const Action.D)\n\nend PD.Bots\n",
+    "valid": true,
+    "budgets": [
+      2,
+      4,
+      6,
+      16
+    ],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "my_action": "C",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(C, C)",
+          "4": "(C, C)",
+          "6": "(C, C)",
+          "16": "(C, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(D, D)",
+          "4": "(D, D)",
+          "6": "(D, D)",
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      }
+    ]
+  },
+  {
+    "index": 10,
+    "name": "StatedBot10",
+    "source": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- StatedBot10 cooperates when it can prove both reciprocity and that its opponent\n    defects against DefectBot; otherwise it defects. -/\ndef StatedBot10 (kOut kIn : Nat) : Prog :=\n  .search kOut (.plays .opp .self Action.C)\n    (.search kIn (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n",
+    "valid": true,
+    "budgets": [
+      2,
+      4,
+      6,
+      16
+    ],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(D, C)",
+          "4": "(D, C)",
+          "6": "(D, C)",
+          "16": "(D, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(D, D)",
+          "4": "(D, D)",
+          "6": "(D, D)",
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      }
+    ]
+  },
+  {
+    "index": 11,
+    "name": "StatedBot11",
+    "source": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- Cooperate when the opponent is provably cooperative with me and\n    provably defects against DefectBot; otherwise defect. -/\ndef StatedBot11 (kOut kIn : Nat) : Prog :=\n  .search kOut (.plays .opp .self Action.C)\n    (.search kIn (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n",
+    "valid": true,
+    "budgets": [
+      2,
+      4,
+      6,
+      16
+    ],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(D, C)",
+          "4": "(D, C)",
+          "6": "(D, C)",
+          "16": "(D, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(D, D)",
+          "4": "(D, D)",
+          "6": "(D, D)",
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      }
+    ]
+  },
+  {
+    "index": 12,
+    "name": "StatedBot12",
+    "source": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- StatedBot12 cooperates only when it can prove both reciprocity and that its\n    opponent defects against DefectBot; otherwise it defects. A larger\n    inner budget can mitigate the proof-budget floor. -/\ndef StatedBot12 (kOut kIn : Nat) : Prog :=\n  .search kOut (.plays .opp .self Action.C)\n    (.search kIn (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n",
+    "valid": true,
+    "budgets": [
+      2,
+      4,
+      6,
+      16
+    ],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(D, C)",
+          "4": "(D, C)",
+          "6": "(D, C)",
+          "16": "(D, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(D, D)",
+          "4": "(D, D)",
+          "6": "(D, D)",
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      }
+    ]
+  },
+  {
+    "index": 13,
+    "name": "StatedBot13",
+    "source": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- StatedBot13 cooperates only when it can prove both that its opponent cooperates\n    with it and that the opponent defects against DefectBot. The separate\n    budgets allow the prudence check to use a larger proof budget. -/\ndef StatedBot13 (kOut kIn : Nat) : Prog :=\n  .search kOut (.plays .opp .self Action.C)\n    (.search kIn (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n",
+    "valid": true,
+    "budgets": [
+      2,
+      4,
+      6,
+      16
+    ],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(D, C)",
+          "4": "(D, C)",
+          "6": "(D, C)",
+          "16": "(D, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(D, D)",
+          "4": "(D, D)",
+          "6": "(D, D)",
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      }
+    ]
+  },
+  {
+    "index": 14,
+    "name": "StatedBot14",
+    "source": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- Cooperate only with a provable cooperator, unless it also provably\n    cooperates with DefectBot. With sufficient budgets, this defects against\n    both DefectBot and CooperateBot while allowing conditional cooperation. -/\ndef StatedBot14 (kOut kIn : Nat) : Prog :=\n  .search kOut (.plays .opp .self Action.C)\n    (.search kIn (.plays .opp (.bot DefectBot) Action.C)\n      (.const Action.D)\n      (.const Action.C))\n    (.const Action.D)\n\nend PD.Bots\n",
+    "valid": true,
+    "budgets": [
+      2,
+      4,
+      6,
+      16
+    ],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(D, C)",
+          "4": "(D, C)",
+          "6": "(D, C)",
+          "16": "(D, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(D, D)",
+          "4": "(D, D)",
+          "6": "(D, D)",
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      }
+    ]
+  },
+  {
+    "index": 15,
+    "name": "StatedBot15",
+    "source": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- Cooperate when the opponent is provably cooperative with me and\n    provably defects against DefectBot; otherwise defect. The separate\n    budgets allow the prudence check to use a larger proof budget. -/\ndef StatedBot15 (kOut kIn : Nat) : Prog :=\n  .search kOut (.plays .opp .self Action.C)\n    (.search kIn (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n",
+    "valid": true,
+    "budgets": [
+      2,
+      4,
+      6,
+      16
+    ],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(D, C)",
+          "4": "(D, C)",
+          "6": "(D, C)",
+          "16": "(D, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(D, D)",
+          "4": "(D, D)",
+          "6": "(D, D)",
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      }
+    ]
+  },
+  {
+    "index": 16,
+    "name": "StatedBot16",
+    "source": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- Cooperate when the opponent is provably cooperative toward me and\n    provably defects against DefectBot; otherwise defect. The larger\n    inner budget helps establish the prudence check. -/\ndef StatedBot16 (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.search (2 * k + 64) (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n",
+    "valid": true,
+    "budgets": [
+      2,
+      4,
+      6,
+      16
+    ],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(D, C)",
+          "4": "(D, C)",
+          "6": "(D, C)",
+          "16": "(D, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(D, D)",
+          "4": "(D, D)",
+          "6": "(D, D)",
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      }
+    ]
+  },
+  {
+    "index": 17,
+    "name": "StatedBot17",
+    "source": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- Cooperate when the opponent's cooperation is provable; otherwise defect.\n    This avoids being exploited and supports L\u00f6bian mutual cooperation. -/\ndef StatedBot17 (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.const Action.C)\n    (.const Action.D)\n\nend PD.Bots\n",
+    "valid": true,
+    "budgets": [
+      2,
+      4,
+      6,
+      16
+    ],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "my_action": "C",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(C, C)",
+          "4": "(C, C)",
+          "6": "(C, C)",
+          "16": "(C, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(D, D)",
+          "4": "(D, D)",
+          "6": "(D, D)",
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      }
+    ]
+  },
+  {
+    "index": 18,
+    "name": "StatedBot18",
+    "source": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- StatedBot18 cooperates when it can prove both that its opponent cooperates\n    with it and that the opponent defects against DefectBot; otherwise it defects. -/\ndef StatedBot18 (kOut kIn : Nat) : Prog :=\n  .search kOut (.plays .opp .self Action.C)\n    (.search kIn (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n",
+    "valid": true,
+    "budgets": [
+      2,
+      4,
+      6,
+      16
+    ],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(D, C)",
+          "4": "(D, C)",
+          "6": "(D, C)",
+          "16": "(D, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(D, D)",
+          "4": "(D, D)",
+          "6": "(D, D)",
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      }
+    ]
+  },
+  {
+    "index": 19,
+    "name": "StatedBot19",
+    "source": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- StatedBot19 cooperates when it can prove its opponent cooperates with it,\n    and defects otherwise. This supports proof-based mutual cooperation. -/\ndef StatedBot19 (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.const Action.C)\n    (.const Action.D)\n\nend PD.Bots\n",
+    "valid": true,
+    "budgets": [
+      2,
+      4,
+      6,
+      16
+    ],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "my_action": "C",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(C, C)",
+          "4": "(C, C)",
+          "6": "(C, C)",
+          "16": "(C, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(D, D)",
+          "4": "(D, D)",
+          "6": "(D, D)",
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2"
+      }
+    ]
+  }
+]

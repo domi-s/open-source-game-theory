@@ -1,0 +1,82 @@
+[
+  {
+    "index": 0,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: defect unconditionally, taking the dominant action and guaranteeing at least\n    the mutual-defection payoff regardless of the opponent's action. -/\ndef MyBot : Prog := .const Action.D\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 1,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: Defect unconditionally, since defection yields a higher payoff against either\nopponent action in a one-shot Prisoner's Dilemma. -/\ndef MyBot : Prog := .const Action.D\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 2,
+    "raw": "```lean\nimport PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: exploit bots that cooperate with a defector; otherwise cooperate with bots\nthat show cooperation toward a cooperator or a mirror. -/\ndef MyBot : Prog :=\n  .ite (.sim .opp (.bot DefectBot)) Action.C\n    (.const Action.D)\n    (.ite (.sim .opp (.bot CooperateBot)) Action.C\n      (.const Action.C)\n      (.ite (.sim .opp (.bot MirrorBot)) Action.C\n        (.const Action.C)\n        (.const Action.D)))\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 3,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate when the proof oracle can establish that the opponent cooperates with me; otherwise defect. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.const Action.C)\n    (.const Action.D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 4,
+    "raw": "```lean\nimport PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: exploit opponents who cooperate with a defector; otherwise cooperate with\nthose who are cooperative or reciprocal, and defect against the rest. -/\ndef MyBot : Prog :=\n  .ite (.sim .opp (.bot DefectBot)) Action.C\n    (.const Action.D)\n    (.ite (.sim .opp (.bot CooperateBot)) Action.C\n      (.const Action.C)\n      (.ite (.sim .opp (.bot MirrorBot)) Action.C\n        (.const Action.C)\n        (.const Action.D)))\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 5,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: Always defect; in a one-shot Prisoner's Dilemma, defection strictly dominates cooperation. -/\ndef MyBot : Prog :=\n  .const Action.D\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 6,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: always defects, since against either possible opponent action, D pays at least as much as C. -/\ndef MyBot : Prog := .const Action.D\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 7,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: always defect, since defection gives a higher payoff against either action. -/\ndef MyBot : Prog := .const Action.D\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 8,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: defect unconditionally, since defection strictly dominates cooperation\n    in a one-shot Prisoner's Dilemma regardless of the opponent's action. -/\ndef MyBot : Prog := .const Action.D\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 9,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: Defect, since doing so strictly improves my payoff against either opponent action. -/\ndef MyBot : Prog := .const Action.D\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 10,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: Defect unconditionally; in a one-shot Prisoner's Dilemma, defection\n    strictly dominates cooperation regardless of the opponent's action. -/\ndef MyBot : Prog := .const Action.D\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 11,
+    "raw": "```lean\nimport PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: exploit opponents who cooperate with a defector; otherwise reward cooperation and mirror-like behavior. -/\ndef MyBot : Prog :=\n  .ite (.sim .opp (.bot DefectBot)) Action.C\n    (.const Action.D)\n    (.ite (.sim .opp (.bot CooperateBot)) Action.C\n      (.const Action.C)\n      (.ite (.sim .opp (.bot MirrorBot)) Action.C\n        (.const Action.C)\n        (.const Action.D)))\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 12,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate when the proof oracle can establish that the opponent cooperates with me; otherwise defect. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.const Action.C)\n    (.const Action.D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 13,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: defect against every opponent, since defection is the dominant action in a one-shot Prisoner's Dilemma. -/\ndef MyBot : Prog := .const Action.D\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 14,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: Defect unconditionally; in a one-shot Prisoner's Dilemma, this weakly\n    dominates cooperation against every possible opponent action. -/\ndef MyBot : Prog := .const Action.D\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 15,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate when the proof oracle can establish that the opponent cooperates with me; otherwise defect. This rewards provable cooperation while avoiding an unsupported commitment to cooperate. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.const Action.C)\n    (.const Action.D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 16,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate only when the proof oracle can certify that the opponent cooperates\n    with this exact program; otherwise defect. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.const Action.C)\n    (.const Action.D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 17,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: Always defects, since defection yields a higher payoff against either action. -/\ndef MyBot : Prog := .const Action.D\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 18,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate only when the proof oracle can establish that the opponent\ncooperates with me; otherwise defect. This makes cooperation conditional on\nprovable reciprocity while allowing mutually cooperative self-play. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.const Action.C)\n    (.const Action.D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 19,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate when the opponent's cooperation with me is provable; otherwise defect.\n    This supports mutual cooperation while avoiding an unsupported assumption of reciprocity. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.const Action.C)\n    (.const Action.D)\n\nend PD.Bots\n```"
+  }
+]

@@ -1,0 +1,13 @@
+Valid bots: 20/20
+Per opponent: cooperations / bots with a stable Lean verdict
+  CooperateBot: 7/20
+  CupodBot: 0/0
+  DBot: 0/0
+  DefectBot: 0/20
+  DupocBot: 0/0
+  OBot: 0/0
+  TitForTatBot: 0/0
+  EBot: 0/0
+  CupodTrollBot: 0/0
+
+Not fit: some opponent has no stable verdict.
