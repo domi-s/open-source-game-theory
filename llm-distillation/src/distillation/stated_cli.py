@@ -45,6 +45,9 @@ def build_parser() -> argparse.ArgumentParser:
                         "resuming after any bots already saved.")
     parser.add_argument("--reprofile", action="store_true",
                         help="With --from-run: redo every bot, ignoring saved results.")
+    parser.add_argument("--no-library", action="store_true",
+                        help="Do not take cells from library theorems: evaluate every "
+                        "cell in Lean, even for a bot identical to a library bot.")
     return parser
 
 
@@ -68,6 +71,7 @@ def main(argv: list[str] | None = None) -> int:
         sample_only=args.sample_only,
         from_run=args.from_run,
         reprofile=args.reprofile,
+        use_library=not args.no_library,
     )
     if not args.from_run:
         print(f"Sampling {config.n} bots from model {config.model} ...")
