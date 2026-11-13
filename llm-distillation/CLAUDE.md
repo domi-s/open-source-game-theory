@@ -153,14 +153,20 @@ weight in every tally (`x`, the binomial counts), giving exactly the result of
 profiling each sample separately. `canonicalise` erases only what cannot change
 behaviour: comments, the bot's name, `.C`/`.D` vs `Action.C`/`Action.D`, import order,
 layout (the body is joined to one line only when it has no
-`let`/`have`/`do`/`match`/`where`/`by`, where newlines can matter), and the budget
-parameters' names and declaration order (renamed `k1…kn` by first use in the body:
-sound because the evaluator instantiates EVERY budget parameter with the same `k`; the
-arity is kept, so `(k)` ≠ `(kOut kIn)`). Anything it cannot parse is left un-renamed
-rather than guessed at. Semantically-equal but syntactically different programs
-(reordered `.ite` branches, `2*k+64` vs `64+2*k`) are NOT merged.
+`let`/`have`/`do`/`match`/`where`/`by`, where newlines can matter), and the names and
+number of budget parameters (the budget rule, below). Anything it cannot parse is left
+un-renamed rather than guessed at. Semantically-equal but syntactically different
+programs (reordered `.ite` branches, `2*k+64` vs `64+2*k`) are NOT merged.
 `bots.json` has one entry per distinct program with `indices`/`count`; resume keys on
 the canonical source, so older per-sample `bots.json` files are reused.
+
+**The budget rule: every free budget parameter is the same shared `k`.** The evaluator
+instantiates every parameter with one `k`, and so do the library's proved cells
+(`PrudentBot k`, `OptimBot k k`; `PrudentBot k = PrudentBot2 k k`), so `(kOut kIn)` is
+collapsed to `(k)` and `canonicalise` treats the two as the same program. The price is
+that an LLM's intended staggering through parameters (`kIn > kOut`) is NOT evaluated (the
+report counts such samples). Staggering written into the program
+(`.search (2 * k + 64) …`) is the program's own: it is kept and evaluated.
 
 Needs `OPENROUTER_API_KEY`, `uv`, and a built engine (`lake build`, plus the
 decider module `lean_worker.py` imports). Results are saved after every reply and
@@ -189,7 +195,7 @@ src/distillation/
   pipeline.py      # measure x via the LLM, fit, write run folder
   pipeline_cli.py  # `distillation-llm` entry point
   stated.py        # stated-strategy pipeline: LLM writes a Prog bot, Lean profiles it
-  canonical.py     # canonical form of a bot's source (dedup before Lean)
+  canonical.py     # canonical form of a bot's source (dedup, budget rule)
   stated_cli.py    # `distillation-stated` entry point
   lean_worker.py   # compile + profile one bot in Lean (runs in the app's environment)
 tests/             # parsing + fitting tests
