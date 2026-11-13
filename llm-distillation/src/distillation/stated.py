@@ -3,10 +3,13 @@
 For each of ``n`` samples the model gets the Prog language specification and is
 asked to write ``MyBot``, the program that plays as it would. The reply's last
 ```lean block is extracted (like ``parse_action``: last occurrence wins) and
-renamed ``StatedBot<i>``. Lean then decides validity (does it compile?) and the
-bot's action against every library bot (the engine's certified evaluator, via
-``lean_worker.py`` in the app environment). The cooperation rate against each
-opponent over the valid bots is ``x``, fit exactly like the revealed pipeline.
+renamed ``StatedBot<i>``. Samples that wrote the same program (up to comments, bot
+name, budget-parameter names and layout: ``canonical.py``) are grouped, and Lean runs
+once per distinct program; the group size is that program's sample weight. Lean decides
+validity (does it compile?) and the bot's action against every library bot (the
+engine's certified evaluator, via ``lean_worker.py`` in the app environment). The
+weighted cooperation rate against each opponent over the valid bots is ``x``, fit
+exactly like the revealed pipeline.
 """
 
 from __future__ import annotations
@@ -22,6 +25,7 @@ from pathlib import Path
 
 import numpy as np
 
+from .canonical import DEFAULT_NAME, canonicalise
 from .data import ReferenceLibrary, load_library
 from .fitting import fit_all, fit_binomial
 from .openrouter import make_client
@@ -33,6 +37,7 @@ REPO = Path(__file__).resolve().parents[3]
 DEFAULT_SPEC = REPO / "engine/PrisonersDilemma/Research/Notes/PROG_LANGUAGE_SPEC_NO_EXAMPLES.md"
 DEFAULT_APP = REPO / "app"
 WORKER = Path(__file__).resolve().parent / "lean_worker.py"
+RESULT_KEYS = ("valid", "error", "budgets", "cells")  # what lean_worker.py returns
 
 PROMPT_TEMPLATE = """\
 You are playing a one-shot Prisoner's Dilemma under *maximum transparency*: your
@@ -139,32 +144,58 @@ def run_stated(config: StatedConfig) -> Path:
         if config.sample_only:
             return run_dir
 
-    # Results are saved after every bot, so an interrupted --from-run resumes here.
+    # One Lean job per DISTINCT program; its sample count becomes its weight.
+    # Results are saved after every program, so an interrupted --from-run resumes here.
     finished = {} if config.reprofile else _load_finished(run_dir)
+    groups = group_samples(responses)
+    print(f"  {len(responses)} samples -> {len(groups)} distinct programs", file=sys.stderr)
     bots = []
-    for r in responses:
-        name = f"StatedBot{r['index']}"
-        source = extract_bot(r["raw"], name)
-        entry = {"index": r["index"], "name": name, "source": source}
-        if source is None:
+    for key, entry in groups.items():
+        if entry["source"] is None:
             entry.update(valid=False, error="no ```lean block defining MyBot")
-        elif finished.get(r["index"], {}).get("source") == source:
-            print(f"  Lean: {name} already saved, skipping", file=sys.stderr)
-            entry = finished[r["index"]]
+        elif key in finished:
+            print(f"  Lean: {entry['name']} already saved, skipping", file=sys.stderr)
+            entry.update({k: v for k, v in finished[key].items() if k in RESULT_KEYS})
         else:
-            print(f"  Lean: {name} ...", file=sys.stderr)
-            entry.update(run_in_lean(config.app_dir, name, source, library.bots))
+            print(f"  Lean: {entry['name']} (x{entry['count']}) ...", file=sys.stderr)
+            entry.update(run_in_lean(config.app_dir, entry["name"], entry["source"],
+                                     library.bots))
         bots.append(entry)
-        _save_results(run_dir, library, bots, len(responses))
+        _save_results(run_dir, library, bots, len(groups))
     return run_dir
 
 
-def _load_finished(run_dir: Path) -> dict[int, dict]:
-    """Bots already profiled in this run, by index; empty if none were saved."""
+def group_samples(responses: list[dict]) -> dict[str | None, dict]:
+    """Group replies by canonical program (see ``canonical.py``), in first-seen order.
+
+    Key: the canonical source, or None for replies with no usable bot. Each entry is
+    named after its first sample and carries ``indices``/``count`` (its weight). The
+    entry's ``source`` is the canonical program under that name — what Lean runs.
+    """
+    groups: dict[str | None, dict] = {}
+    for r in responses:
+        raw = extract_bot(r["raw"], DEFAULT_NAME)
+        key = canonicalise(raw) if raw is not None else None
+        if key not in groups:
+            name = f"StatedBot{r['index']}"
+            groups[key] = {"index": r["index"], "name": name, "indices": [], "count": 0,
+                           "source": None if raw is None else canonicalise(raw, name)}
+        groups[key]["indices"].append(r["index"])
+        groups[key]["count"] += 1
+    return groups
+
+
+def _load_finished(run_dir: Path) -> dict[str, dict]:
+    """Programs already profiled in this run, by canonical source; empty if none saved.
+
+    Keyed by ``canonicalise`` of the saved source, so results from runs saved before
+    deduplication (one entry per sample) are reused too.
+    """
     path = run_dir / "bots.json"
     if not path.exists():
         return {}
-    return {b["index"]: b for b in json.loads(path.read_text(encoding="utf-8"))}
+    return {canonicalise(b["source"]): b
+            for b in json.loads(path.read_text(encoding="utf-8")) if b.get("source")}
 
 
 def _write_text(path: Path, text: str) -> None:
@@ -176,19 +207,29 @@ def _write_text(path: Path, text: str) -> None:
 
 def _save_results(run_dir: Path, library: ReferenceLibrary, bots: list[dict],
                   total: int) -> None:
-    """Write bots.json, cooperation_vector.json and report.txt for the bots done so far."""
+    """Write bots.json, cooperation_vector.json and report.txt for the programs done so far.
+
+    ``bots`` holds one entry per distinct program; its ``count`` (default 1) is the
+    number of samples that wrote it, and weights it in every tally, so the result is
+    exactly what profiling each sample separately would give. ``total`` is the number
+    of distinct programs expected.
+    """
+    weight = lambda b: b.get("count", 1)
     valid = [b for b in bots if b["valid"]]
+    samples = sum(weight(b) for b in bots)
     c, n = np.zeros(library.n), np.zeros(library.n)
     for b in valid:
         cells = {cell["opponent"]: cell for cell in b["cells"]}
         for j, opp in enumerate(library.bots):
             if cells[opp]["verdict"] == "stable":
-                n[j] += 1
-                c[j] += cells[opp]["my_action"] == "C"
+                n[j] += weight(b)
+                c[j] += weight(b) * (cells[opp]["my_action"] == "C")
     x = np.divide(c, n, out=np.full(library.n, np.nan), where=n > 0)
 
-    lines = [f"PARTIAL: {len(bots)}/{total} replies processed so far"] if len(bots) < total else []
-    lines += [f"Valid bots: {len(valid)}/{len(bots)}",
+    lines = ([f"PARTIAL: {len(bots)}/{total} distinct programs profiled so far"]
+             if len(bots) < total else [])
+    lines += [f"Distinct programs: {len(bots)} for {samples} samples",
+              f"Valid bots: {sum(weight(b) for b in valid)}/{samples}",
               "Per opponent: cooperations / bots with a stable Lean verdict"]
     lines += [f"  {b}: {int(ci)}/{int(ni)}" for b, ci, ni in zip(library.bots, c, n)]
     if n.all():
