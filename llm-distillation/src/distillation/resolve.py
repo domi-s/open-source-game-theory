@@ -47,16 +47,22 @@ _SHARED_RE = re.compile(r"[A-Z]\w*(?: k)*")
 """A bot applied to the shared budget: ``B``, ``B k``, ``B k k``. Not ``B (2 * k + 64)``."""
 
 
-def load_library_programs(bots_dir: Path = DEFAULT_BOTS_DIR) -> dict[str, list[str]]:
-    """Library bots by program: canonical key -> the (sorted) names that have it."""
-    programs: dict[str, set[str]] = {}
+def iter_library_programs(bots_dir: Path = DEFAULT_BOTS_DIR):
+    """Every library bot as ``(name, canonical program)``."""
     for path in sorted(bots_dir.rglob("*.lean")):
         text = path.read_text(encoding="utf-8")
         for m in _HEADER_RE.finditer(strip_comments(text)):
             name = m.group("name")
-            key = None if _STAGED_RE.fullmatch(name) else program_key(text, name)
-            if key is not None:
-                programs.setdefault(key, set()).add(name)
+            program = None if _STAGED_RE.fullmatch(name) else program_key(text, name)
+            if program is not None:
+                yield name, program
+
+
+def load_library_programs(bots_dir: Path = DEFAULT_BOTS_DIR) -> dict[str, list[str]]:
+    """Library bots by program: canonical key -> the (sorted) names that have it."""
+    programs: dict[str, set[str]] = {}
+    for name, program in iter_library_programs(bots_dir):
+        programs.setdefault(program, set()).add(name)
     return {key: sorted(names) for key, names in programs.items()}
 
 

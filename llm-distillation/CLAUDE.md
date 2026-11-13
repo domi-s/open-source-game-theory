@@ -188,6 +188,15 @@ cell against it. The fit uses those opponents only (columns of `R`) and lists th
 others (`LEFT OUT`, `left_out` in `cooperation_vector.json`): a missing cell makes the
 fit weaker, not void. Only if no opponent has an answer is nothing fit.
 
+**Nearest library bot** ([`tree.py`](src/distillation/tree.py),
+[`neighbours.py`](src/distillation/neighbours.py)). For each distinct program the report
+gives the closest library bot(s) and the tree edit distance, on a LOSSLESS tree
+(actions, budget expressions and bot references are labelled nodes), computed by the
+app's own Zhang–Shasha `tree_edit_distance` through `distance_worker.py`. Distance 0
+iff identical, so an inverted-polarity `PrudentBot` reads "PrudentBot, distance 2".
+Programs outside plain `Prog` (`let`, `.tvote`, …) are "not compared". It is a
+diagnostic: if the app worker cannot run, the table is skipped.
+
 Needs `OPENROUTER_API_KEY`, `uv`, and a built engine (`lake build`, plus the
 decider module `lean_worker.py` imports). Results are saved after every reply and
 every bot, so `--from-run` resumes an interrupted run.
@@ -199,7 +208,7 @@ distillation-stated --from-run runs/<run folder>                    # profile sa
 ```
 
 Run folders add `bots.json` (each distinct program's canonical source, sample count,
-validity and per-opponent cells, each with its `source`) and
+validity, nearest library bot and per-opponent cells, each with its `source`) and
 `open_cells.json` (the blind spots, for the app's proof pipeline).
 
 ## Layout
@@ -218,8 +227,11 @@ src/distillation/
   stated.py        # stated-strategy pipeline: LLM writes a Prog bot, Lean profiles it
   canonical.py     # canonical form of a bot's source (dedup, identity, budget rule)
   resolve.py       # per-cell source: library theorem / Lean eval / open
+  tree.py          # lossless Prog tree of a canonical program
+  neighbours.py    # nearest library bot per program (edit distance)
   stated_cli.py    # `distillation-stated` entry point
   lean_worker.py   # compile + profile one bot in Lean (runs in the app's environment)
+  distance_worker.py  # tree edit distances via the app's Zhang-Shasha (app environment)
 tests/             # parsing + fitting tests
 data/payoff_matrix.csv
 runs/              # per-run outputs (created at runtime)
