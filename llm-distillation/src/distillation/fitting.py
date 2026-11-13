@@ -104,16 +104,16 @@ def fit_l2(R: np.ndarray, x: np.ndarray) -> FitResult:
 
 def fit_l1(R: np.ndarray, x: np.ndarray) -> FitResult:
     """Minimise ``||R^T w - x||_1`` over the simplex (LP)."""
-    n = R.shape[0]
+    n, m = R.shape  # n bots (weights), m opponents (coordinates; fewer if some were left out)
     A = R.T
-    # Variables z = [w (n), t (n)], minimise sum(t) with t_j >= |(A w - x)_j|.
-    c = np.concatenate([np.zeros(n), np.ones(n)])
+    # Variables z = [w (n), t (m)], minimise sum(t) with t_j >= |(A w - x)_j|.
+    c = np.concatenate([np.zeros(n), np.ones(m)])
     # A w - t <= x  ;  -A w - t <= -x
-    A_ub = np.block([[A, -np.eye(n)], [-A, -np.eye(n)]])
+    A_ub = np.block([[A, -np.eye(m)], [-A, -np.eye(m)]])
     b_ub = np.concatenate([x, -x])
-    A_eq = np.concatenate([np.ones(n), np.zeros(n)]).reshape(1, -1)
+    A_eq = np.concatenate([np.ones(n), np.zeros(m)]).reshape(1, -1)
     b_eq = np.array([1.0])
-    bounds = [(0.0, 1.0)] * n + [(0.0, None)] * n
+    bounds = [(0.0, 1.0)] * n + [(0.0, None)] * m
     result = linprog(c, A_ub=A_ub, b_ub=b_ub, A_eq=A_eq, b_eq=b_eq, bounds=bounds)
     if not result.success:
         raise RuntimeError(f"L1 solver failed: {result.message}")
@@ -123,11 +123,11 @@ def fit_l1(R: np.ndarray, x: np.ndarray) -> FitResult:
 
 def fit_linf(R: np.ndarray, x: np.ndarray) -> FitResult:
     """Minimise ``||R^T w - x||_inf`` over the simplex (LP)."""
-    n = R.shape[0]
+    n, m = R.shape  # n bots (weights), m opponents (coordinates)
     A = R.T
     # Variables z = [w (n), t (1)], minimise t with t >= |(A w - x)_j| for all j.
     c = np.concatenate([np.zeros(n), np.ones(1)])
-    A_ub = np.block([[A, -np.ones((n, 1))], [-A, -np.ones((n, 1))]])
+    A_ub = np.block([[A, -np.ones((m, 1))], [-A, -np.ones((m, 1))]])
     b_ub = np.concatenate([x, -x])
     A_eq = np.concatenate([np.ones(n), np.zeros(1)]).reshape(1, -1)
     b_eq = np.array([1.0])

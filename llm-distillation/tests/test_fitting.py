@@ -172,3 +172,16 @@ def test_binomial_vertex_recovery(k):
     fit = fit_binomial(R_SIMPLE, n * R_SIMPLE[k], n)
     assert fit.weights[k] > 1 - 1e-4
     assert fit.residual < 1e-6
+
+def test_every_fitter_accepts_fewer_opponents_than_bots():
+    from distillation.fitting import fit_all, fit_binomial
+
+    R = np.array([[1.0, 1.0, 0.0], [0.0, 1.0, 1.0], [0.0, 0.0, 0.0]])[:, :2]  # 3 bots, 2 opponents
+    x = np.array([1.0, 0.5])
+
+    results = fit_all(R, x) + [fit_binomial(R, np.array([4.0, 2.0]), np.array([4.0, 4.0]))]
+
+    assert [r.metric for r in results] == ["L2", "L1", "Linf", "ExpectedHamming", "BinomialMLE"]
+    for r in results:
+        assert r.weights.shape == (3,) and r.fitted.shape == (2,)
+        assert abs(r.weights.sum() - 1.0) < 1e-6
