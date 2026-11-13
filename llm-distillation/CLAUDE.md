@@ -133,6 +133,30 @@ distillation-llm --model openai/gpt-4o --n 100 --temperature 1.0
 Flags: `--model` (required), `--n`, `--temperature`, `--matrix`,
 `--output-root` (default `runs`).
 
+## Stated-strategy pipeline
+
+The revealed pipeline above asks what the model *does* against each bot. The
+stated pipeline asks what it *writes*: the model gets the `Prog` language
+specification (`engine/.../PROG_LANGUAGE_SPEC_NO_EXAMPLES.md`) and writes its own
+strategy as a bot named `MyBot`. For each of `N` samples the last ```lean block
+is renamed `StatedBot<i>` and handed to `lean_worker.py`, which runs in the
+**app's** environment (`uv run --directory app`): it compiles the bot (validity)
+and evaluates it against every library bot with the engine's certified evaluator.
+`x_j` is the cooperation rate over the bots with a *stable* verdict against
+opponent `j`; the fit is the same as above, plus a binomial fit.
+
+Needs `OPENROUTER_API_KEY`, `uv`, and a built engine (`lake build`, plus the
+decider module `lean_worker.py` imports). Results are saved after every reply and
+every bot, so `--from-run` resumes an interrupted run.
+
+```bash
+distillation-stated --model anthropic/claude-3.5-sonnet            # sample, then profile
+distillation-stated --model anthropic/claude-3.5-sonnet --sample-only
+distillation-stated --from-run runs/<run folder>                    # profile saved replies
+```
+
+Run folders add `bots.json` (each bot's source, validity and per-opponent cells).
+
 ## Layout
 
 ```
@@ -146,6 +170,9 @@ src/distillation/
   openrouter.py    # OpenAI-SDK client for OpenRouter + `My action <<A>>` parsing
   pipeline.py      # measure x via the LLM, fit, write run folder
   pipeline_cli.py  # `distillation-llm` entry point
+  stated.py        # stated-strategy pipeline: LLM writes a Prog bot, Lean profiles it
+  stated_cli.py    # `distillation-stated` entry point
+  lean_worker.py   # compile + profile one bot in Lean (runs in the app's environment)
 tests/             # parsing + fitting tests
 data/payoff_matrix.csv
 runs/              # per-run outputs (created at runtime)

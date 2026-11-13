@@ -26,6 +26,9 @@ from .prompt import build_prompt
 from .reporting import format_report
 
 API_KEY_ENV = "OPENROUTER_API_KEY"
+PROJECT = Path(__file__).resolve().parents[2]
+DEFAULT_MATRIX = PROJECT / "data/payoff_matrix.csv"
+DEFAULT_OUTPUT_ROOT = PROJECT / "runs"
 
 
 @dataclass
@@ -35,8 +38,8 @@ class RunConfig:
     model: str
     n: int = 30
     temperature: float = 1.0
-    matrix_path: Path = Path("data/payoff_matrix.csv")
-    output_root: Path = Path("runs")
+    matrix_path: Path = DEFAULT_MATRIX
+    output_root: Path = DEFAULT_OUTPUT_ROOT
 
 
 def _model_slug(model: str) -> str:
@@ -98,7 +101,7 @@ def _write_outputs(config, bots, x, raw_responses, report) -> Path:
         "bots": list(bots),
     }, indent=2))
 
-    (run_dir / "raw_responses.json").write_text(json.dumps(raw_responses, indent=2))
+    (run_dir / "raw_responses.json").write_text(json.dumps(raw_responses, indent=2), encoding="utf-8")
 
     (run_dir / "cooperation_vector.json").write_text(json.dumps({
         "bots": list(bots),
@@ -106,5 +109,5 @@ def _write_outputs(config, bots, x, raw_responses, report) -> Path:
         "by_bot": dict(zip(bots, x.tolist())),
     }, indent=2))
 
-    (run_dir / "report.txt").write_text(report)
+    (run_dir / "report.txt").write_text(report, encoding="utf-8")
     return run_dir

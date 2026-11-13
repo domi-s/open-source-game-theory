@@ -13,7 +13,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from .pipeline import RunConfig, run_pipeline
+from .pipeline import DEFAULT_MATRIX, DEFAULT_OUTPUT_ROOT, RunConfig, run_pipeline
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -28,9 +28,9 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--temperature", type=float, default=1.0,
                         help="Sampling temperature; must be >0 to estimate "
                         "probabilities. Default: 1.0.")
-    parser.add_argument("--matrix", type=Path, default=Path("data/payoff_matrix.csv"),
+    parser.add_argument("--matrix", type=Path, default=DEFAULT_MATRIX,
                         help="Path to the payoff matrix CSV.")
-    parser.add_argument("--output-root", type=Path, default=Path("runs"),
+    parser.add_argument("--output-root", type=Path, default=DEFAULT_OUTPUT_ROOT,
                         help="Root folder for run outputs. Default: runs.")
     return parser
 
@@ -48,7 +48,7 @@ def main(argv: list[str] | None = None) -> int:
     print(f"Running {config.n} queries/bot against model {config.model} ...")
     run_dir = run_pipeline(config)
     print(f"\nRun saved to {run_dir}")
-    print((run_dir / "report.txt").read_text())
+    print((run_dir / "report.txt").read_text(encoding="utf-8"))
     return 0
 
 
