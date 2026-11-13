@@ -183,6 +183,11 @@ an identity test. Lean runs only for the cells no theorem covers, and not at all
 theorems cover every opponent. `--no-library` forces eval everywhere. The report splits
 the cells into proved (theorem + eval) and missing, per opponent.
 
+**Partial fit.** `x_j` exists for an opponent iff some valid bot has a proved (`stable`)
+cell against it. The fit uses those opponents only (columns of `R`) and lists the
+others (`LEFT OUT`, `left_out` in `cooperation_vector.json`): a missing cell makes the
+fit weaker, not void. Only if no opponent has an answer is nothing fit.
+
 Needs `OPENROUTER_API_KEY`, `uv`, and a built engine (`lake build`, plus the
 decider module `lean_worker.py` imports). Results are saved after every reply and
 every bot, so `--from-run` resumes an interrupted run.

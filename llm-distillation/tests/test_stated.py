@@ -121,6 +121,28 @@ def test_cells_with_no_proved_answer_are_listed_as_blind_spots(tmp_path):
     assert "OPEN (no theorem, no certified eval): 2" in (tmp_path / "report.txt").read_text(encoding="utf-8")
 
 
+def test_a_missing_opponent_weakens_the_fit_instead_of_voiding_it(tmp_path):
+    library = load_library(MATRIX)
+    first, rest, bot = _bot_with_one_open_cell(library)
+
+    _save_results(tmp_path, library, [bot], total=1)
+
+    report = (tmp_path / "report.txt").read_text(encoding="utf-8")
+    assert "Not fit" not in report
+    assert f"Fit on {len(rest)} of {library.n} opponents. LEFT OUT" in report and first in report
+    assert "=== L2 fit ===" in report and "=== BinomialMLE fit ===" in report
+    vector = json.loads((tmp_path / "cooperation_vector.json").read_text(encoding="utf-8"))
+    assert vector["left_out"] == [first] and vector["x"][0] is None and vector["x"][1:] == [1.0] * len(rest)
+
+
+def test_nothing_is_fit_when_no_opponent_has_a_proved_answer(tmp_path):
+    library = load_library(MATRIX)
+    _save_results(tmp_path, library, [_bot(0, "C", verdict="undetermined", opponents=library.bots)],
+                  total=1)
+
+    assert "Not fit: no opponent has a proved answer" in (tmp_path / "report.txt").read_text(encoding="utf-8")
+
+
 def test_the_report_counts_programs_whose_budget_parameters_were_collapsed(tmp_path):
     library = load_library(MATRIX)
     bots = [dict(_bot(0, "C", opponents=library.bots), budget_params=2, count=3),

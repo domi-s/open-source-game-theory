@@ -299,11 +299,20 @@ def _save_results(run_dir: Path, library: ReferenceLibrary, bots: list[dict],
               f"k-dependent {s['k_dependent']}, open {s['open']}]"
               for b, ci, ni, s in zip(library.bots, c, n, by_source.values())]
 
-    if n.all():
-        fits = fit_all(library.R, x) + [fit_binomial(library.R, c, n)]
-        report = "\n".join(lines) + "\n\n" + format_report(library, fits, x)
+    # Fit on the opponents that HAVE a proved answer and list the rest: a missing
+    # cell makes the fit weaker (fewer constraints), not impossible.
+    fit_on = np.flatnonzero(n > 0)
+    left_out = [library.bots[j] for j in np.flatnonzero(n == 0)]
+    if len(fit_on):
+        R, opponents = library.R[:, fit_on], tuple(library.bots[j] for j in fit_on)
+        fits = fit_all(R, x[fit_on]) + [fit_binomial(R, c[fit_on], n[fit_on])]
+        note = (f"Fit on {len(fit_on)} of {library.n} opponents. LEFT OUT (no proved answer "
+                f"from any valid bot): {', '.join(left_out)}. Fewer constraints, so a "
+                "weaker fit, not none.\n\n" if left_out else "")
+        report = ("\n".join(lines) + "\n\n" + note
+                  + format_report(library, fits, x[fit_on], opponents))
     else:
-        report = "\n".join(lines + ["", "Not fit: some opponent has no stable verdict."]) + "\n"
+        report = "\n".join(lines + ["", "Not fit: no opponent has a proved answer."]) + "\n"
 
     _write_text(run_dir / "bots.json", json.dumps(bots, indent=2))
     xs = [None if np.isnan(v) else float(v) for v in x]
@@ -314,6 +323,7 @@ def _save_results(run_dir: Path, library: ReferenceLibrary, bots: list[dict],
         "cooperations": c.astype(int).tolist(),
         "stable_verdicts": n.astype(int).tolist(),
         "by_source": by_source,
+        "left_out": left_out,
     }, indent=2))
     _write_text(run_dir / "open_cells.json", json.dumps(_open_cells(valid), indent=2))
     _write_text(run_dir / "report.txt", report)
