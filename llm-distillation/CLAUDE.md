@@ -145,6 +145,23 @@ and evaluates it against every library bot with the engine's certified evaluator
 `x_j` is the cooperation rate over the bots with a *stable* verdict against
 opponent `j`; the fit is the same as above, plus a binomial fit.
 
+**Deduplication before Lean** ([`canonical.py`](src/distillation/canonical.py)).
+Samples repeat themselves, and Lean is the expensive step (and `#eval` on a bot can
+exhaust fuel or the 3GB cap, which stays fixed). So replies are grouped by *canonical
+program* and Lean runs **once per distinct program**; the group size is its sample
+weight in every tally (`x`, the binomial counts), giving exactly the result of
+profiling each sample separately. `canonicalise` erases only what cannot change
+behaviour: comments, the bot's name, `.C`/`.D` vs `Action.C`/`Action.D`, import order,
+layout (the body is joined to one line only when it has no
+`let`/`have`/`do`/`match`/`where`/`by`, where newlines can matter), and the budget
+parameters' names and declaration order (renamed `k1…kn` by first use in the body:
+sound because the evaluator instantiates EVERY budget parameter with the same `k`; the
+arity is kept, so `(k)` ≠ `(kOut kIn)`). Anything it cannot parse is left un-renamed
+rather than guessed at. Semantically-equal but syntactically different programs
+(reordered `.ite` branches, `2*k+64` vs `64+2*k`) are NOT merged.
+`bots.json` has one entry per distinct program with `indices`/`count`; resume keys on
+the canonical source, so older per-sample `bots.json` files are reused.
+
 Needs `OPENROUTER_API_KEY`, `uv`, and a built engine (`lake build`, plus the
 decider module `lean_worker.py` imports). Results are saved after every reply and
 every bot, so `--from-run` resumes an interrupted run.
@@ -155,7 +172,8 @@ distillation-stated --model anthropic/claude-3.5-sonnet --sample-only
 distillation-stated --from-run runs/<run folder>                    # profile saved replies
 ```
 
-Run folders add `bots.json` (each bot's source, validity and per-opponent cells).
+Run folders add `bots.json` (each distinct program's canonical source, sample count,
+validity and per-opponent cells).
 
 ## Layout
 
@@ -171,6 +189,7 @@ src/distillation/
   pipeline.py      # measure x via the LLM, fit, write run folder
   pipeline_cli.py  # `distillation-llm` entry point
   stated.py        # stated-strategy pipeline: LLM writes a Prog bot, Lean profiles it
+  canonical.py     # canonical form of a bot's source (dedup before Lean)
   stated_cli.py    # `distillation-stated` entry point
   lean_worker.py   # compile + profile one bot in Lean (runs in the app's environment)
 tests/             # parsing + fitting tests
