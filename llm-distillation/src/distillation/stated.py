@@ -29,6 +29,7 @@ import numpy as np
 from .canonical import DEFAULT_NAME, budget_params, canonicalise, program_key
 from .data import ReferenceLibrary, load_library
 from .fitting import fit_all, fit_binomial
+from .neighbours import nearest_library_bots
 from .openrouter import make_client
 from .pipeline import API_KEY_ENV, DEFAULT_MATRIX, DEFAULT_OUTPUT_ROOT
 from .progress import Progress
@@ -156,14 +157,26 @@ def run_stated(config: StatedConfig) -> Path:
     groups = group_samples(responses)
     twins = load_library_programs(config.bots_dir) if config.use_library else {}
     theorems = load_theorems(config.theorems_path) if config.use_library else {}
+    near = _neighbours(config, groups) if config.use_library else {}
     print(f"  {len(responses)} samples -> {len(groups)} distinct programs", file=sys.stderr)
     bots = []
     for key, entry in groups.items():
         resolve_entry(entry, library.bots, twins, theorems, finished.get(key),
                       config.app_dir)
+        entry["neighbours"] = near.get(entry["name"])
         bots.append(entry)
         _save_results(run_dir, library, bots, len(groups))
     return run_dir
+
+
+def _neighbours(config: StatedConfig, groups: dict) -> dict[str, dict]:
+    """Nearest library bot per program. A diagnostic: if it cannot run, skip the table."""
+    programs = {e["name"]: program_key(e["source"]) for e in groups.values() if e["source"]}
+    try:
+        return nearest_library_bots(config.app_dir, config.bots_dir, programs)
+    except (RuntimeError, OSError, ValueError) as err:
+        print(f"  nearest-bot table skipped: {err}", file=sys.stderr)
+        return {}
 
 
 def resolve_entry(entry: dict, opponents, twins: dict, theorems: dict,
@@ -298,6 +311,7 @@ def _save_results(run_dir: Path, library: ReferenceLibrary, bots: list[dict],
     lines += [f"  {b}: {int(ci)}/{int(ni)}   [theorem {s['theorem']}, eval {s['eval']}, "
               f"k-dependent {s['k_dependent']}, open {s['open']}]"
               for b, ci, ni, s in zip(library.bots, c, n, by_source.values())]
+    lines += _neighbour_lines(bots)
 
     # Fit on the opponents that HAVE a proved answer and list the rest: a missing
     # cell makes the fit weaker (fewer constraints), not impossible.
@@ -339,6 +353,17 @@ def _category(cell: dict) -> str:
     if cell.get("source") == THEOREM:
         return "theorem"
     return {"stable": "eval", "phase_dependent": "k_dependent"}.get(cell["verdict"], "open")
+
+
+def _neighbour_lines(bots: list[dict]) -> list[str]:
+    """The nearest-library-bot table: one line per distinct program."""
+    lines = ["Nearest library bot per distinct program (tree edit distance, 0 = identical):"]
+    for b in bots:
+        near = b.get("neighbours")
+        what = (f"{'/'.join(near['nearest'])}, distance {near['distance']}" if near
+                else "not compared (no bot, or not plain Prog)")
+        lines.append(f"  {b['name']} (x{b.get('count', 1)}): {what}")
+    return lines
 
 
 def _open_cells(valid_bots: list[dict]) -> list[dict]:
