@@ -20,17 +20,25 @@ def format_profile_stats(x: np.ndarray) -> str:
     )
 
 
-def format_fit(result: FitResult, library: ReferenceLibrary) -> str:
-    """Render one distance's fit: profile vs. input, weights, residual, checks."""
+def format_fit(
+    result: FitResult, library: ReferenceLibrary, opponents: tuple[str, ...] | None = None
+) -> str:
+    """Render one distance's fit: profile vs. input, weights, residual, checks.
+
+    ``opponents`` names the coordinates of ``x``/``fitted`` when the fit used only some
+    of the opponents (default: all of them, in library order). Weights are always per
+    library bot.
+    """
     bots = library.bots
-    name_w = max(len(b) for b in bots)
+    opponents = opponents or bots
+    name_w = max(len(b) for b in (*bots, *opponents))
     lines = [f"=== {result.metric} fit ==="]
 
     # Fitted profile alongside the input, coordinate by coordinate.
     lines.append("")
     lines.append("Fitted profile (R^T w*) vs input x, per opponent:")
     lines.append(f"  {'opponent'.ljust(name_w)}   x_i    fitted   diff")
-    for j, bot in enumerate(bots):
+    for j, bot in enumerate(opponents):
         xi, fi = result.x[j], result.fitted[j]
         lines.append(
             f"  {bot.ljust(name_w)}  {xi:5.3f}  {fi:6.3f}  {fi - xi:+6.3f}"
@@ -78,11 +86,12 @@ def format_fit(result: FitResult, library: ReferenceLibrary) -> str:
 
 
 def format_report(
-    library: ReferenceLibrary, results: list[FitResult], x: np.ndarray
+    library: ReferenceLibrary, results: list[FitResult], x: np.ndarray,
+    opponents: tuple[str, ...] | None = None,
 ) -> str:
     """Full report: profile stats once, then every distance's fit."""
     blocks = [format_profile_stats(x), ""]
     for result in results:
-        blocks.append(format_fit(result, library))
+        blocks.append(format_fit(result, library, opponents))
         blocks.append("")
     return "\n".join(blocks).rstrip() + "\n"
