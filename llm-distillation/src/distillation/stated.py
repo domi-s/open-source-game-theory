@@ -4,12 +4,13 @@ For each of ``n`` samples the model gets the Prog language specification and is
 asked to write ``MyBot``, the program that plays as it would. The reply's last
 ```lean block is extracted (like ``parse_action``: last occurrence wins) and
 renamed ``StatedBot<i>``. Samples that wrote the same program (up to comments, bot
-name, budget-parameter names and layout: ``canonical.py``) are grouped, and Lean runs
-once per distinct program; the group size is that program's sample weight. Lean decides
-validity (does it compile?) and the bot's action against every library bot (the
-engine's certified evaluator, via ``lean_worker.py`` in the app environment). The
-weighted cooperation rate against each opponent over the valid bots is ``x``, fit
-exactly like the revealed pipeline.
+name, budget parameters and layout: ``canonical.py``) are grouped and resolved once per
+distinct program; the group size is that program's sample weight. Each cell (the
+program's action against one library bot) comes from a library theorem if the program IS
+a library bot, else from Lean (the engine's certified evaluator, via ``lean_worker.py``
+in the app environment), else it is open (``resolve.py``). The weighted cooperation rate
+against each opponent over the proved cells is ``x``, fit exactly like the revealed
+pipeline.
 """
 
 from __future__ import annotations
@@ -25,13 +26,15 @@ from pathlib import Path
 
 import numpy as np
 
-from .canonical import DEFAULT_NAME, budget_params, canonicalise
+from .canonical import DEFAULT_NAME, budget_params, canonicalise, program_key
 from .data import ReferenceLibrary, load_library
 from .fitting import fit_all, fit_binomial
 from .openrouter import make_client
 from .pipeline import API_KEY_ENV, DEFAULT_MATRIX, DEFAULT_OUTPUT_ROOT
 from .progress import Progress
 from .reporting import format_report
+from .resolve import (DEFAULT_BOTS_DIR, DEFAULT_THEOREMS, THEOREM, load_library_programs,
+                      load_theorems, tag_eval_cell, theorem_cells)
 
 REPO = Path(__file__).resolve().parents[3]
 DEFAULT_SPEC = REPO / "engine/PrisonersDilemma/Research/Notes/PROG_LANGUAGE_SPEC_NO_EXAMPLES.md"
@@ -68,6 +71,9 @@ class StatedConfig:
     sample_only: bool = False  # stop once the replies are saved
     from_run: Path | None = None  # profile this run's saved replies; no sampling
     reprofile: bool = False  # with from_run: ignore results already saved in bots.json
+    use_library: bool = True  # resolve cells from library theorems before Lean
+    bots_dir: Path = DEFAULT_BOTS_DIR  # the library bots a stated bot may be identical to
+    theorems_path: Path = DEFAULT_THEOREMS  # their proved outcomes
 
 
 def extract_bot(text: str, name: str) -> str | None:
@@ -144,25 +150,66 @@ def run_stated(config: StatedConfig) -> Path:
         if config.sample_only:
             return run_dir
 
-    # One Lean job per DISTINCT program; its sample count becomes its weight.
+    # One resolution per DISTINCT program; its sample count becomes its weight.
     # Results are saved after every program, so an interrupted --from-run resumes here.
     finished = {} if config.reprofile else _load_finished(run_dir)
     groups = group_samples(responses)
+    twins = load_library_programs(config.bots_dir) if config.use_library else {}
+    theorems = load_theorems(config.theorems_path) if config.use_library else {}
     print(f"  {len(responses)} samples -> {len(groups)} distinct programs", file=sys.stderr)
     bots = []
     for key, entry in groups.items():
-        if entry["source"] is None:
-            entry.update(valid=False, error="no ```lean block defining MyBot")
-        elif key in finished:
-            print(f"  Lean: {entry['name']} already saved, skipping", file=sys.stderr)
-            entry.update({k: v for k, v in finished[key].items() if k in RESULT_KEYS})
-        else:
-            print(f"  Lean: {entry['name']} (x{entry['count']}) ...", file=sys.stderr)
-            entry.update(run_in_lean(config.app_dir, entry["name"], entry["source"],
-                                     library.bots))
+        resolve_entry(entry, library.bots, twins, theorems, finished.get(key),
+                      config.app_dir)
         bots.append(entry)
         _save_results(run_dir, library, bots, len(groups))
     return run_dir
+
+
+def resolve_entry(entry: dict, opponents, twins: dict, theorems: dict,
+                  saved: dict | None, app_dir: Path) -> None:
+    """Give ``entry`` its validity and one cell per opponent, each tagged with its source.
+
+    Order per cell: library theorem (the program IS a library bot with a proved row),
+    else Lean eval, else open. Lean only runs for the cells no theorem covers, and not
+    at all when a theorem covers every opponent: an identical program needs no compile.
+    ``saved`` is this program's result from an earlier run, reused when it covers what
+    is still needed.
+    """
+    name, source = entry["name"], entry["source"]
+    if source is None:
+        entry.update(valid=False, error="no ```lean block defining MyBot")
+        return
+    library_bots = twins.get(program_key(source), [])
+    cells = theorem_cells(library_bots, opponents, theorems)
+    if library_bots:
+        entry["library_bots"] = library_bots
+    need = [o for o in opponents if o not in cells]
+
+    if not need:
+        print(f"  {name} (x{entry['count']}): all cells from the theorems of "
+              f"{'/'.join(library_bots)}, no Lean", file=sys.stderr)
+        entry.update(valid=True, compiled=False, budgets=[],
+                     cells=[cells[o] for o in opponents])
+        return
+
+    saved_cells = ({c["opponent"]: c for c in saved.get("cells", [])}
+                   if saved and saved.get("valid") else {})
+    if saved and saved.get("valid") is False:
+        result = {k: v for k, v in saved.items() if k in RESULT_KEYS}
+    elif saved and all(o in saved_cells for o in need):
+        result = {"valid": True, "budgets": saved.get("budgets", []),
+                  "cells": [saved_cells[o] for o in need]}
+    else:
+        print(f"  Lean: {name} (x{entry['count']}), {len(need)} of {len(opponents)} cells "
+              "...", file=sys.stderr)
+        result = run_in_lean(app_dir, name, source, need)
+    if not result["valid"]:
+        entry.update(valid=False, error=result.get("error", ""))
+        return
+    lean = {c["opponent"]: tag_eval_cell(c) for c in result["cells"]}
+    entry.update(valid=True, compiled=True, budgets=result["budgets"],
+                 cells=[cells.get(o) or lean[o] for o in opponents])
 
 
 def group_samples(responses: list[dict]) -> dict[str | None, dict]:
@@ -220,23 +267,38 @@ def _save_results(run_dir: Path, library: ReferenceLibrary, bots: list[dict],
     samples = sum(weight(b) for b in bots)
     valid_samples = sum(weight(b) for b in valid)
     c, n = np.zeros(library.n), np.zeros(library.n)
+    by_source = {opp: dict.fromkeys(CATEGORIES, 0) for opp in library.bots}
     for b in valid:
         cells = {cell["opponent"]: cell for cell in b["cells"]}
         for j, opp in enumerate(library.bots):
+            by_source[opp][_category(cells[opp])] += weight(b)
             if cells[opp]["verdict"] == "stable":
                 n[j] += weight(b)
                 c[j] += weight(b) * (cells[opp]["my_action"] == "C")
     x = np.divide(c, n, out=np.full(library.n, np.nan), where=n > 0)
 
+    totals = {cat: sum(s[cat] for s in by_source.values()) for cat in CATEGORIES}
+    proved = totals["theorem"] + totals["eval"]
     lines = ([f"PARTIAL: {len(bots)}/{total} distinct programs profiled so far"]
              if len(bots) < total else [])
     lines += [f"Distinct programs: {len(bots)} for {samples} samples",
               f"Valid bots: {valid_samples}/{samples}",
+              f"Cells (valid bot x opponent, weighted by samples): "
+              f"{valid_samples * library.n}",
+              f"  proved by a library theorem: {totals['theorem']}",
+              f"  proved by certified Lean eval: {totals['eval']}",
+              f"  certified but budget-dependent (no single answer): {totals['k_dependent']}",
+              f"  OPEN (no theorem, no certified eval): {totals['open']}",
+              f"  -> {proved} of {valid_samples * library.n} cells carry a proved answer",
               f"Budget rule: every free budget parameter is the same k; "
               f"{sum(weight(b) for b in valid if b.get('budget_params', 0) > 1)} of "
               f"{valid_samples} valid samples had 2+ (any staggering through them is collapsed)",
-              "Per opponent: cooperations / bots with a stable Lean verdict"]
-    lines += [f"  {b}: {int(ci)}/{int(ni)}" for b, ci, ni in zip(library.bots, c, n)]
+              "Per opponent: cooperations / bots with a proved verdict, then where "
+              "each valid bot's cell came from"]
+    lines += [f"  {b}: {int(ci)}/{int(ni)}   [theorem {s['theorem']}, eval {s['eval']}, "
+              f"k-dependent {s['k_dependent']}, open {s['open']}]"
+              for b, ci, ni, s in zip(library.bots, c, n, by_source.values())]
+
     if n.all():
         fits = fit_all(library.R, x) + [fit_binomial(library.R, c, n)]
         report = "\n".join(lines) + "\n\n" + format_report(library, fits, x)
@@ -251,5 +313,28 @@ def _save_results(run_dir: Path, library: ReferenceLibrary, bots: list[dict],
         "by_bot": dict(zip(library.bots, xs)),
         "cooperations": c.astype(int).tolist(),
         "stable_verdicts": n.astype(int).tolist(),
+        "by_source": by_source,
     }, indent=2))
+    _write_text(run_dir / "open_cells.json", json.dumps(_open_cells(valid), indent=2))
     _write_text(run_dir / "report.txt", report)
+
+
+CATEGORIES = ("theorem", "eval", "k_dependent", "open")
+
+
+def _category(cell: dict) -> str:
+    """Where a cell's answer stands: a library theorem, a certified Lean eval (one
+    answer, or budget-dependent), or open. Cells saved before the source was recorded
+    are classed by their verdict."""
+    if cell.get("source") == THEOREM:
+        return "theorem"
+    return {"stable": "eval", "phase_dependent": "k_dependent"}.get(cell["verdict"], "open")
+
+
+def _open_cells(valid_bots: list[dict]) -> list[dict]:
+    """The blind spots: every (program, opponent) cell with no proved answer, in the
+    shape the app's proof pipeline needs to pick it up (the bot's source + the opponent)."""
+    return [{"opponent": cell["opponent"], "bot": b["name"], "indices": b.get("indices", []),
+             "count": b.get("count", 1), "reason": cell.get("note") or cell["verdict"],
+             "by_budget": cell.get("by_budget", {}), "source": b["source"]}
+            for b in valid_bots for cell in b["cells"] if _category(cell) == "open"]

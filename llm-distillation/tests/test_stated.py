@@ -98,6 +98,29 @@ def test_save_results_marks_partial_runs_and_skips_the_fit(tmp_path):
     assert vector["x"] == [None] * library.n
 
 
+def _bot_with_one_open_cell(library):
+    first, rest = library.bots[0], library.bots[1:]
+    bot = _bot(0, "C", opponents=rest)
+    bot["cells"].insert(0, {"opponent": first, "verdict": "undetermined", "my_action": None,
+                            "note": "timeout", "by_budget": {}})
+    bot.update(source="def StatedBot0 (k : Nat) : Prog := .self\n", count=2)
+    return first, rest, bot
+
+
+def test_cells_with_no_proved_answer_are_listed_as_blind_spots(tmp_path):
+    library = load_library(MATRIX)
+    first, rest, bot = _bot_with_one_open_cell(library)
+
+    _save_results(tmp_path, library, [bot], total=1)
+
+    # the blind spot is listed for the proof pipeline, weighted by its samples
+    blind = json.loads((tmp_path / "open_cells.json").read_text(encoding="utf-8"))
+    assert [(c["opponent"], c["count"], c["reason"]) for c in blind] == [(first, 2, "timeout")]
+    vector = json.loads((tmp_path / "cooperation_vector.json").read_text(encoding="utf-8"))
+    assert vector["by_source"][first]["open"] == 2 and vector["by_source"][rest[0]]["eval"] == 2
+    assert "OPEN (no theorem, no certified eval): 2" in (tmp_path / "report.txt").read_text(encoding="utf-8")
+
+
 def test_the_report_counts_programs_whose_budget_parameters_were_collapsed(tmp_path):
     library = load_library(MATRIX)
     bots = [dict(_bot(0, "C", opponents=library.bots), budget_params=2, count=3),

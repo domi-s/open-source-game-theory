@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from distillation.canonical import budget_params, canonicalise, strip_comments
+from distillation.canonical import budget_params, canonicalise, program_key, strip_comments
 
 TWO_TIER = """\
 import PrisonersDilemma.Program
@@ -96,6 +96,14 @@ def test_action_shorthand_is_the_same_program_but_c_is_not_d():
     assert canonicalise("def B : Prog := .const .C") != canonicalise("def B : Prog := .const .D")
     # `.DefectBot` is not an action
     assert canonicalise("def B : Prog := .bot .DefectBot") == "def StatedBot : Prog := .bot .DefectBot\n"
+
+
+def test_program_key_is_one_named_def_whatever_surrounds_it():
+    file = ("import X\nnamespace PD.Bots\ndef Helper : Prog := .const .C\n"
+            "/-- doc -/\ndef Target (a b : Nat) : Prog :=\n  .const .D\n\nend PD.Bots\n")
+    assert program_key(file, "Target") == "def StatedBot (k : Nat) : Prog := .const Action.D\n"
+    assert program_key(file) == "def StatedBot : Prog := .const Action.C\n"
+    assert program_key(file, "Missing") is None
 
 
 def test_layout_sensitive_bodies_keep_their_newlines():

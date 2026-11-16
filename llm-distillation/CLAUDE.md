@@ -163,10 +163,25 @@ the canonical source, so older per-sample `bots.json` files are reused.
 **The budget rule: every free budget parameter is the same shared `k`.** The evaluator
 instantiates every parameter with one `k`, and so do the library's proved cells
 (`PrudentBot k`, `OptimBot k k`; `PrudentBot k = PrudentBot2 k k`), so `(kOut kIn)` is
-collapsed to `(k)` and `canonicalise` treats the two as the same program. The price is
-that an LLM's intended staggering through parameters (`kIn > kOut`) is NOT evaluated (the
-report counts such samples). Staggering written into the program
-(`.search (2 * k + 64) …`) is the program's own: it is kept and evaluated.
+collapsed to `(k)`. This is what lets a two-parameter LLM bot land on the proved
+`PrudentBot` cells; the price is that an LLM's intended staggering through parameters
+(`kIn > kOut`) is NOT evaluated (the report counts such samples). Staggering written
+into the program (`.search (2 * k + 64) …`) is the program's own: it is kept and
+evaluated, and never matched to a theorem unless a library bot has the same text. The
+staggered `†` companions are excluded from the theorem table (`resolve.load_theorems`).
+
+**Where each cell comes from** ([`resolve.py`](src/distillation/resolve.py)). Cells are
+resolved in order and each records its `source`: **theorem** (the program is a library
+bot, so its row is that bot's proved cells from `app/generated/outcome_theorems.json`;
+a pair stored in one orientation is read reversed and marked `swapped`, as the app's
+matrix does), else **eval** (`lean_worker.py`, certified; `stable`, or `phase_dependent`
+= certified but budget-dependent), else **open** (a blind spot, listed in
+`open_cells.json`). Identity is STRICT equality of canonical programs: not the
+tree edit distance in `app/.../tau/syntax.py`, which erases budgets and drops the `.C`/`.D`
+shorthand (so `.const .C` and `.const .D` are 0 apart) and is a confusability metric, not
+an identity test. Lean runs only for the cells no theorem covers, and not at all when
+theorems cover every opponent. `--no-library` forces eval everywhere. The report splits
+the cells into proved (theorem + eval) and missing, per opponent.
 
 Needs `OPENROUTER_API_KEY`, `uv`, and a built engine (`lake build`, plus the
 decider module `lean_worker.py` imports). Results are saved after every reply and
@@ -179,7 +194,8 @@ distillation-stated --from-run runs/<run folder>                    # profile sa
 ```
 
 Run folders add `bots.json` (each distinct program's canonical source, sample count,
-validity and per-opponent cells).
+validity and per-opponent cells, each with its `source`) and
+`open_cells.json` (the blind spots, for the app's proof pipeline).
 
 ## Layout
 
@@ -195,7 +211,8 @@ src/distillation/
   pipeline.py      # measure x via the LLM, fit, write run folder
   pipeline_cli.py  # `distillation-llm` entry point
   stated.py        # stated-strategy pipeline: LLM writes a Prog bot, Lean profiles it
-  canonical.py     # canonical form of a bot's source (dedup, budget rule)
+  canonical.py     # canonical form of a bot's source (dedup, identity, budget rule)
+  resolve.py       # per-cell source: library theorem / Lean eval / open
   stated_cli.py    # `distillation-stated` entry point
   lean_worker.py   # compile + profile one bot in Lean (runs in the app's environment)
 tests/             # parsing + fitting tests

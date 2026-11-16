@@ -32,6 +32,10 @@ _LAYOUT_KEYWORDS = {"let", "have", "show", "do", "match", "where", "by", "calc",
 _ACTION_SHORTHAND_RE = re.compile(r"(?<![\w.')\]])\.([CD])(?![\w'])")
 """``.C`` / ``.D`` as written without the ``Action`` prefix. Every position that takes an action elaborates both spellings to the same term, so they are rewritten to ``Action.C`` / ``Action.D``. (Not matched: ``x.C`` field access, ``Action.C`` itself, ``.DefectBot``.)"""
 
+_NEXT_COMMAND_RE = re.compile(r"^(?:def|end|namespace|section|theorem|lemma|open|instance)\b",
+                              re.MULTILINE)
+"""The start of the next top-level command, which ends a def's text."""
+
 
 def strip_comments(text: str) -> str:
     """Remove Lean comments; caution around string literals."""
@@ -151,3 +155,22 @@ def canonicalise(source: str, name: str = DEFAULT_NAME) -> str:
     if m:
         text = _rename_identifiers(text, {m.group("name"): name})
     return _collapse_layout(_rename_budgets(text))
+
+
+def program_key(source: str, name: str | None = None) -> str | None:
+    """Canonical text of ONE bot definition in ``source``; equal keys mean the same program.
+
+    Picks ``def <name> … : Prog`` (the first ``: Prog`` def if ``name`` is None), cuts it
+    at the next top-level command, and canonicalises just that, so the imports, the
+    namespace and any other definitions in the file do not matter. Budget expressions,
+    bot references and actions are all kept, so unlike a lossy tree metric, equality here
+    is genuine identity of the program (and hence of its outcomes). ``None`` if no such
+    definition exists.
+    """
+    text = strip_comments(source)
+    for m in _HEADER_RE.finditer(text):
+        if name is not None and m.group("name") != name:
+            continue
+        nxt = _NEXT_COMMAND_RE.search(text, m.end())
+        return canonicalise(text[m.start():nxt.start() if nxt else len(text)])
+    return None
