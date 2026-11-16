@@ -1,6 +1,6 @@
 """Canonical form of a stated bot's Lean source.
 
-``canonicalise`` normalises a bot's source code so that two programs that are the same up to: comments, whitespace, import order, bot name, budget-parameter names and layout
+``canonicalise`` normalises a bot's source code so that two programs that are the same up to: comments, whitespace, import order, bot name, layout, and the names and NUMBER of budget parameters (all are one shared ``k``, see ``_rename_budgets``)
 
 Anything that does not parse as a ``def <name> (k … : Nat) … : Prog`` header is left
 un-renamed rather than guessed at (still comment-stripped and tidied).
@@ -105,28 +105,41 @@ def _collapse_layout(text: str) -> str:
     return text[:m.end()] + body + "\n" + text[cut:]
 
 
+def _budget_params(header: re.Match) -> list[str] | None:
+    """The budget parameter names of a def header; None if a binder is not a plain ``Nat``."""
+
+    binders = header.group("binders")
+    if _BINDER_RE.sub("", binders).strip():
+        return None
+    return [p for g in _BINDER_RE.findall(binders) for p in g.split()]
+
+
+def budget_params(source: str) -> int:
+    """How many free budget parameters the bot was written with (0 if none or unparsed)."""
+
+    m = _HEADER_RE.search(strip_comments(source))
+    return len(_budget_params(m) or []) if m else 0
+
+
 def _rename_budgets(text: str) -> str:
-    """Rename the budget parameters to k1, k2, … in order of first use."""
+    """THE BUDGET RULE: every budget parameter is the same shared ``k``.
+
+    The evaluator instantiates every parameter of a bot with one ``k`` (as do the
+    library's proved cells: ``PrudentBot k`` / ``OptimBot k k``), so ``(kOut kIn)`` is
+    ``(k)`` with both uses renamed: ``PrudentBot2 k k`` IS ``PrudentBot k``. Staggering
+    through the parameters is therefore collapsed; staggering written into the program
+    (``.search (2 * k + 64) …``) is the program's own and is kept.
+    """
 
     m = _HEADER_RE.search(text)
-    if not m:
-        return text
-    groups = _BINDER_RE.findall(m.group("binders"))
-    binders = m.group("binders")
-    if not groups or _BINDER_RE.sub("", binders).strip():
-        return text
-    params = [p for g in groups for p in g.split()]
-    if len(set(params)) != len(params):
+    params = _budget_params(m) if m else None
+    if not params or len(set(params)) != len(params):
         return text
     body = text[m.end():]
-    first_use = [t for t in dict.fromkeys(_IDENT_RE.findall(body)) if t in params]
-    order = first_use + [p for p in params if p not in first_use]
-    mapping = {p: f"k{i + 1}" for i, p in enumerate(order)}
-    others = set(_IDENT_RE.findall(body)) - set(params)
-    if others & set(mapping.values()):
-        return text  # a `k1` already means something else in the body
-    header = f"{m.group('head')}{m.group('name')} ({' '.join(mapping.values())} : Nat) : Prog"
-    return text[:m.start()] + header + _rename_identifiers(body, mapping)
+    if "k" in set(_IDENT_RE.findall(body)) - set(params):
+        return text  # a `k` already means something else in the body
+    header = f"{m.group('head')}{m.group('name')} (k : Nat) : Prog"
+    return text[:m.start()] + header + _rename_identifiers(body, dict.fromkeys(params, "k"))
 
 
 def canonicalise(source: str, name: str = DEFAULT_NAME) -> str:

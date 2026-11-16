@@ -12,6 +12,10 @@ of that module is the validity check; the cells are the app's certified
 evaluator (``outcomeG (guardFastN k) 64``, sound by ``outcomeG_sound``), and the
 budget ladder is collapsed by the app's own ``_classify``.
 
+Budget rule: every budget parameter of the bot gets the SAME ``k`` (``expr.format(k=k)``),
+as in the library's proved cells; ``stated.py`` hands this worker a program whose
+parameters are already collapsed to one ``k`` (``canonical._rename_budgets``).
+
 The one difference from ``build_profile``: all cells run in ONE Lean process.
 Importing the engine costs ~1 min here, so ``build_profile``'s process per cell
 (36 per bot) spends nearly all its time importing and times most cells out. Lean

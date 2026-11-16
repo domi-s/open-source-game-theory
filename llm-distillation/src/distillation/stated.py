@@ -25,7 +25,7 @@ from pathlib import Path
 
 import numpy as np
 
-from .canonical import DEFAULT_NAME, canonicalise
+from .canonical import DEFAULT_NAME, budget_params, canonicalise
 from .data import ReferenceLibrary, load_library
 from .fitting import fit_all, fit_binomial
 from .openrouter import make_client
@@ -179,6 +179,7 @@ def group_samples(responses: list[dict]) -> dict[str | None, dict]:
         if key not in groups:
             name = f"StatedBot{r['index']}"
             groups[key] = {"index": r["index"], "name": name, "indices": [], "count": 0,
+                           "budget_params": 0 if raw is None else budget_params(raw),
                            "source": None if raw is None else canonicalise(raw, name)}
         groups[key]["indices"].append(r["index"])
         groups[key]["count"] += 1
@@ -217,6 +218,7 @@ def _save_results(run_dir: Path, library: ReferenceLibrary, bots: list[dict],
     weight = lambda b: b.get("count", 1)
     valid = [b for b in bots if b["valid"]]
     samples = sum(weight(b) for b in bots)
+    valid_samples = sum(weight(b) for b in valid)
     c, n = np.zeros(library.n), np.zeros(library.n)
     for b in valid:
         cells = {cell["opponent"]: cell for cell in b["cells"]}
@@ -229,7 +231,10 @@ def _save_results(run_dir: Path, library: ReferenceLibrary, bots: list[dict],
     lines = ([f"PARTIAL: {len(bots)}/{total} distinct programs profiled so far"]
              if len(bots) < total else [])
     lines += [f"Distinct programs: {len(bots)} for {samples} samples",
-              f"Valid bots: {sum(weight(b) for b in valid)}/{samples}",
+              f"Valid bots: {valid_samples}/{samples}",
+              f"Budget rule: every free budget parameter is the same k; "
+              f"{sum(weight(b) for b in valid if b.get('budget_params', 0) > 1)} of "
+              f"{valid_samples} valid samples had 2+ (any staggering through them is collapsed)",
               "Per opponent: cooperations / bots with a stable Lean verdict"]
     lines += [f"  {b}: {int(ci)}/{int(ni)}" for b, ci, ni in zip(library.bots, c, n)]
     if n.all():

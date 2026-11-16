@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from distillation.canonical import canonicalise, strip_comments
+from distillation.canonical import budget_params, canonicalise, strip_comments
 
 TWO_TIER = """\
 import PrisonersDilemma.Program
@@ -32,7 +32,7 @@ def test_comments_name_and_budget_names_are_erased():
     a = canonicalise(two_tier("kOut", "kIn"))
     assert a == canonicalise(two_tier("a", "b").replace("MyBot", "Other"))
     assert "--" not in a and "/-" not in a
-    assert "def StatedBot (k1 k2 : Nat) : Prog := .search k1 " in a
+    assert "def StatedBot (k : Nat) : Prog := .search k " in a
 
 
 def test_budget_order_is_order_of_first_use_in_the_body():
@@ -57,28 +57,38 @@ def test_layout_and_import_order_do_not_matter():
 
 
 def test_the_name_argument_names_the_bot():
-    assert "def StatedBot7 (k1 k2 : Nat)" in canonicalise(two_tier(), "StatedBot7")
+    assert "def StatedBot7 (k : Nat)" in canonicalise(two_tier(), "StatedBot7")
     assert canonicalise(canonicalise(two_tier(), "StatedBot7")) == canonicalise(two_tier())
 
 
 def test_different_programs_stay_different():
     base = canonicalise(two_tier())
-    # one budget used twice is NOT the two-parameter bot (arity and use matter)
-    assert canonicalise(two_tier("k", "k").replace("(k k : Nat)", "(k : Nat)")) != base
     flipped = two_tier().replace("Action.D))\n    (.const Action.D)",
                                  "Action.D))\n    (.const Action.C)")
     assert flipped != two_tier()
     assert canonicalise(flipped) != base
-    # an unused parameter changes the arity, so it is kept
-    unused = two_tier().replace("(kOut kIn : Nat)", "(kOut kIn kSpare : Nat)")
-    assert canonicalise(unused) != base and "k3" in canonicalise(unused)
+    # a budget EXPRESSION in the body is the program's own, not a parameter: kept
+    staggered = two_tier().replace("(.search kIn", "(.search (2 * kOut + 64)")
+    assert staggered != two_tier()
+    assert canonicalise(staggered) != base
 
 
-def test_a_swap_of_budget_names_does_not_collide():
-    # Body already uses k2 before k1: renaming must be simultaneous.
-    src = "def B (k1 k2 : Nat) : Prog :=\n  .search k2 (.plays .opp .self .C) (.const .C) (.search k1 (.plays .opp .self .C) (.const .C) (.const .D))\n"
-    out = canonicalise(src)
-    assert ".search k1 (.plays .opp .self Action.C) (.const Action.C) (.search k2" in out
+def test_every_budget_parameter_is_the_one_shared_k():
+    # PrudentBot2 k k IS PrudentBot k: two parameters collapse to one `k`...
+    two = two_tier("kOut", "kIn")
+    one = two_tier("k", "k").replace("(k k : Nat)", "(k : Nat)")
+    assert canonicalise(two) == canonicalise(one)
+    # ...also with an unused spare parameter
+    spare = two.replace("(kOut kIn : Nat)", "(kOut kIn spare : Nat)")
+    assert canonicalise(spare) == canonicalise(one)
+    assert budget_params(two) == 2 and budget_params(one) == 1
+    assert budget_params("def B : Prog := .const Action.C") == 0
+
+
+def test_a_k_that_is_not_a_parameter_blocks_the_collapse():
+    src = ("def B (j : Nat) : Prog :=\n  let k := j\n"
+           "  .search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D)\n")
+    assert "def StatedBot (j : Nat)" in canonicalise(src)
 
 
 def test_action_shorthand_is_the_same_program_but_c_is_not_d():

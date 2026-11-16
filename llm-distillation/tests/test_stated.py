@@ -41,7 +41,7 @@ def test_group_samples_merges_identical_programs_and_counts_them():
         (0, [0, 2, 4], 3), (1, [1], 1), (3, [3], 1)]
     first = next(iter(groups.values()))
     assert first["name"] == "StatedBot0"
-    assert "def StatedBot0 (k1 : Nat)" in first["source"]
+    assert "def StatedBot0 (k : Nat)" in first["source"]
     assert list(groups)[-1] is None and groups[None]["source"] is None
 
 
@@ -96,3 +96,13 @@ def test_save_results_marks_partial_runs_and_skips_the_fit(tmp_path):
     assert "Not fit" in report
     vector = json.loads((tmp_path / "cooperation_vector.json").read_text(encoding="utf-8"))
     assert vector["x"] == [None] * library.n
+
+
+def test_the_report_counts_programs_whose_budget_parameters_were_collapsed(tmp_path):
+    library = load_library(MATRIX)
+    bots = [dict(_bot(0, "C", opponents=library.bots), budget_params=2, count=3),
+            dict(_bot(1, "D", opponents=library.bots), budget_params=1)]
+
+    _save_results(tmp_path, library, bots, total=2)
+
+    assert "3 of 4 valid samples had 2+" in (tmp_path / "report.txt").read_text(encoding="utf-8")
