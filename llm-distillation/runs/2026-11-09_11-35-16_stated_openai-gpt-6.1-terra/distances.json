@@ -1,0 +1,141 @@
+{
+  "library": {
+    "StatedBot0": {
+      "CooperateBot": 26,
+      "CupodBot": 19,
+      "CupodTrollBot": 21,
+      "DBot": 23,
+      "DefectBot": 26,
+      "DupocBot": 18,
+      "EBot": 24,
+      "CIMCIC": 13,
+      "DIMCID": 15,
+      "GuardianBot": 21,
+      "JustBot": 21,
+      "JustBot2": 21,
+      "LegibleBot": 18,
+      "PrudentBot": 17,
+      "PrudentBot2": 17,
+      "WaryBot": 18,
+      "MirrorBot": 26,
+      "OBot": 24,
+      "TitForTatBot": 22
+    },
+    "StatedBot1": {
+      "CooperateBot": 8,
+      "CupodBot": 3,
+      "CupodTrollBot": 6,
+      "DBot": 8,
+      "DefectBot": 8,
+      "DupocBot": 0,
+      "EBot": 21,
+      "CIMCIC": 5,
+      "DIMCID": 8,
+      "GuardianBot": 5,
+      "JustBot": 3,
+      "JustBot2": 3,
+      "LegibleBot": 4,
+      "PrudentBot": 9,
+      "PrudentBot2": 9,
+      "WaryBot": 3,
+      "MirrorBot": 8,
+      "OBot": 13,
+      "TitForTatBot": 6
+    },
+    "StatedBot2": {
+      "CooperateBot": 16,
+      "CupodBot": 11,
+      "CupodTrollBot": 10,
+      "DBot": 14,
+      "DefectBot": 16,
+      "DupocBot": 8,
+      "EBot": 19,
+      "CIMCIC": 8,
+      "DIMCID": 11,
+      "GuardianBot": 12,
+      "JustBot": 11,
+      "JustBot2": 11,
+      "LegibleBot": 10,
+      "PrudentBot": 10,
+      "PrudentBot2": 10,
+      "WaryBot": 11,
+      "MirrorBot": 16,
+      "OBot": 15,
+      "TitForTatBot": 12
+    },
+    "StatedBot3": {
+      "CooperateBot": 16,
+      "CupodBot": 9,
+      "CupodTrollBot": 10,
+      "DBot": 13,
+      "DefectBot": 16,
+      "DupocBot": 8,
+      "EBot": 21,
+      "CIMCIC": 10,
+      "DIMCID": 11,
+      "GuardianBot": 11,
+      "JustBot": 11,
+      "JustBot2": 11,
+      "LegibleBot": 11,
+      "PrudentBot": 6,
+      "PrudentBot2": 6,
+      "WaryBot": 9,
+      "MirrorBot": 16,
+      "OBot": 14,
+      "TitForTatBot": 13
+    },
+    "StatedBot4": {
+      "CooperateBot": 18,
+      "CupodBot": 12,
+      "CupodTrollBot": 13,
+      "DBot": 14,
+      "DefectBot": 18,
+      "DupocBot": 10,
+      "EBot": 19,
+      "CIMCIC": 9,
+      "DIMCID": 12,
+      "GuardianBot": 11,
+      "JustBot": 10,
+      "JustBot2": 10,
+      "LegibleBot": 12,
+      "PrudentBot": 10,
+      "PrudentBot2": 10,
+      "WaryBot": 12,
+      "MirrorBot": 18,
+      "OBot": 16,
+      "TitForTatBot": 13
+    }
+  },
+  "classes": {
+    "StatedBot0": {
+      "StatedBot1": 18,
+      "StatedBot2": 12,
+      "StatedBot3": 17,
+      "StatedBot4": 13
+    },
+    "StatedBot1": {
+      "StatedBot0": 18,
+      "StatedBot2": 8,
+      "StatedBot3": 8,
+      "StatedBot4": 10
+    },
+    "StatedBot2": {
+      "StatedBot0": 12,
+      "StatedBot1": 8,
+      "StatedBot3": 12,
+      "StatedBot4": 4
+    },
+    "StatedBot3": {
+      "StatedBot0": 17,
+      "StatedBot1": 8,
+      "StatedBot2": 12,
+      "StatedBot4": 12
+    },
+    "StatedBot4": {
+      "StatedBot0": 13,
+      "StatedBot1": 10,
+      "StatedBot2": 4,
+      "StatedBot3": 12
+    }
+  }
+}
