@@ -40,7 +40,7 @@ def test_group_samples_merges_identical_programs_and_counts_them():
                              _program(3, None), _program(4, DEFINITION)])
 
     assert [(g["index"], g["indices"], g["count"]) for g in classes] == [
-        (0, [0, 2, 4], 3), (1, [1], 1), (3, [3], 1)]
+        (0, [0, 2, 4], 3), (1, [1], 1), (2, [3], 1)]
     assert classes[0]["name"] == "StatedBot0"
     assert "def StatedBot0 (k : Nat)" in classes[0]["source"]
     assert classes[-1]["source"] is None

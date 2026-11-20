@@ -11,16 +11,17 @@ from .sample import extract_programs
 def group_samples(programs: list[dict]) -> list[dict]:
     """One class per canonical program (see ``canonical.py``), in first-seen order.
 
-    A class is named after its first sample and carries ``indices``/``count`` (its
-    weight). Samples with no usable bot form one class whose ``source`` is None.
+    Classes are numbered 0, 1, ... in that order (``StatedBot<number>``) and carry the
+    sample ``indices`` and ``count`` (their weight). Samples with no usable bot form one class whose ``source`` is None.
     """
     classes: dict[str | None, dict] = {}
     for p in programs:
         raw = p["program"]
         key = canonicalise(raw, DEFAULT_NAME) if raw is not None else None
         if key not in classes:
-            name = f"StatedBot{p['index']}"
-            classes[key] = {"index": p["index"], "name": name, "indices": [], "count": 0,
+            number = len(classes)
+            name = f"StatedBot{number}"
+            classes[key] = {"index": number, "name": name, "indices": [], "count": 0,
                             "budget_params": 0 if raw is None else budget_params(raw),
                             "source": None if raw is None else canonicalise(raw, name)}
         classes[key]["indices"].append(p["index"])
