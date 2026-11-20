@@ -189,7 +189,7 @@ others (`LEFT OUT`, `left_out` in `cooperation_vector.json`): a missing cell mak
 fit weaker, not void. Only if no opponent has an answer is nothing fit.
 
 **Nearest library bot** ([`tree.py`](src/distillation/tree.py),
-[`neighbours.py`](src/distillation/neighbours.py)). For each distinct program the report
+[`neighbours.py`](src/distillation/neighbours.py), computed in step 3a). For each distinct program the report
 gives the closest library bot(s) and the tree edit distance, on a LOSSLESS tree
 (actions, budget expressions and bot references are labelled nodes), computed by the
 app's own Zhang–Shasha `tree_edit_distance` through `distance_worker.py`. Distance 0
@@ -203,8 +203,9 @@ every bot, so `--from-run` resumes an interrupted run.
 
 ```bash
 distillation-stated --model anthropic/claude-3.5-sonnet            # sample, then profile
-distillation-stated --model anthropic/claude-3.5-sonnet --sample-only
-distillation-stated --from-run runs/<run folder>                    # profile saved replies
+distillation-stated --model anthropic/claude-3.5-sonnet --only sample
+distillation-stated --from-run runs/<run folder>                    # all steps, resuming
+distillation-stated --from-run runs/<run folder> --only distances   # or --from-step outcomes
 ```
 
 Run folders add `bots.json` (each distinct program's canonical source, sample count,
@@ -224,11 +225,14 @@ src/distillation/
   openrouter.py    # OpenAI-SDK client for OpenRouter + `My action <<A>>` parsing
   pipeline.py      # measure x via the LLM, fit, write run folder
   pipeline_cli.py  # `distillation-llm` entry point
-  stated.py        # stated-strategy pipeline: LLM writes a Prog bot, Lean profiles it
+  stated.py        # stated pipeline: orchestrates the steps; outcomes step (see STATED.md)
+  sample.py        # step 1: sample bots, extract programs
+  classes.py       # step 2: group equal programs (canonical classes)
+  distances.py     # step 3a: edit distances, classes x (library + classes)
   canonical.py     # canonical form of a bot's source (dedup, identity, budget rule)
   resolve.py       # per-cell source: library theorem / Lean eval / open
   tree.py          # lossless Prog tree of a canonical program
-  neighbours.py    # nearest library bot per program (edit distance)
+  neighbours.py    # tree edit distance helpers, nearest library bots
   stated_cli.py    # `distillation-stated` entry point
   lean_worker.py   # compile + profile one bot in Lean (runs in the app's environment)
   distance_worker.py  # tree edit distances via the app's Zhang-Shasha (app environment)

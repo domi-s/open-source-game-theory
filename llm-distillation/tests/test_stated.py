@@ -6,7 +6,9 @@ import json
 from pathlib import Path
 
 from distillation.data import load_library
-from distillation.stated import _save_results, extract_bot, group_samples
+from distillation.classes import group_samples
+from distillation.sample import extract_bot
+from distillation.stated import _save_results
 
 MATRIX = Path(__file__).resolve().parents[1] / "data" / "payoff_matrix.csv"
 
@@ -27,22 +29,21 @@ def test_extract_bot_requires_a_block_defining_mybot():
     assert extract_bot("```lean\ndef Other := 0\n```", "B") is None
 
 
-def _reply(index, definition):
-    return {"index": index, "raw": f"```lean\n{definition}\n```"}
+def _program(index, definition):
+    return {"index": index, "program": definition}
 
 
 def test_group_samples_merges_identical_programs_and_counts_them():
     other = "def MyBot : Prog := .const Action.D"
     comment = f"/-- same thing -/\n{DEFINITION}"
-    groups = group_samples([_reply(0, DEFINITION), _reply(1, other), _reply(2, comment),
-                            {"index": 3, "raw": "no code"}, _reply(4, DEFINITION)])
+    classes = group_samples([_program(0, DEFINITION), _program(1, other), _program(2, comment),
+                             _program(3, None), _program(4, DEFINITION)])
 
-    assert [(g["index"], g["indices"], g["count"]) for g in groups.values()] == [
+    assert [(g["index"], g["indices"], g["count"]) for g in classes] == [
         (0, [0, 2, 4], 3), (1, [1], 1), (3, [3], 1)]
-    first = next(iter(groups.values()))
-    assert first["name"] == "StatedBot0"
-    assert "def StatedBot0 (k : Nat)" in first["source"]
-    assert list(groups)[-1] is None and groups[None]["source"] is None
+    assert classes[0]["name"] == "StatedBot0"
+    assert "def StatedBot0 (k : Nat)" in classes[0]["source"]
+    assert classes[-1]["source"] is None
 
 
 def test_weights_equal_profiling_every_sample_separately(tmp_path):

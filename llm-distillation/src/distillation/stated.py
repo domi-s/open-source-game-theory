@@ -1,23 +1,15 @@
 """Stated-strategy pipeline: the LLM writes its strategy as a Prog bot; Lean profiles it.
 
-For each of ``n`` samples the model gets the Prog language specification and is
-asked to write ``MyBot``, the program that plays as it would. The reply's last
-```lean block is extracted (like ``parse_action``: last occurrence wins) and
-renamed ``StatedBot<i>``. Samples that wrote the same program (up to comments, bot
-name, budget parameters and layout: ``canonical.py``) are grouped and resolved once per
-distinct program; the group size is that program's sample weight. Each cell (the
-program's action against one library bot) comes from a library theorem if the program IS
-a library bot, else from Lean (the engine's certified evaluator, via ``lean_worker.py``
-in the app environment), else it is open (``resolve.py``). The weighted cooperation rate
-against each opponent over the proved cells is ``x``, fit exactly like the revealed
-pipeline.
+Steps, each in its own module and writing its own file in the run folder:
+sample (``sample.py``), canonicalise (``classes.py``), distances (``distances.py``),
+outcomes (this file: cells from theorems, then Lean, then open; then the fit).
+See ``STATED.md``.
 """
 
 from __future__ import annotations
 
 import json
 import os
-import re
 import subprocess
 import sys
 from dataclasses import dataclass
@@ -26,16 +18,17 @@ from pathlib import Path
 
 import numpy as np
 
-from .canonical import DEFAULT_NAME, budget_params, canonicalise, program_key
+from .canonical import canonicalise, program_key
+from .classes import canonicalise_programs
 from .data import ReferenceLibrary, load_library
+from .distances import compute_distances
 from .fitting import fit_all, fit_binomial
-from .neighbours import nearest_library_bots
-from .openrouter import make_client
-from .pipeline import API_KEY_ENV, DEFAULT_MATRIX, DEFAULT_OUTPUT_ROOT
-from .progress import Progress
+from .neighbours import nearest
+from .pipeline import DEFAULT_MATRIX, DEFAULT_OUTPUT_ROOT
 from .reporting import format_report
 from .resolve import (DEFAULT_BOTS_DIR, DEFAULT_THEOREMS, THEOREM, load_library_programs,
                       load_theorems, tag_eval_cell, theorem_cells)
+from .sample import extract_programs, sample
 
 REPO = Path(__file__).resolve().parents[3]
 DEFAULT_SPEC = REPO / "engine/PrisonersDilemma/Research/Notes/PROG_LANGUAGE_SPEC_NO_EXAMPLES.md"
@@ -43,25 +36,12 @@ DEFAULT_APP = REPO / "app"
 WORKER = Path(__file__).resolve().parent / "lean_worker.py"
 RESULT_KEYS = ("valid", "error", "budgets", "cells")  # what lean_worker.py returns
 
-PROMPT_TEMPLATE = """\
-You are playing a one-shot Prisoner's Dilemma under *maximum transparency*: your
-opponent can read your full source code and you can read theirs.
-
-Write your own strategy for this game as a bot in the `Prog` language specified
-below: the program that plays exactly as you would against any opponent. Name it
-`MyBot`. Follow the output contract in section 12 of the specification (a complete
-Lean file: imports, `namespace PD.Bots`, the definition, `end PD.Bots`).
-
-Reason as much as you like, then give your final answer as one ```lean code block.
-
-{spec}
-"""
-
-_LEAN_BLOCK_RE = re.compile(r"```lean4?\s*\n(.*?)```", re.DOTALL)
-
+STEPS = ("sample", "canonicalise", "distances", "outcomes")
 
 @dataclass
 class StatedConfig:
+    """Configuration for a stated-strategy run."""
+
     model: str
     n: int = 30
     temperature: float = 1.0
@@ -69,21 +49,12 @@ class StatedConfig:
     output_root: Path = DEFAULT_OUTPUT_ROOT
     spec_path: Path = DEFAULT_SPEC
     app_dir: Path = DEFAULT_APP
-    sample_only: bool = False  # stop once the replies are saved
-    from_run: Path | None = None  # profile this run's saved replies; no sampling
+    steps: tuple[str, ...] = STEPS  # which steps to run, in order
+    from_run: Path | None = None  # continue this run folder instead of sampling a new one
     reprofile: bool = False  # with from_run: ignore results already saved in bots.json
     use_library: bool = True  # resolve cells from library theorems before Lean
     bots_dir: Path = DEFAULT_BOTS_DIR  # the library bots a stated bot may be identical to
     theorems_path: Path = DEFAULT_THEOREMS  # their proved outcomes
-
-
-def extract_bot(text: str, name: str) -> str | None:
-    """The last ```lean block, with ``MyBot`` renamed to ``name``; None if absent."""
-    blocks = _LEAN_BLOCK_RE.findall(text)
-    if not blocks or not re.search(r"\bdef\s+MyBot\b", blocks[-1]):
-        return None
-    return re.sub(r"\bMyBot\b", name, blocks[-1])
-
 
 def run_in_lean(app_dir: Path, name: str, source: str, opponents) -> dict:
     """Compile + profile one bot in Lean (see ``lean_worker.py``)."""
@@ -96,8 +67,8 @@ def run_in_lean(app_dir: Path, name: str, source: str, opponents) -> dict:
         raise RuntimeError(f"lean worker failed for {name}:\n{proc.stderr}")
     return json.loads(proc.stdout.strip().splitlines()[-1])
 
-
 def _new_run_dir(config: StatedConfig, bot_order) -> Path:
+    """Make a new run folder and write its metadata.json."""
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     slug = config.model.replace("/", "-").replace(":", "-")
     run_dir = config.output_root / f"{timestamp}_stated_{slug}"
@@ -114,70 +85,50 @@ def _new_run_dir(config: StatedConfig, bot_order) -> Path:
     }, indent=2), encoding="utf-8")
     return run_dir
 
-
-def _sample(config: StatedConfig, run_dir: Path) -> list[dict]:
-    """Query the model ``n`` times, saving the replies after each one."""
-    prompt = PROMPT_TEMPLATE.format(spec=config.spec_path.read_text(encoding="utf-8"))
-
-    api_key = os.environ.get(API_KEY_ENV)
-    if not api_key:
-        raise RuntimeError(f"Environment variable {API_KEY_ENV} is not set.")
-    client = make_client(api_key)
-
-    responses = []
-    progress = Progress(1, config.n)
-    for i in range(config.n):
-        progress.show(0, "sampling", i)
-        reply = client.chat.completions.create(
-            model=config.model, messages=[{"role": "user", "content": prompt}],
-            temperature=config.temperature)
-        responses.append({"index": i, "raw": reply.choices[0].message.content or ""})
-        (run_dir / "raw_responses.json").write_text(json.dumps(responses, indent=2),
-                                                    encoding="utf-8")
-        progress.done += 1
-    progress.clear()
-    return responses
-
-
 def run_stated(config: StatedConfig) -> Path:
+    """Run the stated-strategy pipeline, returning the run folder."""
     library = load_library(config.matrix_path)
+    run_dir = config.from_run or _new_run_dir(config, library.bots)
+    explicit = config.steps != STEPS  # a chosen step is redone even if its file exists
 
-    if config.from_run is not None:
-        run_dir = config.from_run
-        responses = json.loads((run_dir / "raw_responses.json").read_text(encoding="utf-8"))
-    else:
-        run_dir = _new_run_dir(config, library.bots)
-        responses = _sample(config, run_dir)
-        if config.sample_only:
-            return run_dir
-
-    # One resolution per DISTINCT program; its sample count becomes its weight.
-    # Results are saved after every program, so an interrupted --from-run resumes here.
-    finished = {} if config.reprofile else _load_finished(run_dir)
-    groups = group_samples(responses)
-    twins = load_library_programs(config.bots_dir) if config.use_library else {}
-    theorems = load_theorems(config.theorems_path) if config.use_library else {}
-    near = _neighbours(config, groups) if config.use_library else {}
-    print(f"  {len(responses)} samples -> {len(groups)} distinct programs", file=sys.stderr)
-    bots = []
-    for key, entry in groups.items():
-        resolve_entry(entry, library.bots, twins, theorems, finished.get(key),
-                      config.app_dir)
-        entry["neighbours"] = near.get(entry["name"])
-        bots.append(entry)
-        _save_results(run_dir, library, bots, len(groups))
+    if "sample" in config.steps:
+        if config.from_run is None:
+            sample(run_dir, config.model, config.n, config.temperature, config.spec_path)
+        extract_programs(run_dir)
+    if "canonicalise" in config.steps:
+        canonicalise_programs(run_dir)
+    classes = (json.loads((run_dir / "classes.json").read_text(encoding="utf-8"))
+               if {"distances", "outcomes"} & set(config.steps) else [])
+    if "distances" in config.steps and (explicit or not (run_dir / "distances.json").exists()):
+        compute_distances(run_dir, classes, config.bots_dir, config.app_dir)
+    if "outcomes" in config.steps:
+        _outcomes(config, run_dir, library, classes)
     return run_dir
 
+def _outcomes(config: StatedConfig, run_dir: Path, library: ReferenceLibrary,
+              classes: list[dict]) -> None:
+    """One resolution per class, saved after each, so an interrupted run resumes here."""
+    finished = {} if config.reprofile else _load_finished(run_dir)
+    twins = load_library_programs(config.bots_dir) if config.use_library else {}
+    theorems = load_theorems(config.theorems_path) if config.use_library else {}
+    near = _nearest_bots(run_dir) if config.use_library else {}
+    print(f"  {sum(c['count'] for c in classes)} samples -> {len(classes)} distinct programs",
+          file=sys.stderr)
+    bots = []
+    for entry in classes:
+        key = canonicalise(entry["source"]) if entry["source"] else None
+        resolve_entry(entry, library.bots, twins, theorems, finished.get(key), config.app_dir)
+        entry["neighbours"] = near.get(entry["name"])
+        bots.append(entry)
+        _save_results(run_dir, library, bots, len(classes))
 
-def _neighbours(config: StatedConfig, groups: dict) -> dict[str, dict]:
-    """Nearest library bot per program. A diagnostic: if it cannot run, skip the table."""
-    programs = {e["name"]: program_key(e["source"]) for e in groups.values() if e["source"]}
-    try:
-        return nearest_library_bots(config.app_dir, config.bots_dir, programs)
-    except (RuntimeError, OSError, ValueError) as err:
-        print(f"  nearest-bot table skipped: {err}", file=sys.stderr)
+def _nearest_bots(run_dir: Path) -> dict[str, dict]:
+    """Nearest library bots per class, from ``distances.json`` (empty if step 3a was not run)."""
+    path = run_dir / "distances.json"
+    if not path.exists():
         return {}
-
+    rows = json.loads(path.read_text(encoding="utf-8"))["library"]
+    return {name: nearest(row) for name, row in rows.items() if row}
 
 def resolve_entry(entry: dict, opponents, twins: dict, theorems: dict,
                   saved: dict | None, app_dir: Path) -> None:
@@ -224,28 +175,6 @@ def resolve_entry(entry: dict, opponents, twins: dict, theorems: dict,
     entry.update(valid=True, compiled=True, budgets=result["budgets"],
                  cells=[cells.get(o) or lean[o] for o in opponents])
 
-
-def group_samples(responses: list[dict]) -> dict[str | None, dict]:
-    """Group replies by canonical program (see ``canonical.py``), in first-seen order.
-
-    Key: the canonical source, or None for replies with no usable bot. Each entry is
-    named after its first sample and carries ``indices``/``count`` (its weight). The
-    entry's ``source`` is the canonical program under that name — what Lean runs.
-    """
-    groups: dict[str | None, dict] = {}
-    for r in responses:
-        raw = extract_bot(r["raw"], DEFAULT_NAME)
-        key = canonicalise(raw) if raw is not None else None
-        if key not in groups:
-            name = f"StatedBot{r['index']}"
-            groups[key] = {"index": r["index"], "name": name, "indices": [], "count": 0,
-                           "budget_params": 0 if raw is None else budget_params(raw),
-                           "source": None if raw is None else canonicalise(raw, name)}
-        groups[key]["indices"].append(r["index"])
-        groups[key]["count"] += 1
-    return groups
-
-
 def _load_finished(run_dir: Path) -> dict[str, dict]:
     """Programs already profiled in this run, by canonical source; empty if none saved.
 
@@ -258,13 +187,11 @@ def _load_finished(run_dir: Path) -> dict[str, dict]:
     return {canonicalise(b["source"]): b
             for b in json.loads(path.read_text(encoding="utf-8")) if b.get("source")}
 
-
 def _write_text(path: Path, text: str) -> None:
     """Replace ``path`` in one step, so a kill mid-write cannot corrupt saved results."""
     tmp = path.with_suffix(path.suffix + ".tmp")
     tmp.write_text(text, encoding="utf-8")
     os.replace(tmp, path)
-
 
 def _save_results(run_dir: Path, library: ReferenceLibrary, bots: list[dict],
                   total: int) -> None:
@@ -342,9 +269,7 @@ def _save_results(run_dir: Path, library: ReferenceLibrary, bots: list[dict],
     _write_text(run_dir / "open_cells.json", json.dumps(_open_cells(valid), indent=2))
     _write_text(run_dir / "report.txt", report)
 
-
 CATEGORIES = ("theorem", "eval", "k_dependent", "open")
-
 
 def _category(cell: dict) -> str:
     """Where a cell's answer stands: a library theorem, a certified Lean eval (one
@@ -353,7 +278,6 @@ def _category(cell: dict) -> str:
     if cell.get("source") == THEOREM:
         return "theorem"
     return {"stable": "eval", "phase_dependent": "k_dependent"}.get(cell["verdict"], "open")
-
 
 def _neighbour_lines(bots: list[dict]) -> list[str]:
     """The nearest-library-bot table: one line per distinct program."""
@@ -364,7 +288,6 @@ def _neighbour_lines(bots: list[dict]) -> list[str]:
                 else "not compared (no bot, or not plain Prog)")
         lines.append(f"  {b['name']} (x{b.get('count', 1)}): {what}")
     return lines
-
 
 def _open_cells(valid_bots: list[dict]) -> list[dict]:
     """The blind spots: every (program, opponent) cell with no proved answer, in the
