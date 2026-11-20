@@ -3,8 +3,10 @@
 Usage::
 
     distillation-stated --model anthropic/claude-3.5-sonnet [--n 30]
-    distillation-stated --model anthropic/claude-3.5-sonnet --sample-only
-    distillation-stated --from-run runs/<run folder>
+    distillation-stated --model anthropic/claude-3.5-sonnet --only sample
+    distillation-stated --from-run runs/<run folder>                  # all steps, resuming
+    distillation-stated --from-run runs/<run folder> --only distances
+    distillation-stated --from-run runs/<run folder> --from-step outcomes
 
 Requires ``OPENROUTER_API_KEY``, ``uv``, and a built engine (``lake build``).
 """
@@ -16,10 +18,10 @@ import sys
 from pathlib import Path
 
 from .pipeline import DEFAULT_MATRIX, DEFAULT_OUTPUT_ROOT
-from .stated import DEFAULT_APP, DEFAULT_SPEC, StatedConfig, run_stated
-
+from .stated import DEFAULT_APP, DEFAULT_SPEC, STEPS, StatedConfig, run_stated
 
 def build_parser() -> argparse.ArgumentParser:
+    """Build the command-line parser for ``distillation-stated``."""
     parser = argparse.ArgumentParser(
         prog="distillation-stated",
         description="Ask an LLM to write its strategy as a Prog bot, profile the "
@@ -38,11 +40,11 @@ def build_parser() -> argparse.ArgumentParser:
                         help="Prog language specification put in the prompt.")
     parser.add_argument("--app-dir", type=Path, default=DEFAULT_APP,
                         help="The app project, whose environment runs Lean.")
-    parser.add_argument("--sample-only", action="store_true",
-                        help="Save the model's replies and stop, skipping Lean.")
     parser.add_argument("--from-run", type=Path,
-                        help="Run Lean and the fit on this run folder's saved replies, "
-                        "resuming after any bots already saved.")
+                        help="Continue this run folder instead of sampling a new one.")
+    parser.add_argument("--only", choices=STEPS, help="Run just this step.")
+    parser.add_argument("--from-step", choices=STEPS,
+                        help="Run this step and every step after it.")
     parser.add_argument("--reprofile", action="store_true",
                         help="With --from-run: redo every bot, ignoring saved results.")
     parser.add_argument("--no-library", action="store_true",
@@ -50,16 +52,19 @@ def build_parser() -> argparse.ArgumentParser:
                         "cell in Lean, even for a bot identical to a library bot.")
     return parser
 
-
 def main(argv: list[str] | None = None) -> int:
+    """Run the stated-strategy pipeline."""
     parser = build_parser()
     args = parser.parse_args(argv)
     if not args.model and not args.from_run:
         parser.error("--model is required unless --from-run is given")
-    if args.sample_only and args.from_run:
-        parser.error("--sample-only and --from-run do not combine")
+    if args.only and args.from_step:
+        parser.error("--only and --from-step do not combine")
     if args.reprofile and not args.from_run:
         parser.error("--reprofile requires --from-run")
+    steps = (args.only,) if args.only else STEPS[STEPS.index(args.from_step or STEPS[0]):]
+    if args.from_run is None and steps[0] != "sample":
+        parser.error("without --from-run the first step must be sample")
     config = StatedConfig(
         model=args.model or "",
         n=args.n,
@@ -68,21 +73,16 @@ def main(argv: list[str] | None = None) -> int:
         output_root=args.output_root,
         spec_path=args.spec,
         app_dir=args.app_dir,
-        sample_only=args.sample_only,
+        steps=steps,
         from_run=args.from_run,
         reprofile=args.reprofile,
         use_library=not args.no_library,
     )
-    if not args.from_run:
-        print(f"Sampling {config.n} bots from model {config.model} ...")
     run_dir = run_stated(config)
     print(f"\nRun saved to {run_dir}")
-    if args.sample_only:
-        print(f'Profile it later with: --from-run "{run_dir}"')
-        return 0
-    print((run_dir / "report.txt").read_text(encoding="utf-8"))
+    if "outcomes" in steps:
+        print((run_dir / "report.txt").read_text(encoding="utf-8"))
     return 0
-
 
 if __name__ == "__main__":
     sys.exit(main())

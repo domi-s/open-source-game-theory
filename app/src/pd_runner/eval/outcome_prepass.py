@@ -109,7 +109,7 @@ REGISTRY: dict[str, BotSpec] = {
     "GuardianBot": BotSpec(f"{_LLM_NS}.GuardianBot", "GuardianBot {k}", "plays"),
 }
 
-_DECIDER_MODULE = "PrisonersDilemma.Decidability.T31EngineDecider"
+_DECIDER_MODULE = "PrisonersDilemma.Decidability.T31Sound" # T31Sound = Soundness bit of T31EngineDecider
 _DEFAULT_BOTS = "OptimBot,WaryBot,LegibleBot,GuardianBot"
 
 # `def BotName (k : Nat) (j : Nat) : Prog` / `def BotName (k j : Nat) : Prog`
