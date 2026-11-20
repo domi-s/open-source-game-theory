@@ -1,0 +1,114 @@
+{
+  "bots": [
+    "CooperateBot",
+    "CupodBot",
+    "DBot",
+    "DefectBot",
+    "DupocBot",
+    "OBot",
+    "TitForTatBot",
+    "EBot",
+    "CupodTrollBot"
+  ],
+  "x": [
+    0.75,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.75,
+    0.0,
+    0.0
+  ],
+  "by_bot": {
+    "CooperateBot": 0.75,
+    "CupodBot": 0.0,
+    "DBot": 0.0,
+    "DefectBot": 0.0,
+    "DupocBot": 1.0,
+    "OBot": 0.0,
+    "TitForTatBot": 0.75,
+    "EBot": 0.0,
+    "CupodTrollBot": 0.0
+  },
+  "cooperations": [
+    15,
+    0,
+    0,
+    0,
+    3,
+    0,
+    3,
+    0,
+    0
+  ],
+  "stable_verdicts": [
+    20,
+    3,
+    8,
+    20,
+    3,
+    4,
+    4,
+    4,
+    4
+  ],
+  "by_source": {
+    "CooperateBot": {
+      "theorem": 3,
+      "eval": 17,
+      "k_dependent": 0,
+      "open": 0
+    },
+    "CupodBot": {
+      "theorem": 3,
+      "eval": 0,
+      "k_dependent": 0,
+      "open": 17
+    },
+    "DBot": {
+      "theorem": 3,
+      "eval": 5,
+      "k_dependent": 0,
+      "open": 12
+    },
+    "DefectBot": {
+      "theorem": 3,
+      "eval": 17,
+      "k_dependent": 0,
+      "open": 0
+    },
+    "DupocBot": {
+      "theorem": 3,
+      "eval": 0,
+      "k_dependent": 0,
+      "open": 17
+    },
+    "OBot": {
+      "theorem": 3,
+      "eval": 1,
+      "k_dependent": 0,
+      "open": 16
+    },
+    "TitForTatBot": {
+      "theorem": 3,
+      "eval": 1,
+      "k_dependent": 0,
+      "open": 16
+    },
+    "EBot": {
+      "theorem": 3,
+      "eval": 1,
+      "k_dependent": 0,
+      "open": 16
+    },
+    "CupodTrollBot": {
+      "theorem": 3,
+      "eval": 1,
+      "k_dependent": 0,
+      "open": 16
+    }
+  },
+  "left_out": []
+}

@@ -1,0 +1,442 @@
+[
+  {
+    "opponent": "CupodBot",
+    "bot": "StatedBot0",
+    "indices": [
+      0
+    ],
+    "count": 1,
+    "reason": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2",
+    "by_budget": {
+      "2": null,
+      "4": null,
+      "6": null,
+      "16": null
+    },
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot0 (k : Nat) : Prog := .search k (.impl (.plays .self .opp Action.D) (.plays .opp .self Action.C)) (.const Action.D) (.search k (.impl (.plays .self .opp Action.C) (.plays .opp .self Action.C)) (.const Action.C) (.const Action.D))\nend PD.Bots\n"
+  },
+  {
+    "opponent": "DupocBot",
+    "bot": "StatedBot0",
+    "indices": [
+      0
+    ],
+    "count": 1,
+    "reason": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2",
+    "by_budget": {
+      "2": null,
+      "4": null,
+      "6": null,
+      "16": null
+    },
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot0 (k : Nat) : Prog := .search k (.impl (.plays .self .opp Action.D) (.plays .opp .self Action.C)) (.const Action.D) (.search k (.impl (.plays .self .opp Action.C) (.plays .opp .self Action.C)) (.const Action.C) (.const Action.D))\nend PD.Bots\n"
+  },
+  {
+    "opponent": "CupodBot",
+    "bot": "StatedBot2",
+    "indices": [
+      2,
+      3,
+      6,
+      7,
+      10,
+      11,
+      12,
+      15,
+      16,
+      17,
+      18
+    ],
+    "count": 11,
+    "reason": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2",
+    "by_budget": {
+      "2": null,
+      "4": null,
+      "6": null,
+      "16": null
+    },
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot2 (k : Nat) : Prog := .search k (.eq .opp (.const Action.C)) (.const Action.D) (.search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D))\nend PD.Bots\n"
+  },
+  {
+    "opponent": "DBot",
+    "bot": "StatedBot2",
+    "indices": [
+      2,
+      3,
+      6,
+      7,
+      10,
+      11,
+      12,
+      15,
+      16,
+      17,
+      18
+    ],
+    "count": 11,
+    "reason": "L\u00f6b boundary or budget floor at k=16; L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap",
+    "by_budget": {
+      "2": null,
+      "4": null,
+      "6": null,
+      "16": null
+    },
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot2 (k : Nat) : Prog := .search k (.eq .opp (.const Action.C)) (.const Action.D) (.search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D))\nend PD.Bots\n"
+  },
+  {
+    "opponent": "DupocBot",
+    "bot": "StatedBot2",
+    "indices": [
+      2,
+      3,
+      6,
+      7,
+      10,
+      11,
+      12,
+      15,
+      16,
+      17,
+      18
+    ],
+    "count": 11,
+    "reason": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2",
+    "by_budget": {
+      "2": null,
+      "4": null,
+      "6": null,
+      "16": null
+    },
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot2 (k : Nat) : Prog := .search k (.eq .opp (.const Action.C)) (.const Action.D) (.search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D))\nend PD.Bots\n"
+  },
+  {
+    "opponent": "OBot",
+    "bot": "StatedBot2",
+    "indices": [
+      2,
+      3,
+      6,
+      7,
+      10,
+      11,
+      12,
+      15,
+      16,
+      17,
+      18
+    ],
+    "count": 11,
+    "reason": "L\u00f6b boundary or budget floor at k=16; L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap",
+    "by_budget": {
+      "2": null,
+      "4": null,
+      "6": null,
+      "16": null
+    },
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot2 (k : Nat) : Prog := .search k (.eq .opp (.const Action.C)) (.const Action.D) (.search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D))\nend PD.Bots\n"
+  },
+  {
+    "opponent": "TitForTatBot",
+    "bot": "StatedBot2",
+    "indices": [
+      2,
+      3,
+      6,
+      7,
+      10,
+      11,
+      12,
+      15,
+      16,
+      17,
+      18
+    ],
+    "count": 11,
+    "reason": "L\u00f6b boundary or budget floor at k=16; L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap",
+    "by_budget": {
+      "2": null,
+      "4": null,
+      "6": null,
+      "16": null
+    },
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot2 (k : Nat) : Prog := .search k (.eq .opp (.const Action.C)) (.const Action.D) (.search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D))\nend PD.Bots\n"
+  },
+  {
+    "opponent": "EBot",
+    "bot": "StatedBot2",
+    "indices": [
+      2,
+      3,
+      6,
+      7,
+      10,
+      11,
+      12,
+      15,
+      16,
+      17,
+      18
+    ],
+    "count": 11,
+    "reason": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap",
+    "by_budget": {
+      "2": null,
+      "4": null,
+      "6": null,
+      "16": null
+    },
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot2 (k : Nat) : Prog := .search k (.eq .opp (.const Action.C)) (.const Action.D) (.search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D))\nend PD.Bots\n"
+  },
+  {
+    "opponent": "CupodTrollBot",
+    "bot": "StatedBot2",
+    "indices": [
+      2,
+      3,
+      6,
+      7,
+      10,
+      11,
+      12,
+      15,
+      16,
+      17,
+      18
+    ],
+    "count": 11,
+    "reason": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2",
+    "by_budget": {
+      "2": null,
+      "4": null,
+      "6": null,
+      "16": null
+    },
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot2 (k : Nat) : Prog := .search k (.eq .opp (.const Action.C)) (.const Action.D) (.search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D))\nend PD.Bots\n"
+  },
+  {
+    "opponent": "CupodBot",
+    "bot": "StatedBot3",
+    "indices": [
+      5
+    ],
+    "count": 1,
+    "reason": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2",
+    "by_budget": {
+      "2": null,
+      "4": null,
+      "6": null,
+      "16": null
+    },
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot3 (k : Nat) : Prog := .search k (.plays .opp .self Action.C) (.search k (.eq .opp (.const Action.C)) (.const Action.D) (.const Action.C)) (.const Action.D)\nend PD.Bots\n"
+  },
+  {
+    "opponent": "DBot",
+    "bot": "StatedBot3",
+    "indices": [
+      5
+    ],
+    "count": 1,
+    "reason": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap",
+    "by_budget": {
+      "2": null,
+      "4": null,
+      "6": null,
+      "16": null
+    },
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot3 (k : Nat) : Prog := .search k (.plays .opp .self Action.C) (.search k (.eq .opp (.const Action.C)) (.const Action.D) (.const Action.C)) (.const Action.D)\nend PD.Bots\n"
+  },
+  {
+    "opponent": "DupocBot",
+    "bot": "StatedBot3",
+    "indices": [
+      5
+    ],
+    "count": 1,
+    "reason": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2",
+    "by_budget": {
+      "2": null,
+      "4": null,
+      "6": null,
+      "16": null
+    },
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot3 (k : Nat) : Prog := .search k (.plays .opp .self Action.C) (.search k (.eq .opp (.const Action.C)) (.const Action.D) (.const Action.C)) (.const Action.D)\nend PD.Bots\n"
+  },
+  {
+    "opponent": "OBot",
+    "bot": "StatedBot3",
+    "indices": [
+      5
+    ],
+    "count": 1,
+    "reason": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap",
+    "by_budget": {
+      "2": null,
+      "4": null,
+      "6": null,
+      "16": null
+    },
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot3 (k : Nat) : Prog := .search k (.plays .opp .self Action.C) (.search k (.eq .opp (.const Action.C)) (.const Action.D) (.const Action.C)) (.const Action.D)\nend PD.Bots\n"
+  },
+  {
+    "opponent": "TitForTatBot",
+    "bot": "StatedBot3",
+    "indices": [
+      5
+    ],
+    "count": 1,
+    "reason": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap",
+    "by_budget": {
+      "2": null,
+      "4": null,
+      "6": null,
+      "16": null
+    },
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot3 (k : Nat) : Prog := .search k (.plays .opp .self Action.C) (.search k (.eq .opp (.const Action.C)) (.const Action.D) (.const Action.C)) (.const Action.D)\nend PD.Bots\n"
+  },
+  {
+    "opponent": "EBot",
+    "bot": "StatedBot3",
+    "indices": [
+      5
+    ],
+    "count": 1,
+    "reason": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap",
+    "by_budget": {
+      "2": null,
+      "4": null,
+      "6": null,
+      "16": null
+    },
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot3 (k : Nat) : Prog := .search k (.plays .opp .self Action.C) (.search k (.eq .opp (.const Action.C)) (.const Action.D) (.const Action.C)) (.const Action.D)\nend PD.Bots\n"
+  },
+  {
+    "opponent": "CupodTrollBot",
+    "bot": "StatedBot3",
+    "indices": [
+      5
+    ],
+    "count": 1,
+    "reason": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2",
+    "by_budget": {
+      "2": null,
+      "4": null,
+      "6": null,
+      "16": null
+    },
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot3 (k : Nat) : Prog := .search k (.plays .opp .self Action.C) (.search k (.eq .opp (.const Action.C)) (.const Action.D) (.const Action.C)) (.const Action.D)\nend PD.Bots\n"
+  },
+  {
+    "opponent": "CupodBot",
+    "bot": "StatedBot4",
+    "indices": [
+      8,
+      9,
+      14,
+      19
+    ],
+    "count": 4,
+    "reason": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2",
+    "by_budget": {
+      "2": null,
+      "4": null,
+      "6": null,
+      "16": null
+    },
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot4 (k : Nat) : Prog := .search k (.plays .opp (.bot (.const Action.D)) Action.C) (.const Action.D) (.search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D))\nend PD.Bots\n"
+  },
+  {
+    "opponent": "DupocBot",
+    "bot": "StatedBot4",
+    "indices": [
+      8,
+      9,
+      14,
+      19
+    ],
+    "count": 4,
+    "reason": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2",
+    "by_budget": {
+      "2": null,
+      "4": null,
+      "6": null,
+      "16": null
+    },
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot4 (k : Nat) : Prog := .search k (.plays .opp (.bot (.const Action.D)) Action.C) (.const Action.D) (.search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D))\nend PD.Bots\n"
+  },
+  {
+    "opponent": "OBot",
+    "bot": "StatedBot4",
+    "indices": [
+      8,
+      9,
+      14,
+      19
+    ],
+    "count": 4,
+    "reason": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap",
+    "by_budget": {
+      "2": null,
+      "4": null,
+      "6": null,
+      "16": null
+    },
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot4 (k : Nat) : Prog := .search k (.plays .opp (.bot (.const Action.D)) Action.C) (.const Action.D) (.search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D))\nend PD.Bots\n"
+  },
+  {
+    "opponent": "TitForTatBot",
+    "bot": "StatedBot4",
+    "indices": [
+      8,
+      9,
+      14,
+      19
+    ],
+    "count": 4,
+    "reason": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap",
+    "by_budget": {
+      "2": null,
+      "4": null,
+      "6": null,
+      "16": null
+    },
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot4 (k : Nat) : Prog := .search k (.plays .opp (.bot (.const Action.D)) Action.C) (.const Action.D) (.search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D))\nend PD.Bots\n"
+  },
+  {
+    "opponent": "EBot",
+    "bot": "StatedBot4",
+    "indices": [
+      8,
+      9,
+      14,
+      19
+    ],
+    "count": 4,
+    "reason": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; L\u00f6b boundary or budget floor at k=6; exceeded 3072MB cap",
+    "by_budget": {
+      "2": null,
+      "4": null,
+      "6": null,
+      "16": null
+    },
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot4 (k : Nat) : Prog := .search k (.plays .opp (.bot (.const Action.D)) Action.C) (.const Action.D) (.search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D))\nend PD.Bots\n"
+  },
+  {
+    "opponent": "CupodTrollBot",
+    "bot": "StatedBot4",
+    "indices": [
+      8,
+      9,
+      14,
+      19
+    ],
+    "count": 4,
+    "reason": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2",
+    "by_budget": {
+      "2": null,
+      "4": null,
+      "6": null,
+      "16": null
+    },
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot4 (k : Nat) : Prog := .search k (.plays .opp (.bot (.const Action.D)) Action.C) (.const Action.D) (.search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D))\nend PD.Bots\n"
+  }
+]

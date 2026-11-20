@@ -1,0 +1,67 @@
+[
+  {
+    "index": 0,
+    "name": "StatedBot0",
+    "indices": [
+      0
+    ],
+    "count": 1,
+    "budget_params": 2,
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot0 (k : Nat) : Prog := .search k (.impl (.plays .self .opp Action.D) (.plays .opp .self Action.C)) (.const Action.D) (.search k (.impl (.plays .self .opp Action.C) (.plays .opp .self Action.C)) (.const Action.C) (.const Action.D))\nend PD.Bots\n"
+  },
+  {
+    "index": 1,
+    "name": "StatedBot1",
+    "indices": [
+      1,
+      4,
+      13
+    ],
+    "count": 3,
+    "budget_params": 1,
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot1 (k : Nat) : Prog := .search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D)\nend PD.Bots\n"
+  },
+  {
+    "index": 2,
+    "name": "StatedBot2",
+    "indices": [
+      2,
+      3,
+      6,
+      7,
+      10,
+      11,
+      12,
+      15,
+      16,
+      17,
+      18
+    ],
+    "count": 11,
+    "budget_params": 2,
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot2 (k : Nat) : Prog := .search k (.eq .opp (.const Action.C)) (.const Action.D) (.search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D))\nend PD.Bots\n"
+  },
+  {
+    "index": 3,
+    "name": "StatedBot3",
+    "indices": [
+      5
+    ],
+    "count": 1,
+    "budget_params": 2,
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot3 (k : Nat) : Prog := .search k (.plays .opp .self Action.C) (.search k (.eq .opp (.const Action.C)) (.const Action.D) (.const Action.C)) (.const Action.D)\nend PD.Bots\n"
+  },
+  {
+    "index": 4,
+    "name": "StatedBot4",
+    "indices": [
+      8,
+      9,
+      14,
+      19
+    ],
+    "count": 4,
+    "budget_params": 2,
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot4 (k : Nat) : Prog := .search k (.plays .opp (.bot (.const Action.D)) Action.C) (.const Action.D) (.search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D))\nend PD.Bots\n"
+  }
+]
