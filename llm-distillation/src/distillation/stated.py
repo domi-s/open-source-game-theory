@@ -97,8 +97,10 @@ def run_stated(config: StatedConfig) -> Path:
         extract_programs(run_dir)
     if "canonicalise" in config.steps:
         canonicalise_programs(run_dir)
-    classes = (json.loads((run_dir / "classes.json").read_text(encoding="utf-8"))
-               if {"distances", "outcomes"} & set(config.steps) else [])
+    classes_file = run_dir / "classes.json"
+    needs_classes = {"distances", "outcomes"} & set(config.steps)
+    classes = (json.loads(classes_file.read_text(encoding="utf-8")) if classes_file.exists()
+               else canonicalise_programs(run_dir)) if needs_classes else []
     if "distances" in config.steps and (explicit or not (run_dir / "distances.json").exists()):
         compute_distances(run_dir, classes, config.bots_dir, config.app_dir)
     if "outcomes" in config.steps:

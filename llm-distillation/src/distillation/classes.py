@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 
 from .canonical import DEFAULT_NAME, budget_params, canonicalise
+from .sample import extract_programs
 
 def group_samples(programs: list[dict]) -> list[dict]:
     """One class per canonical program (see ``canonical.py``), in first-seen order.
@@ -27,8 +28,9 @@ def group_samples(programs: list[dict]) -> list[dict]:
     return list(classes.values())
 
 def canonicalise_programs(run_dir: Path) -> list[dict]:
-    """Write ``classes.json`` from ``programs.json``."""
-    programs = json.loads((run_dir / "programs.json").read_text(encoding="utf-8"))
+    """Write ``classes.json`` from ``programs.json`` (extracted first if the run predates it)."""
+    path = run_dir / "programs.json"
+    programs = json.loads(path.read_text(encoding="utf-8")) if path.exists() else extract_programs(run_dir)
     classes = group_samples(programs)
     (run_dir / "classes.json").write_text(json.dumps(classes, indent=2), encoding="utf-8")
     return classes
