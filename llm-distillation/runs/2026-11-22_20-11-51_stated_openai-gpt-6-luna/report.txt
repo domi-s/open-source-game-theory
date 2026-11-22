@@ -1,0 +1,152 @@
+Distinct programs: 4 for 20 samples
+Valid bots: 20/20
+Cells (valid bot x opponent, weighted by samples): 180
+  proved by a library theorem: 153
+  proved by certified Lean eval: 16
+  certified but budget-dependent (no single answer): 0
+  OPEN (no theorem, no certified eval): 11
+  -> 169 of 180 cells carry a proved answer
+Budget rule: every free budget parameter is the same k; 0 of 20 valid samples had 2+ (any staggering through them is collapsed)
+Per opponent: cooperations / bots with a proved verdict, then where each valid bot's cell came from
+  CooperateBot: 4/20   [theorem 17, eval 3, k-dependent 0, open 0]
+  CupodBot: 0/17   [theorem 17, eval 0, k-dependent 0, open 3]
+  DBot: 2/19   [theorem 17, eval 2, k-dependent 0, open 1]
+  DefectBot: 0/20   [theorem 17, eval 3, k-dependent 0, open 0]
+  DupocBot: 2/17   [theorem 17, eval 0, k-dependent 0, open 3]
+  OBot: 0/19   [theorem 17, eval 2, k-dependent 0, open 1]
+  TitForTatBot: 4/19   [theorem 17, eval 2, k-dependent 0, open 1]
+  EBot: 2/19   [theorem 17, eval 2, k-dependent 0, open 1]
+  CupodTrollBot: 2/19   [theorem 17, eval 2, k-dependent 0, open 1]
+Nearest library bot per distinct program (tree edit distance, 0 = identical):
+  StatedBot0 (x1): PrudentBot/PrudentBot2, distance 2
+  StatedBot1 (x15): DefectBot, distance 0
+  StatedBot2 (x2): TitForTatBot, distance 2
+  StatedBot3 (x2): DupocBot, distance 0
+
+Input profile summary (metric-independent):
+  level     = mean(x)        = 0.0938  (overall cooperativeness)
+  sharpness = mean(|x-0.5|)  = 0.4062  (how decisive / near 0-1 the profile is)
+
+=== L2 fit ===
+
+Fitted profile (R^T w*) vs input x, per opponent:
+  opponent        x_i    fitted   diff
+  CooperateBot   0.200   0.220  +0.020
+  CupodBot       0.000   0.000  +0.000
+  DBot           0.105   0.070  -0.035
+  DefectBot      0.000   0.020  +0.020
+  DupocBot       0.118   0.154  +0.037
+  OBot           0.000   0.070  +0.070
+  TitForTatBot   0.211   0.154  -0.056
+  EBot           0.105   0.070  -0.035
+  CupodTrollBot  0.105   0.085  -0.020
+
+Optimal weights w* (bots with non-negligible mass):
+  CupodBot       0.0504
+  DefectBot      0.7802
+  DupocBot       0.0840
+  OBot           0.0656
+  CupodTrollBot  0.0198
+
+Residual ||R^T w* - x||  (L2) = 0.114343
+  > 0: NO convex combination of library bots can reproduce x; it sits off the library manifold (outside conv{r_i}).
+
+Identifiability: active reference rows are affinely independent -> weights are uniquely identified.
+
+=== L1 fit ===
+
+Fitted profile (R^T w*) vs input x, per opponent:
+  opponent        x_i    fitted   diff
+  CooperateBot   0.200   0.200  +0.000
+  CupodBot       0.000   0.000  +0.000
+  DBot           0.105   0.105  +0.000
+  DefectBot      0.000   0.023  +0.023
+  DupocBot       0.118   0.118  +0.000
+  OBot           0.000   0.105  +0.105
+  TitForTatBot   0.211   0.118  -0.093
+  EBot           0.105   0.105  +0.000
+  CupodTrollBot  0.105   0.105  +0.000
+
+Optimal weights w* (bots with non-negligible mass):
+  CupodBot       0.0824
+  DefectBot      0.8000
+  DupocBot       0.0124
+  OBot           0.0824
+  CupodTrollBot  0.0229
+
+Residual ||R^T w* - x||  (L1) = 0.221053
+  > 0: NO convex combination of library bots can reproduce x; it sits off the library manifold (outside conv{r_i}).
+
+Identifiability: active reference rows are affinely independent -> weights are uniquely identified.
+
+=== Linf fit ===
+
+Fitted profile (R^T w*) vs input x, per opponent:
+  opponent        x_i    fitted   diff
+  CooperateBot   0.200   0.253  +0.053
+  CupodBot       0.000   0.053  +0.053
+  DBot           0.105   0.053  -0.053
+  DefectBot      0.000   0.053  +0.053
+  DupocBot       0.118   0.170  +0.053
+  OBot           0.000   0.053  +0.053
+  TitForTatBot   0.211   0.170  -0.040
+  EBot           0.105   0.053  -0.053
+  CupodTrollBot  0.105   0.135  +0.030
+
+Optimal weights w* (bots with non-negligible mass):
+  CooperateBot   0.0526
+  DefectBot      0.7474
+  DupocBot       0.1176
+  OBot           0.0824
+
+Residual ||R^T w* - x||  (Linf) = 0.052632
+  > 0: NO convex combination of library bots can reproduce x; it sits off the library manifold (outside conv{r_i}).
+
+Identifiability: active reference rows are affinely independent -> weights are uniquely identified.
+
+=== ExpectedHamming fit ===
+
+Fitted profile (R^T w*) vs input x, per opponent:
+  opponent        x_i    fitted   diff
+  CooperateBot   0.200   0.000  -0.200
+  CupodBot       0.000   0.000  +0.000
+  DBot           0.105   0.000  -0.105
+  DefectBot      0.000   0.000  +0.000
+  DupocBot       0.118   0.000  -0.118
+  OBot           0.000   0.000  +0.000
+  TitForTatBot   0.211   0.000  -0.211
+  EBot           0.105   0.000  -0.105
+  CupodTrollBot  0.105   0.000  -0.105
+
+Optimal weights w* (bots with non-negligible mass):
+  DefectBot      1.0000
+
+Residual ||R^T w* - x||  (ExpectedHamming) = 0.843963
+  > 0: NO convex combination of library bots can reproduce x; it sits off the library manifold (outside conv{r_i}).
+
+Identifiability: active reference rows are affinely independent -> weights are uniquely identified.
+
+=== BinomialMLE fit ===
+
+Fitted profile (R^T w*) vs input x, per opponent:
+  opponent        x_i    fitted   diff
+  CooperateBot   0.200   0.239  +0.039
+  CupodBot       0.000   0.000  +0.000
+  DBot           0.105   0.070  -0.035
+  DefectBot      0.000   0.000  +0.000
+  DupocBot       0.118   0.151  +0.034
+  OBot           0.000   0.070  +0.070
+  TitForTatBot   0.211   0.151  -0.059
+  EBot           0.105   0.070  -0.035
+  CupodTrollBot  0.105   0.087  -0.018
+
+Optimal weights w* (bots with non-negligible mass):
+  CupodBot       0.0702
+  DefectBot      0.7612
+  DupocBot       0.0813
+  OBot           0.0874
+
+Residual ||R^T w* - x||  (BinomialMLE) = 4.269076
+  > 0: NO convex combination of library bots can reproduce x; it sits off the library manifold (outside conv{r_i}).
+
+Identifiability: active reference rows are affinely independent -> weights are uniquely identified.

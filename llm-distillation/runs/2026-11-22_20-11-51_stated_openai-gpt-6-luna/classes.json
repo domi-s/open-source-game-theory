@@ -1,0 +1,58 @@
+[
+  {
+    "index": 0,
+    "name": "StatedBot0",
+    "indices": [
+      0
+    ],
+    "count": 1,
+    "budget_params": 1,
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot0 (k : Nat) : Prog := .search k (.plays .opp .self Action.C) (.search k (.plays .opp (.const Action.D) Action.D) (.const Action.C) (.const Action.D)) (.const Action.D)\nend PD.Bots\n"
+  },
+  {
+    "index": 1,
+    "name": "StatedBot1",
+    "indices": [
+      1,
+      2,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      11,
+      12,
+      14,
+      15,
+      17,
+      18,
+      19
+    ],
+    "count": 15,
+    "budget_params": 0,
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot1 : Prog := .const Action.D\nend PD.Bots\n"
+  },
+  {
+    "index": 2,
+    "name": "StatedBot2",
+    "indices": [
+      3,
+      16
+    ],
+    "count": 2,
+    "budget_params": 0,
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot2 : Prog := .ite (.sim .opp .self) Action.C (.const Action.C) (.const Action.D)\nend PD.Bots\n"
+  },
+  {
+    "index": 3,
+    "name": "StatedBot3",
+    "indices": [
+      10,
+      13
+    ],
+    "count": 2,
+    "budget_params": 1,
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot3 (k : Nat) : Prog := .search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D)\nend PD.Bots\n"
+  }
+]

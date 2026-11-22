@@ -1,0 +1,114 @@
+{
+  "bots": [
+    "CooperateBot",
+    "CupodBot",
+    "DBot",
+    "DefectBot",
+    "DupocBot",
+    "OBot",
+    "TitForTatBot",
+    "EBot",
+    "CupodTrollBot"
+  ],
+  "x": [
+    0.2,
+    0.0,
+    0.10526315789473684,
+    0.0,
+    0.11764705882352941,
+    0.0,
+    0.21052631578947367,
+    0.10526315789473684,
+    0.10526315789473684
+  ],
+  "by_bot": {
+    "CooperateBot": 0.2,
+    "CupodBot": 0.0,
+    "DBot": 0.10526315789473684,
+    "DefectBot": 0.0,
+    "DupocBot": 0.11764705882352941,
+    "OBot": 0.0,
+    "TitForTatBot": 0.21052631578947367,
+    "EBot": 0.10526315789473684,
+    "CupodTrollBot": 0.10526315789473684
+  },
+  "cooperations": [
+    4,
+    0,
+    2,
+    0,
+    2,
+    0,
+    4,
+    2,
+    2
+  ],
+  "stable_verdicts": [
+    20,
+    17,
+    19,
+    20,
+    17,
+    19,
+    19,
+    19,
+    19
+  ],
+  "by_source": {
+    "CooperateBot": {
+      "theorem": 17,
+      "eval": 3,
+      "k_dependent": 0,
+      "open": 0
+    },
+    "CupodBot": {
+      "theorem": 17,
+      "eval": 0,
+      "k_dependent": 0,
+      "open": 3
+    },
+    "DBot": {
+      "theorem": 17,
+      "eval": 2,
+      "k_dependent": 0,
+      "open": 1
+    },
+    "DefectBot": {
+      "theorem": 17,
+      "eval": 3,
+      "k_dependent": 0,
+      "open": 0
+    },
+    "DupocBot": {
+      "theorem": 17,
+      "eval": 0,
+      "k_dependent": 0,
+      "open": 3
+    },
+    "OBot": {
+      "theorem": 17,
+      "eval": 2,
+      "k_dependent": 0,
+      "open": 1
+    },
+    "TitForTatBot": {
+      "theorem": 17,
+      "eval": 2,
+      "k_dependent": 0,
+      "open": 1
+    },
+    "EBot": {
+      "theorem": 17,
+      "eval": 2,
+      "k_dependent": 0,
+      "open": 1
+    },
+    "CupodTrollBot": {
+      "theorem": 17,
+      "eval": 2,
+      "k_dependent": 0,
+      "open": 1
+    }
+  },
+  "left_out": []
+}

@@ -1,0 +1,110 @@
+{
+  "library": {
+    "StatedBot0": {
+      "CooperateBot": 17,
+      "CupodBot": 10,
+      "CupodTrollBot": 13,
+      "DBot": 14,
+      "DefectBot": 17,
+      "DupocBot": 9,
+      "EBot": 22,
+      "CIMCIC": 10,
+      "DIMCID": 10,
+      "GuardianBot": 11,
+      "JustBot": 12,
+      "JustBot2": 12,
+      "LegibleBot": 12,
+      "PrudentBot": 2,
+      "PrudentBot2": 2,
+      "WaryBot": 10,
+      "MirrorBot": 17,
+      "OBot": 13,
+      "TitForTatBot": 14
+    },
+    "StatedBot1": {
+      "CooperateBot": 1,
+      "CupodBot": 8,
+      "CupodTrollBot": 8,
+      "DBot": 8,
+      "DefectBot": 0,
+      "DupocBot": 8,
+      "EBot": 24,
+      "CIMCIC": 13,
+      "DIMCID": 13,
+      "GuardianBot": 9,
+      "JustBot": 10,
+      "JustBot2": 10,
+      "LegibleBot": 10,
+      "PrudentBot": 17,
+      "PrudentBot2": 17,
+      "WaryBot": 9,
+      "MirrorBot": 3,
+      "OBot": 16,
+      "TitForTatBot": 8
+    },
+    "StatedBot2": {
+      "CooperateBot": 7,
+      "CupodBot": 7,
+      "CupodTrollBot": 8,
+      "DBot": 4,
+      "DefectBot": 7,
+      "DupocBot": 4,
+      "EBot": 18,
+      "CIMCIC": 9,
+      "DIMCID": 12,
+      "GuardianBot": 9,
+      "JustBot": 7,
+      "JustBot2": 7,
+      "LegibleBot": 7,
+      "PrudentBot": 13,
+      "PrudentBot2": 13,
+      "WaryBot": 7,
+      "MirrorBot": 6,
+      "OBot": 10,
+      "TitForTatBot": 2
+    },
+    "StatedBot3": {
+      "CooperateBot": 8,
+      "CupodBot": 3,
+      "CupodTrollBot": 6,
+      "DBot": 8,
+      "DefectBot": 8,
+      "DupocBot": 0,
+      "EBot": 21,
+      "CIMCIC": 5,
+      "DIMCID": 8,
+      "GuardianBot": 5,
+      "JustBot": 3,
+      "JustBot2": 3,
+      "LegibleBot": 4,
+      "PrudentBot": 9,
+      "PrudentBot2": 9,
+      "WaryBot": 3,
+      "MirrorBot": 8,
+      "OBot": 13,
+      "TitForTatBot": 6
+    }
+  },
+  "classes": {
+    "StatedBot0": {
+      "StatedBot1": 17,
+      "StatedBot2": 13,
+      "StatedBot3": 9
+    },
+    "StatedBot1": {
+      "StatedBot0": 17,
+      "StatedBot2": 7,
+      "StatedBot3": 8
+    },
+    "StatedBot2": {
+      "StatedBot0": 13,
+      "StatedBot1": 7,
+      "StatedBot3": 4
+    },
+    "StatedBot3": {
+      "StatedBot0": 9,
+      "StatedBot1": 8,
+      "StatedBot2": 4
+    }
+  }
+}
