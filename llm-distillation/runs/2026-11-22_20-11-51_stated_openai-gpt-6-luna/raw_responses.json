@@ -1,0 +1,82 @@
+[
+  {
+    "index": 0,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate when the opponent is provably cooperative against me and provably not an unconditional cooperator. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k\n    (.plays .opp .self .C)\n    (.search k\n      (.plays .opp (.const .D) .D)\n      (.const .C)\n      (.const .D))\n    (.const .D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 1,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: Defect, the payoff-maximizing action regardless of the opponent's move. -/\ndef MyBot : Prog :=\n  .const .D\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 2,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: Defect, the dominant action in a one-shot Prisoner's Dilemma. -/\ndef MyBot : Prog :=\n  .const .D\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 3,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate if simulating the opponent against me predicts cooperation; otherwise defect. -/\ndef MyBot : Prog :=\n  .ite (.sim .opp .self) .C (.const .C) (.const .D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 4,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: Defect, the dominant action in a one-shot Prisoner's Dilemma. -/\ndef MyBot : Prog :=\n  .const Action.D\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 5,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: Defect, since defecting gives a higher payoff regardless of the opponent's action. -/\ndef MyBot : Prog :=\n  .const Action.D\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 6,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: Defect, the strictly dominant action in a one-shot Prisoner's Dilemma. -/\ndef MyBot : Prog :=\n  .const .D\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 7,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: Defect, the dominant action in a one-shot Prisoner's Dilemma. -/\ndef MyBot : Prog :=\n  .const .D\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 8,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: Defects, the strictly dominant action in a one-shot Prisoner's Dilemma. -/\ndef MyBot : Prog := .const Action.D\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 9,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: Defect, the dominant action in a one-shot Prisoner's Dilemma. -/\ndef MyBot : Prog :=\n  .const .D\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 10,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: Cooperate only when a bounded sound proof establishes that the opponent cooperates against this bot; otherwise defect. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 11,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: Defect, the payoff-maximizing action against either possible opponent action. -/\ndef MyBot : Prog :=\n  .const Action.D\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 12,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: Defect, since doing so is the dominant action in a one-shot Prisoner's Dilemma. -/\ndef MyBot : Prog :=\n  .const .D\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 13,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate when the proof oracle can certify that the opponent cooperates against me; otherwise defect. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self .C) (.const .C) (.const .D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 14,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: Defects to maximize its guaranteed payoff in a one-shot dilemma. -/\ndef MyBot : Prog := .const Action.D\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 15,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: Defect, the strictly dominant action in a one-shot Prisoner's Dilemma. -/\ndef MyBot : Prog :=\n  .const .D\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 16,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate exactly when simulating the opponent against me predicts cooperation. -/\ndef MyBot : Prog :=\n  .ite (.sim .opp .self) .C (.const .C) (.const .D)\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 17,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: Defect, the dominant action in a one-shot Prisoner's Dilemma. -/\ndef MyBot : Prog :=\n  .const Action.D\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 18,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: Defect, the dominant action in a one-shot Prisoner's Dilemma. -/\ndef MyBot : Prog :=\n  .const .D\n\nend PD.Bots\n```"
+  },
+  {
+    "index": 19,
+    "raw": "```lean\nimport PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: Defect, the strictly dominant action in a one-shot Prisoner's Dilemma. -/\ndef MyBot : Prog :=\n  .const .D\n\nend PD.Bots\n```"
+  }
+]
