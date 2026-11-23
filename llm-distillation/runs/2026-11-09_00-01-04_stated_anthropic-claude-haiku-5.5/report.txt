@@ -1,0 +1,151 @@
+Distinct programs: 8 for 30 samples
+Valid bots: 29/30
+Cells (valid bot x opponent, weighted by samples): 261
+  proved by a library theorem: 189
+  proved by certified Lean eval: 33
+  certified but budget-dependent (no single answer): 0
+  OPEN (no theorem, no certified eval): 39
+  -> 222 of 261 cells carry a proved answer
+Budget rule: every free budget parameter is the same k; 2 of 29 valid samples had 2+ (any staggering through them is collapsed)
+Per opponent: cooperations / bots with a proved verdict, then where each valid bot's cell came from
+  CooperateBot: 3/29   [theorem 21, eval 8, k-dependent 0, open 0]
+  CupodBot: 19/21   [theorem 21, eval 0, k-dependent 0, open 8]
+  DBot: 0/25   [theorem 21, eval 4, k-dependent 0, open 4]
+  DefectBot: 0/29   [theorem 21, eval 8, k-dependent 0, open 0]
+  DupocBot: 19/21   [theorem 21, eval 0, k-dependent 0, open 8]
+  OBot: 20/25   [theorem 21, eval 4, k-dependent 0, open 4]
+  TitForTatBot: 21/25   [theorem 21, eval 4, k-dependent 0, open 4]
+  EBot: 20/22   [theorem 21, eval 1, k-dependent 0, open 7]
+  CupodTrollBot: 0/25   [theorem 21, eval 4, k-dependent 0, open 4]
+Nearest library bot per distinct program (tree edit distance, 0 = identical):
+  StatedBot0 (x2): PrudentBot/PrudentBot2, distance 0
+  StatedBot1 (x19): EBot, distance 0
+  StatedBot2 (x3): EBot, distance 8
+  StatedBot3 (x2): DBot/DupocBot, distance 8
+  StatedBot4 (x1): EBot, distance 4
+  StatedBot5 (x1): EBot, distance 2
+  StatedBot6 (x1): PrudentBot/PrudentBot2, distance 1
+  StatedBot7 (x1): not compared (no bot, or not plain Prog)
+
+Input profile summary (metric-independent):
+  level     = mean(x)        = 0.4958  (overall cooperativeness)
+  sharpness = mean(|x-0.5|)  = 0.4172  (how decisive / near 0-1 the profile is)
+
+=== L2 fit ===
+
+Fitted profile (R^T w*) vs input x, per opponent:
+  opponent        x_i    fitted   diff
+  CooperateBot   0.103   0.067  -0.036
+  CupodBot       0.905   0.859  -0.046
+  DBot           0.000   0.000  +0.000
+  DefectBot      0.000   0.000  +0.000
+  DupocBot       0.905   0.890  -0.014
+  OBot           0.800   0.859  +0.059
+  TitForTatBot   0.840   0.890  +0.050
+  EBot           0.909   0.859  -0.050
+  CupodTrollBot  0.000   0.036  +0.036
+
+Optimal weights w* (bots with non-negligible mass):
+  DefectBot      0.0734
+  DupocBot       0.0312
+  OBot           0.0361
+  EBot           0.8592
+
+Residual ||R^T w* - x||  (L2) = 0.115870
+  > 0: NO convex combination of library bots can reproduce x; it sits off the library manifold (outside conv{r_i}).
+
+Identifiability: active reference rows are affinely independent -> weights are uniquely identified.
+
+=== L1 fit ===
+
+Fitted profile (R^T w*) vs input x, per opponent:
+  opponent        x_i    fitted   diff
+  CooperateBot   0.103   0.103  +0.000
+  CupodBot       0.905   0.801  -0.103
+  DBot           0.000   0.000  +0.000
+  DefectBot      0.000   0.000  +0.000
+  DupocBot       0.905   0.905  +0.000
+  OBot           0.800   0.801  +0.001
+  TitForTatBot   0.840   0.905  +0.065
+  EBot           0.909   0.801  -0.108
+  CupodTrollBot  0.000   0.000  +0.000
+
+Optimal weights w* (bots with non-negligible mass):
+  DefectBot      0.0952
+  DupocBot       0.1034
+  EBot           0.8013
+
+Residual ||R^T w* - x||  (L1) = 0.277301
+  > 0: NO convex combination of library bots can reproduce x; it sits off the library manifold (outside conv{r_i}).
+
+Identifiability: active reference rows are affinely independent -> weights are uniquely identified.
+
+=== Linf fit ===
+
+Fitted profile (R^T w*) vs input x, per opponent:
+  opponent        x_i    fitted   diff
+  CooperateBot   0.103   0.055  -0.049
+  CupodBot       0.905   0.855  -0.050
+  DBot           0.000   0.055  +0.055
+  DefectBot      0.000   0.055  +0.055
+  DupocBot       0.905   0.855  -0.050
+  OBot           0.800   0.855  +0.055
+  TitForTatBot   0.840   0.855  +0.015
+  EBot           0.909   0.855  -0.055
+  CupodTrollBot  0.000   0.055  +0.055
+
+Optimal weights w* (bots with non-negligible mass):
+  CooperateBot   0.0545
+  DefectBot      0.1455
+  EBot           0.8000
+
+Residual ||R^T w* - x||  (Linf) = 0.054545
+  > 0: NO convex combination of library bots can reproduce x; it sits off the library manifold (outside conv{r_i}).
+
+Identifiability: active reference rows are affinely independent -> weights are uniquely identified.
+
+=== ExpectedHamming fit ===
+
+Fitted profile (R^T w*) vs input x, per opponent:
+  opponent        x_i    fitted   diff
+  CooperateBot   0.103   0.000  -0.103
+  CupodBot       0.905   1.000  +0.095
+  DBot           0.000   0.000  +0.000
+  DefectBot      0.000   0.000  +0.000
+  DupocBot       0.905   1.000  +0.095
+  OBot           0.800   1.000  +0.200
+  TitForTatBot   0.840   1.000  +0.160
+  EBot           0.909   1.000  +0.091
+  CupodTrollBot  0.000   0.000  +0.000
+
+Optimal weights w* (bots with non-negligible mass):
+  EBot           1.0000
+
+Residual ||R^T w* - x||  (ExpectedHamming) = 0.744834
+  > 0: NO convex combination of library bots can reproduce x; it sits off the library manifold (outside conv{r_i}).
+
+Identifiability: active reference rows are affinely independent -> weights are uniquely identified.
+
+=== BinomialMLE fit ===
+
+Fitted profile (R^T w*) vs input x, per opponent:
+  opponent        x_i    fitted   diff
+  CooperateBot   0.103   0.068  -0.036
+  CupodBot       0.905   0.834  -0.071
+  DBot           0.000   0.000  +0.000
+  DefectBot      0.000   0.000  +0.000
+  DupocBot       0.905   0.901  -0.003
+  OBot           0.800   0.834  +0.034
+  TitForTatBot   0.840   0.901  +0.061
+  EBot           0.909   0.834  -0.075
+  CupodTrollBot  0.000   0.000  +0.000
+
+Optimal weights w* (bots with non-negligible mass):
+  DefectBot      0.0985
+  DupocBot       0.0675
+  EBot           0.8340
+
+Residual ||R^T w* - x||  (BinomialMLE) = 3.543831
+  > 0: NO convex combination of library bots can reproduce x; it sits off the library manifold (outside conv{r_i}).
+
+Identifiability: active reference rows are affinely independent -> weights are uniquely identified.

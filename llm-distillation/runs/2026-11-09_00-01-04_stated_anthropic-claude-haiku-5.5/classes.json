@@ -1,0 +1,104 @@
+[
+  {
+    "index": 0,
+    "name": "StatedBot0",
+    "indices": [
+      0,
+      20
+    ],
+    "count": 2,
+    "budget_params": 2,
+    "source": "import PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot0 (k : Nat) : Prog := .search k (.plays .opp .self Action.C) (.search k (.plays .opp (.bot DefectBot) Action.D) (.const Action.C) (.const Action.D)) (.const Action.D)\nend PD.Bots\n"
+  },
+  {
+    "index": 1,
+    "name": "StatedBot1",
+    "indices": [
+      1,
+      3,
+      4,
+      7,
+      8,
+      10,
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      19,
+      22,
+      23,
+      25,
+      26,
+      28,
+      29
+    ],
+    "count": 19,
+    "budget_params": 0,
+    "source": "import PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\nimport PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot1 : Prog := .ite (.sim .opp (.bot DefectBot)) Action.C (.const Action.D) (.ite (.sim .opp (.bot CooperateBot)) Action.C (.const Action.C) (.ite (.sim .opp (.bot MirrorBot)) Action.C (.const Action.C) (.const Action.D)))\nend PD.Bots\n"
+  },
+  {
+    "index": 2,
+    "name": "StatedBot2",
+    "indices": [
+      2,
+      5,
+      27
+    ],
+    "count": 3,
+    "budget_params": 1,
+    "source": "import PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\nimport PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot2 (k : Nat) : Prog := .search k (.plays .opp .self Action.C) (.const Action.C) (.ite (.sim .opp (.bot DefectBot)) Action.C (.const Action.D) (.ite (.sim .opp (.bot CooperateBot)) Action.C (.const Action.C) (.ite (.sim .opp (.bot MirrorBot)) Action.C (.const Action.C) (.const Action.D))))\nend PD.Bots\n"
+  },
+  {
+    "index": 3,
+    "name": "StatedBot3",
+    "indices": [
+      6,
+      11
+    ],
+    "count": 2,
+    "budget_params": 1,
+    "source": "import PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot3 (k : Nat) : Prog := .ite (.sim .opp (.bot DefectBot)) Action.C (.const Action.D) (.search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D))\nend PD.Bots\n"
+  },
+  {
+    "index": 4,
+    "name": "StatedBot4",
+    "indices": [
+      9
+    ],
+    "count": 1,
+    "budget_params": 0,
+    "source": "import PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\nimport PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot4 : Prog := .ite (.sim .opp (.bot DefectBot)) Action.C (.const Action.D) (.ite (.sim .opp (.bot CooperateBot)) Action.C (.ite (.sim .opp (.bot MirrorBot)) Action.C (.const Action.C) (.const Action.D)) (.const Action.D))\nend PD.Bots\n"
+  },
+  {
+    "index": 5,
+    "name": "StatedBot5",
+    "indices": [
+      17
+    ],
+    "count": 1,
+    "budget_params": 0,
+    "source": "import PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\nimport PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot5 : Prog := .ite (.sim .opp (.bot DefectBot)) Action.C (.const Action.D) (.ite (.sim .opp (.bot CooperateBot)) Action.C (.const Action.C) (.ite (.sim .opp .self) Action.C (.const Action.C) (.const Action.D)))\nend PD.Bots\n"
+  },
+  {
+    "index": 6,
+    "name": "StatedBot6",
+    "indices": [
+      21
+    ],
+    "count": 1,
+    "budget_params": 1,
+    "source": "import PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot6 (k : Nat) : Prog := .search k (.plays .opp .self Action.C) (.search (2 * k + 64) (.plays .opp (.bot DefectBot) Action.D) (.const Action.C) (.const Action.D)) (.const Action.D)\nend PD.Bots\n"
+  },
+  {
+    "index": 7,
+    "name": "StatedBot7",
+    "indices": [
+      24
+    ],
+    "count": 1,
+    "budget_params": 0,
+    "source": null
+  }
+]

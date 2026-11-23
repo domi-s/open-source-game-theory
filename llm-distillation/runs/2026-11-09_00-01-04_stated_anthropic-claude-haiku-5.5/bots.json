@@ -1,0 +1,1083 @@
+[
+  {
+    "index": 0,
+    "name": "StatedBot0",
+    "indices": [
+      0,
+      20
+    ],
+    "count": 2,
+    "budget_params": 2,
+    "source": "import PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot0 (k : Nat) : Prog := .search k (.plays .opp .self Action.C) (.search k (.plays .opp (.bot DefectBot) Action.D) (.const Action.C) (.const Action.D)) (.const Action.D)\nend PD.Bots\n",
+    "library_bots": [
+      "PrudentBot",
+      "PrudentBot2"
+    ],
+    "valid": true,
+    "compiled": false,
+    "budgets": [],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "source": "theorem",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {},
+        "library_bot": "PrudentBot",
+        "theorem": "outcome_PrudentBot_vs_CooperateBot",
+        "regime": "universal",
+        "swapped": false,
+        "note": "outcome_PrudentBot_vs_CooperateBot (universal)"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "stable",
+        "source": "theorem",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {},
+        "library_bot": "PrudentBot",
+        "theorem": "outcome_PrudentBot_vs_CupodBot",
+        "regime": "universal",
+        "swapped": false,
+        "note": "outcome_PrudentBot_vs_CupodBot (universal)"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "stable",
+        "source": "theorem",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {},
+        "library_bot": "PrudentBot",
+        "theorem": "outcome_PrudentBot_vs_DBot",
+        "regime": "eventual",
+        "swapped": false,
+        "note": "outcome_PrudentBot_vs_DBot (eventual)"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "source": "theorem",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {},
+        "library_bot": "PrudentBot",
+        "theorem": "outcome_PrudentBot_vs_DefectBot",
+        "regime": "universal",
+        "swapped": false,
+        "note": "outcome_PrudentBot_vs_DefectBot (universal)"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "stable",
+        "source": "theorem",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {},
+        "library_bot": "PrudentBot",
+        "theorem": "outcome_PrudentBot_vs_DupocBot",
+        "regime": "universal",
+        "swapped": false,
+        "note": "outcome_PrudentBot_vs_DupocBot (universal)"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "stable",
+        "source": "theorem",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {},
+        "library_bot": "PrudentBot",
+        "theorem": "outcome_PrudentBot_vs_OBot",
+        "regime": "eventual",
+        "swapped": false,
+        "note": "outcome_PrudentBot_vs_OBot (eventual)"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "stable",
+        "source": "theorem",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {},
+        "library_bot": "PrudentBot",
+        "theorem": "outcome_PrudentBot_vs_TitForTatBot",
+        "regime": "eventual",
+        "swapped": false,
+        "note": "outcome_PrudentBot_vs_TitForTatBot (eventual)"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "stable",
+        "source": "theorem",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {},
+        "library_bot": "PrudentBot",
+        "theorem": "outcome_PrudentBot_vs_EBot",
+        "regime": "eventual",
+        "swapped": false,
+        "note": "outcome_PrudentBot_vs_EBot (eventual)"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "stable",
+        "source": "theorem",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {},
+        "library_bot": "PrudentBot",
+        "theorem": "outcome_PrudentBot_vs_CupodTrollBot",
+        "regime": "eventual",
+        "swapped": false,
+        "note": "outcome_PrudentBot_vs_CupodTrollBot (eventual)"
+      }
+    ],
+    "neighbours": {
+      "nearest": [
+        "PrudentBot",
+        "PrudentBot2"
+      ],
+      "distance": 0
+    }
+  },
+  {
+    "index": 1,
+    "name": "StatedBot1",
+    "indices": [
+      1,
+      3,
+      4,
+      7,
+      8,
+      10,
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      19,
+      22,
+      23,
+      25,
+      26,
+      28,
+      29
+    ],
+    "count": 19,
+    "budget_params": 0,
+    "source": "import PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\nimport PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot1 : Prog := .ite (.sim .opp (.bot DefectBot)) Action.C (.const Action.D) (.ite (.sim .opp (.bot CooperateBot)) Action.C (.const Action.C) (.ite (.sim .opp (.bot MirrorBot)) Action.C (.const Action.C) (.const Action.D)))\nend PD.Bots\n",
+    "library_bots": [
+      "EBot"
+    ],
+    "valid": true,
+    "compiled": false,
+    "budgets": [],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "source": "theorem",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {},
+        "library_bot": "EBot",
+        "theorem": "outcome_EBot_vs_CooperateBot",
+        "regime": "nobudget",
+        "swapped": false,
+        "note": "outcome_EBot_vs_CooperateBot (nobudget)"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "stable",
+        "source": "theorem",
+        "my_action": "C",
+        "opponent_action": "C",
+        "by_budget": {},
+        "library_bot": "EBot",
+        "theorem": "outcome_CupodBot_vs_EBot",
+        "regime": "eventual",
+        "swapped": true,
+        "note": "outcome_CupodBot_vs_EBot (eventual)"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "stable",
+        "source": "theorem",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {},
+        "library_bot": "EBot",
+        "theorem": "outcome_EBot_vs_DBot",
+        "regime": "nobudget",
+        "swapped": false,
+        "note": "outcome_EBot_vs_DBot (nobudget)"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "source": "theorem",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {},
+        "library_bot": "EBot",
+        "theorem": "outcome_EBot_vs_DefectBot",
+        "regime": "nobudget",
+        "swapped": false,
+        "note": "outcome_EBot_vs_DefectBot (nobudget)"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "stable",
+        "source": "theorem",
+        "my_action": "C",
+        "opponent_action": "D",
+        "by_budget": {},
+        "library_bot": "EBot",
+        "theorem": "outcome_DupocBot_vs_EBot",
+        "regime": "eventual",
+        "swapped": true,
+        "note": "outcome_DupocBot_vs_EBot (eventual)"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "stable",
+        "source": "theorem",
+        "my_action": "C",
+        "opponent_action": "D",
+        "by_budget": {},
+        "library_bot": "EBot",
+        "theorem": "outcome_EBot_vs_OBot",
+        "regime": "nobudget",
+        "swapped": false,
+        "note": "outcome_EBot_vs_OBot (nobudget)"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "stable",
+        "source": "theorem",
+        "my_action": "C",
+        "opponent_action": "D",
+        "by_budget": {},
+        "library_bot": "EBot",
+        "theorem": "outcome_EBot_vs_TitForTatBot",
+        "regime": "nobudget",
+        "swapped": false,
+        "note": "outcome_EBot_vs_TitForTatBot (nobudget)"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "stable",
+        "source": "theorem",
+        "my_action": "C",
+        "opponent_action": "C",
+        "by_budget": {},
+        "library_bot": "EBot",
+        "theorem": "outcome_EBot_vs_EBot",
+        "regime": "nobudget",
+        "swapped": false,
+        "note": "outcome_EBot_vs_EBot (nobudget)"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "stable",
+        "source": "theorem",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {},
+        "library_bot": "EBot",
+        "theorem": "outcome_CupodTrollBot_vs_EBot",
+        "regime": "universal",
+        "swapped": true,
+        "note": "outcome_CupodTrollBot_vs_EBot (universal)"
+      }
+    ],
+    "neighbours": {
+      "nearest": [
+        "EBot"
+      ],
+      "distance": 0
+    }
+  },
+  {
+    "index": 2,
+    "name": "StatedBot2",
+    "indices": [
+      2,
+      5,
+      27
+    ],
+    "count": 3,
+    "budget_params": 1,
+    "source": "import PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\nimport PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot2 (k : Nat) : Prog := .search k (.plays .opp .self Action.C) (.const Action.C) (.ite (.sim .opp (.bot DefectBot)) Action.C (.const Action.D) (.ite (.sim .opp (.bot CooperateBot)) Action.C (.const Action.C) (.ite (.sim .opp (.bot MirrorBot)) Action.C (.const Action.C) (.const Action.D))))\nend PD.Bots\n",
+    "valid": true,
+    "compiled": true,
+    "budgets": [
+      2,
+      4,
+      6,
+      16
+    ],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "my_action": "C",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(C, C)",
+          "4": "(C, C)",
+          "6": "(C, C)",
+          "16": "(C, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}",
+        "source": "eval"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2",
+        "source": "open"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap",
+        "source": "open"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(D, D)",
+          "4": "(D, D)",
+          "6": "(D, D)",
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}",
+        "source": "eval"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2",
+        "source": "open"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap",
+        "source": "open"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap",
+        "source": "open"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap",
+        "source": "open"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2",
+        "source": "open"
+      }
+    ],
+    "neighbours": {
+      "nearest": [
+        "EBot"
+      ],
+      "distance": 8
+    }
+  },
+  {
+    "index": 3,
+    "name": "StatedBot3",
+    "indices": [
+      6,
+      11
+    ],
+    "count": 2,
+    "budget_params": 1,
+    "source": "import PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot3 (k : Nat) : Prog := .ite (.sim .opp (.bot DefectBot)) Action.C (.const Action.D) (.search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D))\nend PD.Bots\n",
+    "valid": true,
+    "compiled": true,
+    "budgets": [
+      2,
+      4,
+      6,
+      16
+    ],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(D, C)",
+          "4": "(D, C)",
+          "6": "(D, C)",
+          "16": "(D, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}",
+        "source": "eval"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2",
+        "source": "open"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(D, C)",
+          "4": "(D, C)",
+          "6": "(D, C)",
+          "16": "(D, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}",
+        "source": "eval"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(D, D)",
+          "4": "(D, D)",
+          "6": "(D, D)",
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}",
+        "source": "eval"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2",
+        "source": "open"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {16}",
+        "source": "eval"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {16}",
+        "source": "eval"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap",
+        "source": "open"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(D, C)",
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "certified at k \u2208 {2}",
+        "source": "eval"
+      }
+    ],
+    "neighbours": {
+      "nearest": [
+        "DBot",
+        "DupocBot"
+      ],
+      "distance": 8
+    }
+  },
+  {
+    "index": 4,
+    "name": "StatedBot4",
+    "indices": [
+      9
+    ],
+    "count": 1,
+    "budget_params": 0,
+    "source": "import PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\nimport PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot4 : Prog := .ite (.sim .opp (.bot DefectBot)) Action.C (.const Action.D) (.ite (.sim .opp (.bot CooperateBot)) Action.C (.ite (.sim .opp (.bot MirrorBot)) Action.C (.const Action.C) (.const Action.D)) (.const Action.D))\nend PD.Bots\n",
+    "valid": true,
+    "compiled": true,
+    "budgets": [
+      2,
+      4,
+      6,
+      16
+    ],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(D, C)",
+          "4": "(D, C)",
+          "6": "(D, C)",
+          "16": "(D, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}",
+        "source": "eval"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap",
+        "source": "open"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(D, C)",
+          "4": "(D, C)",
+          "6": "(D, C)",
+          "16": "(D, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}",
+        "source": "eval"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(D, D)",
+          "4": "(D, D)",
+          "6": "(D, D)",
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}",
+        "source": "eval"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap",
+        "source": "open"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(D, D)",
+          "4": "(D, D)",
+          "6": "(D, D)",
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}",
+        "source": "eval"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "stable",
+        "my_action": "C",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(C, D)",
+          "4": "(C, D)",
+          "6": "(C, D)",
+          "16": "(C, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}",
+        "source": "eval"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=16; L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; L\u00f6b boundary or budget floor at k=6",
+        "source": "open"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(D, C)",
+          "4": "(D, C)",
+          "6": "(D, C)",
+          "16": null
+        },
+        "note": "certified at k \u2208 {2, 4, 6}",
+        "source": "eval"
+      }
+    ],
+    "neighbours": {
+      "nearest": [
+        "EBot"
+      ],
+      "distance": 4
+    }
+  },
+  {
+    "index": 5,
+    "name": "StatedBot5",
+    "indices": [
+      17
+    ],
+    "count": 1,
+    "budget_params": 0,
+    "source": "import PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\nimport PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot5 : Prog := .ite (.sim .opp (.bot DefectBot)) Action.C (.const Action.D) (.ite (.sim .opp (.bot CooperateBot)) Action.C (.const Action.C) (.ite (.sim .opp .self) Action.C (.const Action.C) (.const Action.D)))\nend PD.Bots\n",
+    "valid": true,
+    "compiled": true,
+    "budgets": [
+      2,
+      4,
+      6,
+      16
+    ],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(D, C)",
+          "4": "(D, C)",
+          "6": "(D, C)",
+          "16": "(D, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}",
+        "source": "eval"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap",
+        "source": "open"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(D, C)",
+          "4": "(D, C)",
+          "6": "(D, C)",
+          "16": "(D, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}",
+        "source": "eval"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(D, D)",
+          "4": "(D, D)",
+          "6": "(D, D)",
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}",
+        "source": "eval"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap",
+        "source": "open"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "stable",
+        "my_action": "C",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(C, D)",
+          "4": "(C, D)",
+          "6": "(C, D)",
+          "16": "(C, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}",
+        "source": "eval"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "stable",
+        "my_action": "C",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(C, D)",
+          "4": "(C, D)",
+          "6": "(C, D)",
+          "16": "(C, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}",
+        "source": "eval"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "stable",
+        "my_action": "C",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(C, C)",
+          "4": "(C, C)",
+          "6": "(C, C)",
+          "16": "(C, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}",
+        "source": "eval"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(D, C)",
+          "4": "(D, C)",
+          "6": "(D, C)",
+          "16": null
+        },
+        "note": "certified at k \u2208 {2, 4, 6}",
+        "source": "eval"
+      }
+    ],
+    "neighbours": {
+      "nearest": [
+        "EBot"
+      ],
+      "distance": 2
+    }
+  },
+  {
+    "index": 6,
+    "name": "StatedBot6",
+    "indices": [
+      21
+    ],
+    "count": 1,
+    "budget_params": 1,
+    "source": "import PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot6 (k : Nat) : Prog := .search k (.plays .opp .self Action.C) (.search (2 * k + 64) (.plays .opp (.bot DefectBot) Action.D) (.const Action.C) (.const Action.D)) (.const Action.D)\nend PD.Bots\n",
+    "valid": true,
+    "compiled": true,
+    "budgets": [
+      2,
+      4,
+      6,
+      16
+    ],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {
+          "2": "(D, C)",
+          "4": "(D, C)",
+          "6": "(D, C)",
+          "16": "(D, C)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}",
+        "source": "eval"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2",
+        "source": "open"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap",
+        "source": "open"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {
+          "2": "(D, D)",
+          "4": "(D, D)",
+          "6": "(D, D)",
+          "16": "(D, D)"
+        },
+        "note": "certified at k \u2208 {2, 4, 6, 16}",
+        "source": "eval"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2",
+        "source": "open"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap",
+        "source": "open"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; L\u00f6b boundary or budget floor at k=4; exceeded 3072MB cap",
+        "source": "open"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; exceeded 3072MB cap",
+        "source": "open"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "undetermined",
+        "my_action": null,
+        "opponent_action": null,
+        "by_budget": {
+          "2": null,
+          "4": null,
+          "6": null,
+          "16": null
+        },
+        "note": "L\u00f6b boundary or budget floor at k=2; both-searcher cell at k>2",
+        "source": "open"
+      }
+    ],
+    "neighbours": {
+      "nearest": [
+        "PrudentBot",
+        "PrudentBot2"
+      ],
+      "distance": 1
+    }
+  },
+  {
+    "index": 7,
+    "name": "StatedBot7",
+    "indices": [
+      24
+    ],
+    "count": 1,
+    "budget_params": 0,
+    "source": null,
+    "valid": false,
+    "error": "no ```lean block defining MyBot",
+    "neighbours": null
+  }
+]

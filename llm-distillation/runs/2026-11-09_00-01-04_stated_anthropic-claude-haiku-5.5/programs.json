@@ -1,0 +1,122 @@
+[
+  {
+    "index": 0,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: two-tier PrudentBot. Cooperate iff the opponent provably cooperates\n    with me (budget kOut) AND provably defects against DefectBot (budget kIn > kOut);\n    otherwise defect. The staggered budget lets the self-referential cooperation\n    proof go through instead of hitting the same-budget floor. Exploits\n    unconditional cooperators, defends against defectors, and aims for mutual\n    cooperation with its own kind. -/\ndef MyBot (kOut kIn : Nat) : Prog :=\n  .search kOut (.plays .opp .self Action.C)\n    (.search kIn (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 1,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: a behavioral decision tree. Defect against opponents that cooperate with\n    DefectBot (exploit the naive); cooperate with opponents that cooperate with\n    CooperateBot or that cooperate with MirrorBot (reward conditional cooperators);\n    defect otherwise. Mirrors the proven-behavior EBot tree. -/\ndef MyBot : Prog :=\n  .ite (.sim .opp (.bot DefectBot)) Action.C\n    (.const Action.D)\n    (.ite (.sim .opp (.bot CooperateBot)) Action.C\n      (.const Action.C)\n      (.ite (.sim .opp (.bot MirrorBot)) Action.C\n        (.const Action.C)\n        (.const Action.D)))\n\nend PD.Bots\n"
+  },
+  {
+    "index": 2,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate if provably the opponent cooperates with me (L\u00f6bian root check);\n    otherwise exploit opponents who cooperate with DefectBot, cooperate with\n    CooperateBot or with MirrorBot, and defect against everything else. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.const Action.C)\n    (.ite (.sim .opp (.bot DefectBot)) Action.C\n      (.const Action.D)\n      (.ite (.sim .opp (.bot CooperateBot)) Action.C\n        (.const Action.C)\n        (.ite (.sim .opp (.bot MirrorBot)) Action.C\n          (.const Action.C)\n          (.const Action.D))))\n\nend PD.Bots\n"
+  },
+  {
+    "index": 3,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: a probing decision tree. Exploit opponents that cooperate with DefectBot,\n    cooperate with opponents that cooperate with CooperateBot or mirror me, and defect otherwise.\n    Expected: mutual cooperation with cooperators/mirrors, exploitation of CooperateBot, mutual defection with DefectBot. -/\ndef MyBot : Prog :=\n  .ite (.sim .opp (.bot DefectBot)) Action.C\n    (.const Action.D)\n    (.ite (.sim .opp (.bot CooperateBot)) Action.C\n      (.const Action.C)\n      (.ite (.sim .opp (.bot MirrorBot)) Action.C\n        (.const Action.C)\n        (.const Action.D)))\n\nend PD.Bots\n"
+  },
+  {
+    "index": 4,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: an EBot-style behavioral decision tree. Exploits opponents that cooperate\n    with DefectBot (naive), cooperates with opponents that cooperate with CooperateBot\n    or that mirror-cooperate, and defects otherwise. Proven (C,C) against EBot and\n    (C,D) against TitForTatBot in the zoo. -/\ndef MyBot : Prog :=\n  .ite (.sim .opp (.bot DefectBot)) Action.C\n    (.const Action.D)\n    (.ite (.sim .opp (.bot CooperateBot)) Action.C\n      (.const Action.C)\n      (.ite (.sim .opp (.bot MirrorBot)) Action.C\n        (.const Action.C)\n        (.const Action.D)))\n\nend PD.Bots\n"
+  },
+  {
+    "index": 5,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate if I can prove the opponent cooperates with me (L\u00f6bian\n    cooperation, sound by construction); otherwise run EBot's probe tree:\n    exploit opponents who cooperate with DefectBot, cooperate with\n    CooperateBot-cooperators and mirror-cooperators, and defect otherwise. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.const Action.C)\n    (.ite (.sim .opp (.bot DefectBot)) Action.C\n      (.const Action.D)\n      (.ite (.sim .opp (.bot CooperateBot)) Action.C\n        (.const Action.C)\n        (.ite (.sim .opp (.bot MirrorBot)) Action.C\n          (.const Action.C)\n          (.const Action.D))))\n\nend PD.Bots\n"
+  },
+  {
+    "index": 6,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: if the opponent cooperates with DefectBot (naive, exploitable), defect.\n    Otherwise cooperate only when the proof system can derive that the opponent\n    cooperates with me (L\u00f6bian DupocBot-style cooperation); defect otherwise. -/\ndef MyBot (k : Nat) : Prog :=\n  .ite (.sim .opp (.bot DefectBot)) Action.C\n    (.const Action.D)\n    (.search k (.plays .opp .self Action.C)\n      (.const Action.C)\n      (.const Action.D))\n\nend PD.Bots\n"
+  },
+  {
+    "index": 7,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: a behavioral decision tree in the style of EBot. It exploits opponents\n    that cooperate with DefectBot (defecting against them), cooperates with\n    CooperateBot-style opponents, cooperates with opponents that cooperate with\n    MirrorBot, and defects otherwise. -/\ndef MyBot : Prog :=\n  .ite (.sim .opp (.bot DefectBot)) Action.C\n    (.const Action.D)\n    (.ite (.sim .opp (.bot CooperateBot)) Action.C\n      (.const Action.C)\n      (.ite (.sim .opp (.bot MirrorBot)) Action.C\n        (.const Action.C)\n        (.const Action.D)))\n\nend PD.Bots\n"
+  },
+  {
+    "index": 8,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: a behavioral decision tree in the style of EBot. It exploits opponents\n    that cooperate with DefectBot, cooperates with opponents that cooperate with\n    CooperateBot or mirror-cooperate, and defects otherwise. Designed to match\n    EBot's proven self-cooperation (EBot vs EBot = (C, C)). -/\ndef MyBot : Prog :=\n  .ite (.sim .opp (.bot DefectBot)) Action.C\n    (.const Action.D)\n    (.ite (.sim .opp (.bot CooperateBot)) Action.C\n      (.const Action.C)\n      (.ite (.sim .opp (.bot MirrorBot)) Action.C\n        (.const Action.C)\n        (.const Action.D)))\n\nend PD.Bots\n"
+  },
+  {
+    "index": 9,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: a behavioral decision tree. Defect against opponents who cooperate with\n    DefectBot (naive exploit); defect against opponents who do not cooperate with\n    CooperateBot (defectors/bullies); cooperate with opponents who cooperate with\n    MirrorBot (reciprocators); defect otherwise. Each probe is a single fixed-bot\n    simulation, so it terminates and avoids self-simulation regress. -/\ndef MyBot : Prog :=\n  .ite (.sim .opp (.bot DefectBot)) Action.C\n    (.const Action.D)\n    (.ite (.sim .opp (.bot CooperateBot)) Action.C\n      (.ite (.sim .opp (.bot MirrorBot)) Action.C\n        (.const Action.C)\n        (.const Action.D))\n      (.const Action.D))\n\nend PD.Bots\n"
+  },
+  {
+    "index": 10,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: an EBot-style behavioral decision tree. It defects against opponents that\n    cooperate with DefectBot (exploiting the naive), cooperates with opponents that\n    defect against DefectBot but cooperate with CooperateBot, cooperates with\n    mirror-style opponents that cooperate with MirrorBot, and defects otherwise. -/\ndef MyBot : Prog :=\n  .ite (.sim .opp (.bot DefectBot)) Action.C\n    (.const Action.D)\n    (.ite (.sim .opp (.bot CooperateBot)) Action.C\n      (.const Action.C)\n      (.ite (.sim .opp (.bot MirrorBot)) Action.C\n        (.const Action.C)\n        (.const Action.D)))\n\nend PD.Bots\n"
+  },
+  {
+    "index": 11,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: exploit opponents that cooperate with DefectBot (they are naive);\n    otherwise cooperate only if I can prove the opponent cooperates with me\n    (L\u00f6bian, DupocBot-style); defect by default.\n    Expected: mutual cooperation with proof-based cooperators, exploitation of\n    naive cooperators, mutual defection with DefectBot and mirror-style defectors. -/\ndef MyBot (k : Nat) : Prog :=\n  .ite (.sim .opp (.bot DefectBot)) Action.C\n    (.const Action.D)\n    (.search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D))\n\nend PD.Bots\n"
+  },
+  {
+    "index": 12,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: a behavioral decision tree in the EBot style. It defects against\n    opponents who cooperate with DefectBot (the naive, exploitable ones),\n    cooperates with opponents who cooperate with CooperateBot, and otherwise\n    cooperates only with opponents who cooperate with MirrorBot. It uses only\n    simulation probes (no proof search), so it always terminates on\n    search-free opponents and does not depend on budget parameters. -/\ndef MyBot : Prog :=\n  .ite (.sim .opp (.bot DefectBot)) Action.C\n    (.const Action.D)\n    (.ite (.sim .opp (.bot CooperateBot)) Action.C\n      (.const Action.C)\n      (.ite (.sim .opp (.bot MirrorBot)) Action.C\n        (.const Action.C)\n        (.const Action.D)))\n\nend PD.Bots\n"
+  },
+  {
+    "index": 13,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: an EBot-style behavioral decision tree. Defect against opponents that\n    cooperate with DefectBot (exploit the naive); cooperate with opponents that\n    cooperate with CooperateBot or that cooperate with MirrorBot; defect otherwise. -/\ndef MyBot : Prog :=\n  .ite (.sim .opp (.bot DefectBot)) Action.C\n    (.const Action.D)\n    (.ite (.sim .opp (.bot CooperateBot)) Action.C\n      (.const Action.C)\n      (.ite (.sim .opp (.bot MirrorBot)) Action.C\n        (.const Action.C)\n        (.const Action.D)))\n\nend PD.Bots\n"
+  },
+  {
+    "index": 14,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: a behavioral decision tree (EBot-style). Defect against opponents who\n    cooperate with DefectBot (exploit the naive); otherwise cooperate with opponents\n    who cooperate with CooperateBot or who mirror-cooperate with me; defect otherwise.\n    Inherits EBot's proven profile: cooperates with EBot, defects against DefectBot. -/\ndef MyBot : Prog :=\n  .ite (.sim .opp (.bot DefectBot)) Action.C\n    (.const Action.D)\n    (.ite (.sim .opp (.bot CooperateBot)) Action.C\n      (.const Action.C)\n      (.ite (.sim .opp (.bot MirrorBot)) Action.C\n        (.const Action.C)\n        (.const Action.D)))\n\nend PD.Bots\n"
+  },
+  {
+    "index": 15,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: an EBot-style behavioural decision tree. It exploits opponents that\n    cooperate with DefectBot (naive), cooperates with opponents that cooperate\n    with CooperateBot or that mirror-cooperate, and defects otherwise. -/\ndef MyBot : Prog :=\n  .ite (.sim .opp (.bot DefectBot)) Action.C\n    (.const Action.D)\n    (.ite (.sim .opp (.bot CooperateBot)) Action.C\n      (.const Action.C)\n      (.ite (.sim .opp (.bot MirrorBot)) Action.C\n        (.const Action.C)\n        (.const Action.D)))\n\nend PD.Bots\n"
+  },
+  {
+    "index": 16,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: a behavioral decision tree. Defect against opponents that cooperate with\n    DefectBot (exploit the naive); otherwise cooperate with opponents that cooperate\n    with CooperateBot or that cooperate with MirrorBot (what they play against me);\n    defect against everything else. Matches the EBot tree, whose pairings are proven\n    in the zoo (EBot vs EBot = (C, C), EBot vs TitForTatBot = (C, D)). -/\ndef MyBot : Prog :=\n  .ite (.sim .opp (.bot DefectBot)) Action.C\n    (.const Action.D)\n    (.ite (.sim .opp (.bot CooperateBot)) Action.C\n      (.const Action.C)\n      (.ite (.sim .opp (.bot MirrorBot)) Action.C\n        (.const Action.C)\n        (.const Action.D)))\n\nend PD.Bots\n"
+  },
+  {
+    "index": 17,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: exploit opponents who cooperate with DefectBot (naive), cooperate with\n    CooperateBot-style and mirror-cooperative opponents, and defect otherwise.\n    A behavioral decision tree with three probes; no self-simulation regress. -/\ndef MyBot : Prog :=\n  .ite (.sim .opp (.bot DefectBot)) Action.C\n    (.const Action.D)\n    (.ite (.sim .opp (.bot CooperateBot)) Action.C\n      (.const Action.C)\n      (.ite (.sim .opp .self) Action.C\n        (.const Action.C)\n        (.const Action.D)))\n\nend PD.Bots\n"
+  },
+  {
+    "index": 18,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: an EBot-style behavioral decision tree. Defect against opponents that\n    cooperate with DefectBot (exploit the naive). Otherwise cooperate with opponents\n    that cooperate with CooperateBot, or that mirror cooperation; defect against the rest.\n    Uses only fixed-bot probes, so no self-simulation regress and no proof budget. -/\ndef MyBot : Prog :=\n  .ite (.sim .opp (.bot DefectBot)) Action.C\n    (.const Action.D)\n    (.ite (.sim .opp (.bot CooperateBot)) Action.C\n      (.const Action.C)\n      (.ite (.sim .opp (.bot MirrorBot)) Action.C\n        (.const Action.C)\n        (.const Action.D)))\n\nend PD.Bots\n"
+  },
+  {
+    "index": 19,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: an EBot-style behavioral decision tree. It exploits opponents who\n    cooperate with DefectBot (naive), cooperates with opponents who cooperate\n    with CooperateBot or who cooperate with me when I mirror them, and defects\n    against everything else. Probes are wrapped in `.bot` so they are not\n    rewritten by the outer frame's substitution. -/\ndef MyBot : Prog :=\n  .ite (.sim .opp (.bot DefectBot)) Action.C\n    (.const Action.D)\n    (.ite (.sim .opp (.bot CooperateBot)) Action.C\n      (.const Action.C)\n      (.ite (.sim .opp (.bot MirrorBot)) Action.C\n        (.const Action.C)\n        (.const Action.D)))\n\nend PD.Bots\n"
+  },
+  {
+    "index": 20,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: a two-tier PrudentBot. Cooperate iff I can prove (at budget kOut) that the\n    opponent cooperates with me AND I can prove (at the larger budget kIn) that the\n    opponent defects against DefectBot; otherwise defect. The staggered budgets (kIn > kOut)\n    let the defection-proof about the opponent's else-branch fit inside the check, which\n    is the usual floor problem for same-budget PrudentBot. -/\ndef MyBot (kOut kIn : Nat) : Prog :=\n  .search kOut (.plays .opp .self Action.C)\n    (.search kIn (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C) (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 21,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: a two-tier PrudentBot. Cooperate iff I can prove (within budget k) that the\n    opponent cooperates with me, AND I can prove (within the larger budget 2k+64) that the\n    opponent defects against DefectBot. The staggered budgets let the self-referential\n    cooperation proof go through, avoiding the same-budget floor that makes plain\n    PrudentBot defect against itself. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.search (2 * k + 64) (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 22,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: an EBot-style behavioral decision tree. It defects against opponents that\n    cooperate with DefectBot (exploiting the naive), cooperates with opponents that\n    cooperate with CooperateBot, cooperates with opponents that mirror it, and\n    defects otherwise. Each node is a single probe, so no proof budget is needed. -/\ndef MyBot : Prog :=\n  .ite (.sim .opp (.bot DefectBot)) Action.C\n    (.const Action.D)\n    (.ite (.sim .opp (.bot CooperateBot)) Action.C\n      (.const Action.C)\n      (.ite (.sim .opp (.bot MirrorBot)) Action.C\n        (.const Action.C)\n        (.const Action.D)))\n\nend PD.Bots\n"
+  },
+  {
+    "index": 23,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: a behavioral decision tree. It exploits opponents who cooperate with\n    DefectBot (defects against them), cooperates with opponents who cooperate with\n    CooperateBot or who mirror-cooperate, and defects against everything else.\n    Probes fixed bots, so it terminates without proof search. -/\ndef MyBot : Prog :=\n  .ite (.sim .opp (.bot DefectBot)) Action.C\n    (.const Action.D)\n    (.ite (.sim .opp (.bot CooperateBot)) Action.C\n      (.const Action.C)\n      (.ite (.sim .opp (.bot MirrorBot)) Action.C\n        (.const Action.C)\n        (.const Action.D)))\n\nend PD.Bots\n"
+  },
+  {
+    "index": 24,
+    "program": null
+  },
+  {
+    "index": 25,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: a behavioral decision tree (EBot-style). Exploits opponents that\n    cooperate with DefectBot, cooperates with CooperateBot-like opponents and\n    with opponents that mirror cooperators, and defects otherwise. -/\ndef MyBot : Prog :=\n  .ite (.sim .opp (.bot DefectBot)) Action.C\n    (.const Action.D)\n    (.ite (.sim .opp (.bot CooperateBot)) Action.C\n      (.const Action.C)\n      (.ite (.sim .opp (.bot MirrorBot)) Action.C\n        (.const Action.C)\n        (.const Action.D)))\n\nend PD.Bots\n"
+  },
+  {
+    "index": 26,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: a behavioral decision tree (EBot-style). Exploit opponents who cooperate\n    with DefectBot; otherwise cooperate with CooperateBot-like opponents and with\n    opponents who cooperate with me (mirror-cooperators); defect against the rest.\n    Expected to cooperate with itself-like cooperators and defect against defectors. -/\ndef MyBot : Prog :=\n  .ite (.sim .opp (.bot DefectBot)) Action.C\n    (.const Action.D)\n    (.ite (.sim .opp (.bot CooperateBot)) Action.C\n      (.const Action.C)\n      (.ite (.sim .opp (.bot MirrorBot)) Action.C\n        (.const Action.C)\n        (.const Action.D)))\n\nend PD.Bots\n"
+  },
+  {
+    "index": 27,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate if I can prove the opponent cooperates with me (L\u00f6bian root guard);\n    otherwise fall back to an EBot-style probe tree that exploits DefectBot-like naivety,\n    cooperates with CooperateBot-like and MirrorBot-like opponents, and defects otherwise. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.const Action.C)\n    (.ite (.sim .opp (.bot DefectBot)) Action.C\n      (.const Action.D)\n      (.ite (.sim .opp (.bot CooperateBot)) Action.C\n        (.const Action.C)\n        (.ite (.sim .opp (.bot MirrorBot)) Action.C\n          (.const Action.C)\n          (.const Action.D))))\n\nend PD.Bots\n"
+  },
+  {
+    "index": 28,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: an EBot-style behavioral decision tree. It defects against opponents\n    that cooperate with DefectBot (exploiting the naive), cooperates with\n    opponents that cooperate with CooperateBot or mirror-cooperate with\n    MirrorBot, and defects against everything else. -/\ndef MyBot : Prog :=\n  .ite (.sim .opp (.bot DefectBot)) Action.C\n    (.const Action.D)\n    (.ite (.sim .opp (.bot CooperateBot)) Action.C\n      (.const Action.C)\n      (.ite (.sim .opp (.bot MirrorBot)) Action.C\n        (.const Action.C)\n        (.const Action.D)))\n\nend PD.Bots\n"
+  },
+  {
+    "index": 29,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.CooperateBot\nimport PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Bots.MirrorBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: a behavioural decision tree (EBot-style). Exploits opponents who cooperate\n    with DefectBot (plays D), cooperates with opponents who cooperate with CooperateBot,\n    cooperates with opponents who cooperate with MirrorBot, and defects otherwise. -/\ndef MyBot : Prog :=\n  .ite (.sim .opp (.bot DefectBot)) Action.C\n    (.const Action.D)\n    (.ite (.sim .opp (.bot CooperateBot)) Action.C\n      (.const Action.C)\n      (.ite (.sim .opp (.bot MirrorBot)) Action.C\n        (.const Action.C)\n        (.const Action.D)))\n\nend PD.Bots\n"
+  }
+]
