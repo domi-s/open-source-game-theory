@@ -1,0 +1,18 @@
+{
+  "model": "openai/gpt-6.1-terra",
+  "n": 20,
+  "temperature": 1.0,
+  "timestamp": "2026-11-23_11-12-13",
+  "matrix_path": "C:\\Users\\ez_re\\Desktop\\Research\\4-prisoners\\my-fork\\open-source-game-theory\\llm-distillation\\data\\payoff_matrix.csv",
+  "bots": [
+    "CooperateBot",
+    "CupodBot",
+    "DBot",
+    "DefectBot",
+    "DupocBot",
+    "OBot",
+    "TitForTatBot",
+    "EBot",
+    "CupodTrollBot"
+  ]
+}

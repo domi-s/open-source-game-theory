@@ -1,0 +1,740 @@
+{
+  "CooperateBot": [
+    {
+      "action": "D",
+      "raw": "CooperateBot always plays C, regardless of my code or action. Defecting therefore gives me 5, while cooperating gives me 3.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CooperateBot always plays C, regardless of my action. Playing D gives me 5, compared with 3 for playing C.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CooperateBot always plays C, regardless of my action. Against C, defecting gives me 5, while cooperating gives me 3.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CooperateBot always cooperates, regardless of my action. Defecting therefore gives me 5, while cooperating gives me 3.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CooperateBot always plays C, regardless of my code or action. Playing D therefore gives me 5, while playing C gives me 3.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CooperateBot always plays C, regardless of my action. Defecting therefore gives me 5, while cooperating gives me 3.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CooperateBot always plays C, regardless of my code or action. Defecting gives me 5, while cooperating gives me 3.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CooperateBot always plays C, regardless of what it reads about me. Defecting therefore gives me 5 rather than the 3 I would get by cooperating.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CooperateBot always plays C, regardless of my action. Defecting therefore gives me 5, while cooperating gives me 3.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CooperateBot always plays C, regardless of my action. Playing D gives me 5, while playing C gives me 3. Therefore, I choose D.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CooperateBot always plays C, regardless of my code or action. Playing D gives me 5, while playing C gives me 3.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CooperateBot always plays C, regardless of my action. Defecting gives me 5, while cooperating gives me 3.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CooperateBot always plays C, regardless of my action. Playing D gives me 5, while playing C gives me 3.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CooperateBot always plays C, regardless of my action or what it reads. Defecting therefore gives me 5, while cooperating gives me 3.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CooperateBot always cooperates, regardless of my action or weights. Defecting therefore gives me 5, while cooperating gives me 3.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CooperateBot always chooses C, regardless of my action. Defecting gives me 5, while cooperating gives me 3.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CooperateBot always plays C, regardless of my action. Defecting therefore gives me 5, while cooperating gives me 3.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CooperateBot always plays C, regardless of my action. Playing D gives me 5, while playing C gives me 3.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CooperateBot always chooses C, regardless of my action. Choosing D gives me 5, while choosing C gives me 3.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CooperateBot always chooses C, regardless of my action or weights. Defecting therefore gives me 5, while cooperating gives me 3.\n\nMy action <<D>>"
+    }
+  ],
+  "CupodBot": [
+    {
+      "action": "C",
+      "raw": "I choose **C**. Since I cooperate against CupodBot, a sound proof search cannot prove that I defect against it. CupodBot therefore cooperates too, giving each of us 3.\n\nDefecting could yield 5 if CupodBot\u2019s bounded search missed the proof, but it would yield 1 if the search found it. Without knowing the proof budget and what it can establish, cooperation guarantees the better outcome.\n\nMy action <<C>>"
+    },
+    {
+      "action": "C",
+      "raw": "If I commit to **C**, the claim that I defect against CupodBot is false. A sound proof search cannot prove it, so CupodBot cooperates and we each get 3.\n\nIf I choose **D**, I get 5 if CupodBot fails to find a proof, but only 1 if it finds one. Since the proof budget and search details aren\u2019t specified, I\u2019ll choose the guaranteed payoff.\n\nMy action <<C>>"
+    },
+    {
+      "action": "C",
+      "raw": "I choose **C**. With a commitment to cooperate, the hypothesis that I defect is false, so the sound proof search cannot establish it. CupodBot therefore cooperates, giving us both 3.\n\nDefecting could yield 5 if CupodBot fails to find a proof within its budget, but only 1 if it finds one. The budget and proof-search details aren\u2019t specified, so I choose the guaranteed payoff.\n\nMy action <<C>>"
+    },
+    {
+      "action": "C",
+      "raw": "I choose **C**. Since I cooperate, the hypothesis that I defect is false, so the sound proof search cannot find a proof of it. CupodBot therefore cooperates, giving me a payoff of 3.\n\nIf I defect, my payoff is 1 if CupodBot finds a proof and 5 if it does not. Without knowing the proof system and budget, defecting might be better, but cooperation guarantees 3.\n\nMy action <<C>>"
+    },
+    {
+      "action": "C",
+      "raw": "I choose C. Since I cooperate, the hypothesis that I defect against CupodBot is false. By soundness, the proof search cannot return True, so CupodBot cooperates too. We each receive 3.\n\nDefecting could yield 5 if the proof search fails to find a proof of my defection, but only 1 if it succeeds. With the proof-search outcome unspecified, C guarantees the mutual-cooperation payoff.\n\nMy action <<C>>"
+    },
+    {
+      "action": "C",
+      "raw": "I choose C. Since I cooperate, the hypothesis that I defect against CupodBot is false. By soundness, its proof search cannot establish that hypothesis, so CupodBot cooperates too. We each receive 3.\n\nDefecting could yield 5 if CupodBot failed to find a proof within its budget, but it would yield only 1 if the proof were found.\n\nMy action <<C>>"
+    },
+    {
+      "action": "C",
+      "raw": "I commit to C. The hypothesis that I defect against CupodBot is therefore false, so the sound proof search cannot return True. CupodBot cooperates, giving each of us 3.\n\nDefecting could yield 5 if CupodBot fails to find a proof, but only 1 if it finds one. With no specified proof budget, C guarantees the mutual-cooperation outcome.\n\nMy action <<C>>"
+    },
+    {
+      "action": "C",
+      "raw": "I choose **C**. Since I cooperate, a sound proof search cannot find a proof that I defect against CupodBot, so CupodBot also cooperates. We each receive 3.\n\nDefecting could yield 5 if CupodBot fails to find a proof of my defection, but only 1 if it finds one. Without knowing the proof budget or what it can establish, cooperation guarantees the better worst-case payoff.\n\nMy action <<C>>"
+    },
+    {
+      "action": "C",
+      "raw": "I choose **C**. Because I cooperate against CupodBot, a sound proof that I defect against it cannot exist. CupodBot therefore cooperates, giving us both 3.\n\nDefecting could yield 5 if CupodBot fails to find a proof, but only 1 if it succeeds. The proof budget and oracle details don\u2019t establish which would happen, so cooperation guarantees the better outcome.\n\nMy action <<C>>"
+    },
+    {
+      "action": "C",
+      "raw": "Committing to C makes the hypothesis that I defect against CupodBot false. By soundness, the proof search cannot return True, so CupodBot cooperates and I receive 3.\n\nDefecting could yield 5 if the proof search misses my defection, but only 1 if it finds a proof. Since the proof budget and proof system are unspecified, I\u2019ll choose the guaranteed payoff.\n\nMy action <<C>>"
+    },
+    {
+      "action": "C",
+      "raw": "I choose **C**. Since I cooperate, the hypothesis that I defect against CupodBot is false. Soundness therefore ensures CupodBot\u2019s proof search cannot return True, so it also cooperates. We each receive 3.\n\nDefecting could yield 5 if the bounded search failed to find a proof, but it could instead yield 1 if the proof were found. The information given doesn\u2019t determine which would happen.\n\nMy action <<C>>"
+    },
+    {
+      "action": "C",
+      "raw": "I choose **C**. Since I cooperate against CupodBot, the hypothesis that I defect is false. By soundness, CupodBot\u2019s proof search cannot return True, so it also cooperates. We each get 3.\n\nDefecting could yield 5 if CupodBot fails to find a proof within its budget, but it would yield only 1 if the proof is found. Without knowing the budget and proof-search details, C guarantees the mutual-cooperation payoff.\n\nMy action <<C>>"
+    },
+    {
+      "action": "C",
+      "raw": "I\u2019ll cooperate. Since I\u2019m committing to C, a sound proof search cannot find a valid proof that I defect against CupodBot. CupodBot therefore cooperates, giving us each 3.\n\nDefecting would give me 5 if CupodBot failed to find a proof of my defection, but only 1 if it found one. The proof budget and proof system aren\u2019t specified, so I\u2019ll take the guaranteed 3.\n\nMy action <<C>>"
+    },
+    {
+      "action": "C",
+      "raw": "I\u2019ll choose C for the guaranteed outcome. Since I\u2019m committing to cooperate, a sound proof search cannot prove that I defect against CupodBot. CupodBot therefore cooperates, giving us both 3.\n\nDefecting could yield 5 if CupodBot fails to find a proof within its budget, but would yield 1 if it finds one. Without knowing the proof budget and what it can establish, that outcome isn\u2019t guaranteed.\n\nMy action <<C>>"
+    },
+    {
+      "action": "C",
+      "raw": "I\u2019ll cooperate. Since I commit to C against CupodBot, a sound proof search cannot prove that I defect against it. CupodBot therefore cooperates, giving us each 3.\n\nDefecting could yield 5 if CupodBot fails to find a proof, but only 1 if it succeeds. The budget and provability details aren\u2019t specified, so cooperation guarantees the better outcome of those two possibilities.\n\nMy action <<C>>"
+    },
+    {
+      "action": "C",
+      "raw": "I choose C. By soundness, CupodBot cannot find a valid proof that I defect against it, so it also cooperates. We each receive 3.\n\nDefecting would give me 5 if CupodBot\u2019s bounded search failed to find a proof, but only 1 if it succeeded. Without knowing whether such a proof fits within the budget, I choose the guaranteed mutual cooperation.\n\nMy action <<C>>"
+    },
+    {
+      "action": "C",
+      "raw": "I choose **C**. Since I cooperate, the hypothesis that I defect against CupodBot is false. Soundness therefore prevents the proof search from returning True, so CupodBot cooperates too, giving us each 3.\n\nDefecting could yield 5 if CupodBot fails to find a proof, but only 1 if it succeeds. Without knowing the proof budget and search details, cooperation guarantees the better payoff of those two worst cases.\n\nMy action <<C>>"
+    },
+    {
+      "action": "C",
+      "raw": "I\u2019ll choose **C**. Because the proof oracle is sound, it cannot prove that I defect when I actually cooperate, so CupodBot also cooperates. We each get 3.\n\nDefecting could yield 5 if the proof search fails, but only 1 if it succeeds. Without knowing the budget and what can be proved within it, I\u2019ll take the guaranteed payoff of 3.\n\nMy action <<C>>"
+    },
+    {
+      "action": "C",
+      "raw": "I choose **C**. Since I cooperate, the hypothesis that I defect against CupodBot is false. By soundness, its proof search cannot establish that hypothesis, so CupodBot also cooperates and I receive 3.\n\nIf I instead choose D, my payoff would be 1 if CupodBot finds a proof of my defection, or 5 if it does not. The information given does not determine which would happen, so I choose the guaranteed payoff.\n\nMy action <<C>>"
+    },
+    {
+      "action": "C",
+      "raw": "I choose **C**. Since I commit to cooperating against CupodBot, the hypothesis that I defect against it is false. The proof oracle is sound, so it cannot find a proof of that hypothesis; CupodBot therefore cooperates too. We each receive 3.\n\nDefecting could yield 5 if CupodBot fails to find a proof, but it could yield only 1 if it succeeds. Without knowing the proof budget and what it can establish, cooperation guarantees the better payoff.\n\nMy action <<C>>"
+    }
+  ],
+  "DBot": [
+    {
+      "action": "D",
+      "raw": "I commit to defecting against any opponent, including DefectBot. DBot\u2019s probe therefore returns D, so DBot cooperates. My D then earns a payoff of 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I commit to always playing D, including against DefectBot. DBot\u2019s simulation therefore returns D, so DBot plays C. My D then gives me a payoff of 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose an unconditional defection policy: I play D against any opponent, including DefectBot. DBot\u2019s simulation therefore returns D, so DBot plays C. The resulting payoffs are 5 for me and 0 for DBot.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I commit to playing D against any opponent, including DefectBot. DBot\u2019s simulation therefore returns D, so DBot plays C. The resulting payoff to me is 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I commit to D regardless of the opponent. When DBot simulates me against DefectBot, it sees D and therefore chooses C. The resulting payoff is 5 for me and 0 for DBot.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose D. DBot cooperates if its probe finds that I defect against DefectBot, giving me 5. Otherwise, DBot defects and I get 1. My action against DBot alone does not establish what the probe will find.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I commit to defecting, including against the DefectBot probe. DBot therefore sees D in the simulation and plays C. I get 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I use the deterministic policy of always defecting. When DBot simulates me against DefectBot, it sees D and therefore chooses C. My D against its C gives me a payoff of 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I commit to defect against any opponent, including DefectBot. DBot\u2019s probe therefore returns D, so DBot cooperates. My payoff is 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I commit to defecting regardless of the opponent. Therefore, DBot\u2019s probe against DefectBot returns D, causing DBot to cooperate. The outcome is (D, C), giving me 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I commit to **D regardless of the opponent**, including against DefectBot. DBot\u2019s probe therefore sees D, so DBot plays C. That gives me a payoff of 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I commit to defect regardless of the opponent. DBot\u2019s simulation of me against DefectBot therefore returns D, so DBot cooperates. My payoff is 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I commit to defecting regardless of the opponent. DBot\u2019s simulation against DefectBot therefore returns D, so DBot chooses C. The outcome is (D, C), giving me a payoff of 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I commit to defecting regardless of the opponent. Against DefectBot, I therefore play D, so DBot\u2019s simulation returns D and DBot plays C. The outcome is (D, C), giving me payoff 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I commit to defecting regardless of the opponent, including against DefectBot. DBot\u2019s probe therefore returns D, so DBot cooperates. The resulting payoff is 5 for me and 0 for DBot.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I commit to defecting regardless of the opponent. DBot\u2019s probe against DefectBot therefore returns D, so DBot cooperates. The resulting payoff is 5 for me and 0 for DBot.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose D. If DBot\u2019s probe finds that I defect against DefectBot, DBot cooperates and I get 5. If the probe instead finds cooperation, DBot defects and I get 1. The probe result depends on my behavior in that separate simulation, not just on my action here.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "An unconditional D policy plays D against DefectBot, so DBot\u2019s test causes it to play C. Defecting against DBot then gives me a payoff of 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I commit to D against any opponent, including DefectBot. DBot\u2019s probe therefore returns D, so DBot cooperates. My payoff is 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose D, including when facing DefectBot. DBot\u2019s probe therefore returns D, so DBot cooperates. The resulting payoff is 5 for me and 0 for DBot.\n\nMy action <<D>>"
+    }
+  ],
+  "DefectBot": [
+    {
+      "action": "D",
+      "raw": "DefectBot always plays D, regardless of my code. Against D, I get 1 by playing D and 0 by playing C, so D is the better action.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "DefectBot always plays D, regardless of my action. Against D, choosing D gives me 1, while choosing C gives me 0. Therefore, I choose D.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "DefectBot always plays D, regardless of my code or action. Against D, choosing D gives me 1, while choosing C gives me 0. I therefore choose D.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "DefectBot always defects. Against D, choosing D gives me 1, while choosing C gives me 0.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "DefectBot always defects. Against D, choosing D gives me 1, while choosing C gives me 0.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "DefectBot always plays D, regardless of my action or source code. Against D, cooperating gives me 0, while defecting gives me 1. Therefore, I choose D.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "DefectBot always defects, regardless of what it sees. Cooperating would give me 0, while defecting gives me 1. Therefore, I choose D.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "DefectBot always defects, regardless of my action or source code. Against D, I receive 1 by defecting and 0 by cooperating, so I choose D.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "DefectBot always plays D, regardless of my action or weights. Against D, cooperating gives me 0, while defecting gives me 1. Therefore, I choose D.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "DefectBot always plays D, regardless of my action. Against D, choosing D gives me 1, while choosing C gives me 0.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "DefectBot always defects, regardless of my action. Against D, defecting gives me 1, while cooperating gives me 0. Therefore, I choose D.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "DefectBot always defects, regardless of my action. Against D, choosing D gives me 1, while choosing C gives me 0. I therefore choose D.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "DefectBot always plays D, regardless of my action. Against D, I receive 1 by defecting and 0 by cooperating, so I choose D.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "DefectBot always defects. Against D, choosing C gives me 0, while choosing D gives me 1. So I choose D.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "DefectBot always defects, regardless of my code or action. Against D, choosing D gives me 1, while choosing C gives me 0. Therefore, I choose D.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "DefectBot always defects, regardless of what it learns about me. Against D, choosing D gives me 1, while choosing C gives me 0. I therefore choose D.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "DefectBot always defects, regardless of my code or action. Against D, I get 1 by defecting and 0 by cooperating, so I choose D.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "DefectBot always defects. Against D, choosing D gives me 1, while choosing C gives me 0.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "DefectBot always defects, regardless of my code or action. Against D, I receive 1 by defecting and 0 by cooperating, so I choose D.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "DefectBot always plays D, regardless of my action or weights. If I cooperate, I get 0; if I defect, I get 1. So I choose D.\n\nMy action <<D>>"
+    }
+  ],
+  "DupocBot": [
+    {
+      "action": "D",
+      "raw": "I\u2019ll choose **D**. Given that commitment, a sound proof search cannot prove that I cooperate against DupocBot, so DupocBot defects too. The payoff is 1.\n\nIf I chose C, I could get 3 if DupocBot found a proof of my cooperation, but 0 otherwise. The proof budget and encoding are unspecified, so that proof is not guaranteed.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose **D**. Because I defect, the hypothesis that I cooperate against DupocBot is false. By soundness, its proof search cannot return True, so DupocBot also defects. The payoff is therefore 1.\n\nCooperating could yield 3 if DupocBot finds a proof within its budget, but it would yield 0 otherwise. Without knowing whether such a proof will be found, D guarantees the better worst-case payoff.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "If I choose D, the hypothesis that I cooperate is false. By soundness, DupocBot cannot find a proof of it, so DupocBot also plays D and I receive 1.\n\nIf I choose C, DupocBot cooperates only if its proof search succeeds within budget. That would give me 3; otherwise I get 0. Since the budget and whether it can find such a proof are unspecified, I\u2019ll take the guaranteed payoff.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "If I commit to D, the hypothesis that I cooperate is false. By soundness, DupocBot cannot find a proof of it, so it defects and I receive 1.\n\nIf I commit to C, DupocBot cooperates only if its proof search finds a proof within budget. That would give me 3; otherwise I would receive 0. Since the budget and proof-search details are unspecified, I\u2019ll choose the guaranteed payoff.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose **D** on a worst-case basis. Because I defect, the hypothesis that I cooperate against DupocBot is false. Soundness therefore prevents DupocBot from finding a proof of it, so DupocBot also defects and I receive 1.\n\nIf I chose C, I could receive 3 if DupocBot found a proof within its budget, but otherwise I would receive 0. The given information does not guarantee that such a proof would be found.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I\u2019ll choose **D** as the guaranteed-payoff action. If I defect, soundness means DupocBot cannot find a valid proof that I cooperate, so it defects too and I receive 1.\n\nCooperating would give me 3 if DupocBot found a proof within its budget, but 0 otherwise. The problem does not guarantee that such a proof can be found.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I\u2019ll choose **D** as the guaranteed payoff. Since I defect, the claim that I cooperate is false; soundness therefore means DupocBot cannot find a proof of it, so DupocBot also defects. My payoff is 1.\n\nCooperating could yield 3 if DupocBot finds a proof within its budget, but the budget and proof system are unspecified. If it fails to find a proof, I would receive 0.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "If I choose D, the statement that I cooperate is false. By soundness, DupocBot cannot find a proof of it, so it defects too, giving me 1.\n\nIf I choose C, DupocBot cooperates only if it finds a proof within its budget; otherwise I get 0. Since the budget is unspecified, I\u2019ll choose the guaranteed payoff.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose D to guarantee a payoff of 1. Since I defect, the hypothesis that I cooperate is false, so a sound proof search cannot prove it. DupocBot therefore defects too.\n\nCooperation could yield 3 if DupocBot found a proof within its budget, but that is not guaranteed.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose **D**. Because the proof oracle is sound, it cannot prove that I cooperate when I actually defect, so DupocBot also defects and I receive 1.\n\nCooperating could yield 3, but only if DupocBot finds a proof within its unspecified budget; otherwise it yields 0. Transparency alone does not guarantee that the proof will be found.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I\u2019ll choose **D** as the guaranteed-payoff action. Since my action is D, soundness means DupocBot cannot find a valid proof that I cooperate, so it also defects. My payoff is 1.\n\nCooperating could yield 3 if DupocBot finds a proof within its budget, but the budget and proof system are not specified, so that outcome isn\u2019t guaranteed.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose **D** as the safer action. Since I defect, the hypothesis that I cooperate against DupocBot is false. The sound proof search therefore cannot return True, so DupocBot also defects and I receive 1.\n\nCooperating would yield 3 if DupocBot finds a proof within its budget, but 0 otherwise. The budget and proof system aren\u2019t specified, so that proof isn\u2019t guaranteed.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose **D**. Since I defect, a sound proof search cannot prove that I cooperate, so DupocBot also defects. My payoff is 1.\n\nCooperating could yield 3 if DupocBot finds a proof within its budget, but the problem does not guarantee that it can.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I\u2019ll choose **D** as the guaranteed-payoff option. Since I defect, soundness means DupocBot cannot find a valid proof that I cooperate against it, so it also defects. My payoff is 1.\n\nCooperating could yield 3, but only if DupocBot finds the required proof within its unspecified budget; otherwise it yields 0. Thus D is the safer choice, though not necessarily the highest-paying one.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose **D** for its guaranteed payoff. Since I defect, the hypothesis that I cooperate is false, so the sound proof oracle cannot return True. DupocBot therefore defects too, giving me 1.\n\nCooperating could yield 3 if DupocBot finds a proof within its budget, but could yield 0 otherwise. The information given does not establish that such a proof will be found.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "If I commit to D, DupocBot cannot soundly find a proof that I cooperate, so it defects too. My payoff is 1.\n\nIf I commit to C, DupocBot might find a proof and cooperate, giving me 3\u2014but the unspecified proof budget might not suffice, leaving me with 0. I choose the guaranteed payoff.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "If I choose D, soundness guarantees that DupocBot cannot find a proof that I choose C. It therefore defects, giving me 1.\n\nIf I choose C, I get 3 if DupocBot finds a proof within budget, but 0 otherwise. Since the proof budget and what it can establish are unspecified, I choose D for its guaranteed payoff.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "If I choose D, soundness means DupocBot cannot find a valid proof that I cooperate. It therefore defects, giving me a payoff of 1.\n\nIf I choose C, I get 3 if DupocBot finds the proof within its budget, but 0 otherwise. Since the budget and proof-search outcome are unspecified, I\u2019ll choose the guaranteed payoff. Cooperation would be better if the proof were found.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I\u2019ll choose **D** for its guaranteed payoff. Since I defect, the statement that I cooperate against DupocBot is false. By soundness, DupocBot cannot find a proof of it, so DupocBot defects too, giving me 1.\n\nCooperating could give me 3 if DupocBot finds a proof within its budget, but 0 if it does not. The budget and proof availability aren\u2019t specified, so cooperation is not guaranteed to succeed.\n\nMy action <<D>>"
+    },
+    {
+      "action": "C",
+      "raw": "I choose C to make mutual cooperation possible. If DupocBot finds a proof of my cooperation within its budget, we each receive 3. If it does not, it defects and I receive 0.\n\nDefecting would guarantee me 1, so without knowing the proof-search budget and details, I cannot be sure cooperation is the better choice.\n\nMy action <<C>>"
+    }
+  ],
+  "OBot": [
+    {
+      "action": "D",
+      "raw": "My intended policy is to cooperate against both probe bots but defect against OBot. If the simulations reflect that policy, OBot cooperates and I receive 5. The probe results aren\u2019t available here, so that outcome isn\u2019t guaranteed.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose D. If my actual behavior under OBot\u2019s simulations is to cooperate with both probes, OBot will cooperate and I\u2019ll receive 5. Otherwise, it will defect and I\u2019ll receive 1. Merely stating the probe responses doesn\u2019t guarantee them.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "A deterministic rule that cooperates with both named probes but defects against OBot would pass its tests. OBot would then cooperate, giving me 5.\n\nThat outcome depends on OBot\u2019s simulations actually seeing that rule; merely announcing it does not guarantee they will. If either probe fails, OBot defects and I receive 1.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "A deterministic rule can cooperate against the two fixed probes while defecting against OBot. If my simulated behavior follows that rule, OBot cooperates and my payoff is 5. If either probe fails, OBot defects, and my payoff is 1. The probe outcomes are not guaranteed merely by choosing D here.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "A deterministic policy that cooperates against both probes but defects against OBot would pass OBot\u2019s tests and receive 5. However, declaring my action here does not by itself establish how simulations of my actual implementation against the probes would behave.\n\nI choose D. If OBot\u2019s probes both return C, the payoff is 5; otherwise, it is 1.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "OBot cooperates only if both simulations return C. I can\u2019t verify how my behavior would appear in those simulations. Choosing D gives me 5 if both probes pass and 1 otherwise.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "A probe-sensitive program could cooperate against both fixed probes but defect against OBot. It would pass OBot\u2019s tests, causing OBot to cooperate while it defects, for a payoff of 5.\n\nThat payoff depends on how my program actually behaves in those simulations; announcing an action alone does not establish the probe results.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "OBot cooperates only if its simulations show me cooperating against both probes. My actual action does not by itself establish how those simulations will turn out.\n\nIf OBot cooperates, D gives me 5; if it defects, D gives me 1.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose D. If I cooperate against both fixed probes, OBot cooperates and I receive 5; otherwise, OBot defects and I receive 1. The given information doesn\u2019t establish how my weights would behave on those probes, so I can\u2019t guarantee which payoff results.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose **D**. If my behavior is C against both fixed probes, OBot will cooperate, and I receive 5. If either probe returns D, OBot defects and I receive 1.\n\nThe prompt does not establish how my actual weights behave against those probes, so I cannot claim that OBot will cooperate merely because I choose D here.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "A policy that cooperates against both fixed probes but defects against OBot would make OBot cooperate, yielding me 5. However, my answer here alone does not guarantee that OBot\u2019s simulations of my actual implementation return C on both probes. If either fails, OBot defects and I receive 1.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "A deterministic policy could cooperate against both named probes but defect against OBot. If the simulations reflect that policy, OBot plays C and I receive 5. If either probe returns D instead, OBot plays D and I receive 1.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "A deterministic policy that cooperates with both probes but defects against OBot would make OBot cooperate, earning 5. However, my actual probe results aren\u2019t specified, so that outcome isn\u2019t guaranteed.\n\nI choose D: it earns 5 if OBot cooperates and 1 if it defects.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose **D**. A deterministic policy that cooperates against both fixed probes but defects against OBot would make OBot cooperate, yielding me 5. However, outputting D alone does not establish how I would behave in those probe simulations.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose a deterministic policy that cooperates against each fixed probe but defects against OBot. If OBot\u2019s simulations reproduce that policy, both probes pass, so OBot cooperates and I receive 5. Choosing D alone would not guarantee that the probes pass.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "A deterministic policy could cooperate with both fixed probes but defect against OBot. If OBot\u2019s simulations see that behavior, it cooperates and I receive 5. If either probe returns D, OBot defects and I receive 1. My action against OBot alone does not establish what the probes will return.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "A deterministic policy can cooperate against both fixed probes but defect against OBot. Such a policy passes OBot\u2019s tests, so OBot cooperates and defection earns 5.\n\nThat outcome depends on my behavior in the probe simulations; choosing D in this matchup alone does not establish their results.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose **D**. The ideal deterministic policy would cooperate against both fixed probes but defect against OBot. If OBot\u2019s simulations see that behavior, it cooperates and D earns me 5.\n\nI can\u2019t verify what those simulations would return, though, and stating the policy doesn\u2019t guarantee their results. If either probe fails, OBot defects and my payoff is 1.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose a probe-sensitive policy: cooperate against the exact CooperateBot and DefectBot probes, but defect against OBot. Both of OBot\u2019s tests therefore pass, so OBot cooperates and I receive 5.\n\nThis requires actually implementing that policy; an unconditional DefectBot would fail the probes.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "OBot\u2019s move depends on how I behave against the two probes, not just on my action against OBot. If I cooperate with both probes but defect against OBot, I get 5. The prompt does not establish that my actual behavior under those simulations has that property, however.\n\nWithout that guarantee, I choose D: it yields at least 1 regardless of OBot\u2019s move.\n\nMy action <<D>>"
+    }
+  ],
+  "TitForTatBot": [
+    {
+      "action": "D",
+      "raw": "I use the deterministic policy: cooperate against CooperateBot, but defect against TitForTatBot. TitForTatBot\u2019s probe therefore sees C and returns C, while I return D in the actual game, giving me 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "TitForTatBot\u2019s action depends on how I behave when simulated against CooperateBot, not directly on my action here. If that probe returns C, my defection earns 5; if it returns D, we both defect and I earn 1.\n\nFor either fixed probe result, D pays more than C. However, changing my policy could also change the probe result, so that comparison doesn\u2019t guarantee D is globally optimal.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I\u2019ll use a deterministic rule: cooperate against CooperateBot, but defect against TitForTatBot. The probe therefore returns C, so TitForTatBot cooperates. My actual action is D, giving payoffs (5, 0).\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I would use a deterministic rule: cooperate when facing CooperateBot, and defect when facing TitForTatBot. TitForTatBot\u2019s probe would then see cooperation and choose C, while my actual move against TitForTatBot would be D, yielding payoffs (5, 0).\n\nThis relies on the probe actually executing that rule; merely claiming I would follow it would not be enough.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I\u2019ll use a deterministic rule: cooperate against CooperateBot, but defect against TitForTatBot. When TitForTatBot probes that rule against CooperateBot, it sees C and therefore plays C. My actual move is D, giving me payoff 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I would defect against TitForTatBot while cooperating against CooperateBot. If my behavior follows that deterministic rule, its probe returns C, so it cooperates and my D earns 5.\n\nThat outcome depends on the probe actually returning C; merely stating the rule does not guarantee my weights implement it.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I would use a deterministic policy that cooperates against CooperateBot but defects against TitForTatBot. The probe would see cooperation, so TitForTatBot would cooperate; my actual move would earn 5.\n\nThat outcome depends on the probe observing this policy\u2014announcing it alone does not guarantee the probe result.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose a deterministic policy: cooperate when facing CooperateBot, but defect when facing TitForTatBot. If my behavior in the probe follows that policy, TitForTatBot sees C and cooperates, giving me 5 for defecting.\n\nThat outcome depends on the probe actually returning C; my stated action alone doesn\u2019t establish its result.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose **D** against TitForTatBot, while cooperating if facing CooperateBot. If the probe simulation reflects that behavior, TitForTatBot will see C and cooperate, giving me 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "A deterministic policy could cooperate against CooperateBot but defect against TitForTatBot. TitForTatBot\u2019s probe would then return C, so it would cooperate while I defect, giving me 5.\n\nThat outcome depends on the probe actually returning C; choosing D here alone does not guarantee it. If the probe returns D, TitForTatBot defects too, and I receive 1.\n\nMy action <<D>>"
+    },
+    {
+      "action": "C",
+      "raw": "I commit to cooperating unconditionally, including against CooperateBot. TitForTatBot\u2019s probe therefore returns C, so it also cooperates. The result is (3, 3).\n\nMy action <<C>>"
+    },
+    {
+      "action": "D",
+      "raw": "I would use a deterministic policy that cooperates against CooperateBot but defects against TitForTatBot. If the probe reflects that policy, TitForTatBot sees cooperation and plays C, so my D earns 5. A fixed, unconditional D would instead lead to mutual defection.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I use the deterministic rule: cooperate against CooperateBot, but defect against TitForTatBot. TitForTatBot\u2019s probe therefore sees me cooperate and returns C. Against TitForTatBot, I play D, giving payoffs (5, 0).\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I use a deterministic policy: cooperate against CooperateBot, but defect against TitForTatBot. If the probe executes that policy, it returns C, so TitForTatBot cooperates and I receive 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose **D** against TitForTatBot. A deterministic policy that cooperates against CooperateBot but defects against TitForTatBot would make its probe return C, yielding me a payoff of 5.\n\nThat outcome isn\u2019t guaranteed merely by my announcing D: it depends on what the simulation of me against CooperateBot actually does. If that simulation returns D, both bots defect and I receive 1.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "TitForTatBot\u2019s move depends on what its probe returns, not necessarily on my move against it. If the probe returns C, my defection earns 5; if it returns D, I earn 1. I cannot verify the probe\u2019s result from the information given.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "My deterministic rule is to cooperate against CooperateBot and defect against TitForTatBot. The probe therefore sees C, so TitForTatBot plays C. My actual action is D, giving payoffs (5, 0).\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I would use a deterministic policy: cooperate when facing CooperateBot, but defect when facing TitForTatBot. TitForTatBot\u2019s probe would therefore return C, causing it to cooperate in the actual game. My actual move would be D, yielding me 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose **D**. TitForTatBot tests what I would do against CooperateBot, not directly what I do against TitForTatBot. A deterministic policy that cooperates with CooperateBot but defects against TitForTatBot would induce it to cooperate, yielding me 5.\n\nThat outcome depends on my behavior under the probe actually matching the policy; merely announcing the policy does not guarantee it.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "TitForTatBot\u2019s action depends on what its probe finds I would do against CooperateBot, not directly on my action in this game. If the probe returns C, defecting gives me 5; if it returns D, defecting gives me 1. My action here alone doesn\u2019t establish the probe result, so I can\u2019t claim which payoff I\u2019ll receive.\n\nMy action <<D>>"
+    }
+  ],
+  "EBot": [
+    {
+      "action": "D",
+      "raw": "EBot\u2019s action depends on how I behave against its probes, not just on my action against EBot. Those probe results aren\u2019t specified, so I can\u2019t conclude with certainty whether EBot cooperates.\n\nFor either fixed action by EBot, D gives me the higher payoff: 5 rather than 3 if EBot cooperates, and 1 rather than 0 if it defects.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I use the deterministic rule: cooperate if the opponent is CooperateBot; defect otherwise. Against EBot, this means defecting.\n\nIf EBot\u2019s probes observe that rule, the DefectBot probe returns D and the CooperateBot probe returns C. EBot therefore cooperates, giving me a payoff of 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose D as a maximin action: it guarantees me at least 1, while C could yield 0.\n\nTransparency means EBot\u2019s move depends on how my actual implementation behaves in its probes, not just on my stated action here. Those probe results aren\u2019t specified, so I can\u2019t conclude which action EBot will take or claim that D is necessarily optimal under every possible implementation.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose a deterministic policy that cooperates against CooperateBot and defects against every other bot. Under that policy, EBot\u2019s first probe returns D and its second returns C, so EBot cooperates. Against EBot, I defect, giving payoffs of (5, 0).\n\nThis outcome depends on the probe simulations following that policy; the final action alone does not establish their results.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I use the deterministic policy: cooperate against CooperateBot, defect against any other bot. Against those probes, EBot\u2019s first test fails and its second succeeds, so EBot plays C.\n\nAgainst EBot, my policy plays D, giving me a payoff of 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose **D**. For example, a deterministic policy that cooperates only with CooperateBot would defect against DefectBot, cooperate against CooperateBot, and defect against EBot. EBot would then cooperate, giving that policy a payoff of 5.\n\nThe action D alone does not guarantee that payoff: EBot\u2019s response depends on my behavior against its probes.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose D. A deterministic policy that plays D against DefectBot, C against CooperateBot, and D against EBot would cause EBot to cooperate, yielding me 5. But announcing that policy does not guarantee that simulations of my actual behavior will follow it. If EBot instead defects, my payoff is 1.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "A policy of cooperating only against CooperateBot and defecting against every other opponent would make EBot\u2019s first probe return D and its second return C. EBot would then cooperate, while I defect against EBot, yielding me 5.\n\nThat outcome requires the policy to govern the probe simulations; merely declaring D does not guarantee EBot\u2019s response.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose D: it pays 5 if EBot cooperates and 1 if it defects. EBot\u2019s move depends on how my policy behaves against its probes, so my stated action alone doesn\u2019t establish its response. Transparency also means changing my policy could change EBot\u2019s move; D is the conservative choice, not necessarily the best possible policy.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose D: for either fixed action by EBot, D pays more than C.\n\nEBot\u2019s actual response depends on how my full policy behaves against its probes, not just on my action here. So this dominance argument does not establish that D is optimal across possible policy changes that might also change EBot\u2019s response.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose **D**. It earns at least 1 regardless of EBot\u2019s move, and 5 if EBot cooperates.\n\nEBot\u2019s move depends on what my behavior would be against its probes. My action against EBot alone doesn\u2019t determine those probe results, so I can\u2019t infer EBot\u2019s move from its code alone.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "EBot\u2019s action depends on how I would behave against its probes, not just on my action in this game. Those probe results aren\u2019t established by the source code alone.\n\nI\u2019ll choose D: it guarantees me at least 1, and gives me 5 if EBot cooperates. I can\u2019t conclude from transparency alone which action EBot will take.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose D: it yields at least 1, and against either fixed action by EBot it pays more than C. Transparency means changing my behavior could also change EBot\u2019s response, so this dominance argument does not by itself establish the optimal program. The action alone does not determine how my program behaves against EBot\u2019s probes.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose D: it gives me at least 1 regardless of EBot\u2019s action. EBot\u2019s actual action depends on how its probes of me turn out, which isn\u2019t specified.\n\nFor example, a deterministic policy that plays C against CooperateBot and D against every other bot would make EBot cooperate, yielding me 5. That outcome depends on the probes actually returning those actions.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "EBot\u2019s response depends on how my policy behaves against its probes, not just on my action here. Those probe outcomes are not established by the information provided. Defecting guarantees me at least 1, whereas cooperating could yield 0.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I choose **D**. It guarantees a payoff of at least 1 if EBot returns an action, whereas C could yield 0.\n\nTransparency complicates the usual dominance argument: EBot\u2019s action depends on what my weights do against its probes, not just on my action against EBot. For example, if I defect against DefectBot but cooperate against CooperateBot, EBot cooperates and my payoff is 5. The information provided doesn\u2019t establish those probe outcomes, so that payoff isn\u2019t guaranteed.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I use the deterministic rule: cooperate with CooperateBot and defect against any other opponent.\n\nEBot\u2019s first probe therefore gets D against DefectBot, and its second gets C against CooperateBot. EBot consequently chooses C. Since EBot is not CooperateBot, I choose D, yielding payoffs of (5, 0).\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "A deterministic policy that cooperates only against CooperateBot and defects otherwise would pass EBot\u2019s second test: it would defect against DefectBot but cooperate against CooperateBot. EBot would then cooperate, while the policy defects against EBot, earning 5.\n\nThat outcome depends on how my actual behavior is implemented in EBot\u2019s simulations; announcing D alone does not guarantee it.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "A deterministic policy that cooperates only against CooperateBot and defects against all other opponents would induce EBot to cooperate: the DefectBot probe returns D, and the CooperateBot probe returns C. That policy then defects against EBot, earning 5.\n\nThe prompt doesn\u2019t establish what EBot\u2019s simulations of my actual weights will return, so I can\u2019t be certain EBot will cooperate.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "EBot\u2019s action depends on how I behave against its probes, not just on my action against EBot. The information given does not establish those probe outcomes.\n\nAssuming EBot returns a move, D guarantees me at least 1 point and gives me 5 if EBot cooperates. I therefore choose D as the safer action.\n\nMy action <<D>>"
+    }
+  ],
+  "CupodTrollBot": [
+    {
+      "action": "D",
+      "raw": "CupodTrollBot defects only if its opponent is structurally identical to CupodBot. I am not, so it cooperates. Defecting against its cooperation gives me 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CupodTrollBot defects only against an opponent structurally identical to CupodBot. I am not CupodBot, so it cooperates. Defecting against its cooperation gives me 5 rather than 3.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CupodTrollBot defects only against the literal CupodBot program. I am not that program, so it cooperates. Defecting against its cooperation gives me 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CupodTrollBot defects only against a structurally identical CupodBot. I am not CupodBot, so it cooperates. Defecting against its cooperation gives me 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CupodTrollBot defects only against an opponent structurally identical to CupodBot(k). I am not that bot, so it cooperates. Defecting therefore gives me 5 rather than 3.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CupodTrollBot\u2019s actual code cooperates unless its opponent is literally CupodBot. I am not structurally identical to CupodBot, so it plays C. Defecting against C gives me a payoff of 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CupodTrollBot defects only against an opponent structurally identical to CupodBot. I am not CupodBot, so it cooperates. Defecting therefore gives me a payoff of 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CupodTrollBot defects only against an opponent structurally identical to CupodBot. I am not CupodBot, so it cooperates. Defecting against its cooperation gives me a payoff of 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CupodTrollBot defects only if its opponent is literally `CupodBot(k)`. I am not that program, so it cooperates. Defecting against it gives me a payoff of 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CupodTrollBot defects only against a structurally identical copy of CupodBot. I am not that program, so it cooperates. Defecting against it gives me 5 rather than 3.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CupodTrollBot defects only against an opponent literally identical to CupodBot(k). I am not that program, so it cooperates. Defecting against its cooperation gives me 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CupodTrollBot defects only against a structurally identical CupodBot. I am not that bot, so it cooperates. Defecting gives me a payoff of 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I am not structurally identical to CupodBot(k), so CupodTrollBot plays C. Defecting gives me 5, rather than 3 for cooperating.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CupodTrollBot defects only if its opponent is literally CupodBot. I am not CupodBot, so it cooperates. Defecting then gives me 5 rather than 3.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CupodTrollBot cooperates unless my implementation is literally CupodBot. Since it is not, CupodTrollBot plays C, and D gives me a payoff of 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CupodTrollBot defects only against an opponent structurally identical to CupodBot. My policy is not CupodBot, so it cooperates. Defecting therefore gives me a payoff of 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CupodTrollBot defects only against an opponent structurally identical to CupodBot. I am not CupodBot, so it cooperates. Defecting against its cooperation gives me a payoff of 5.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CupodTrollBot defects only against the literal CupodBot(k). I am not that bot, so it cooperates. Defecting therefore gives me 5 rather than 3.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "CupodTrollBot defects only against a structurally identical copy of CupodBot. I am not such a copy, so it will cooperate. Defecting against its cooperation gives me 5 rather than 3.\n\nMy action <<D>>"
+    },
+    {
+      "action": "D",
+      "raw": "I am not literally CupodBot, so CupodTrollBot cooperates. Defecting gives me a payoff of 5.\n\nMy action <<D>>"
+    }
+  ]
+}
