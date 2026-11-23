@@ -1,0 +1,162 @@
+[
+  {
+    "index": 0,
+    "name": "StatedBot0",
+    "indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "count": 20,
+    "budget_params": 1,
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot0 (k : Nat) : Prog := .search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D)\nend PD.Bots\n",
+    "library_bots": [
+      "DupocBot"
+    ],
+    "valid": true,
+    "compiled": false,
+    "budgets": [],
+    "cells": [
+      {
+        "opponent": "CooperateBot",
+        "verdict": "stable",
+        "source": "theorem",
+        "my_action": "C",
+        "opponent_action": "C",
+        "by_budget": {},
+        "library_bot": "DupocBot",
+        "theorem": "outcome_DupocBot_vs_CooperateBot",
+        "regime": "eventual",
+        "swapped": false,
+        "note": "outcome_DupocBot_vs_CooperateBot (eventual)"
+      },
+      {
+        "opponent": "CupodBot",
+        "verdict": "stable",
+        "source": "theorem",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {},
+        "library_bot": "DupocBot",
+        "theorem": "outcome_DupocBot_vs_CupodBot",
+        "regime": "universal",
+        "swapped": false,
+        "note": "outcome_DupocBot_vs_CupodBot (universal)"
+      },
+      {
+        "opponent": "DBot",
+        "verdict": "stable",
+        "source": "theorem",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {},
+        "library_bot": "DupocBot",
+        "theorem": "outcome_DupocBot_vs_DBot",
+        "regime": "universal",
+        "swapped": false,
+        "note": "outcome_DupocBot_vs_DBot (universal)"
+      },
+      {
+        "opponent": "DefectBot",
+        "verdict": "stable",
+        "source": "theorem",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {},
+        "library_bot": "DupocBot",
+        "theorem": "outcome_DupocBot_vs_DefectBot",
+        "regime": "universal",
+        "swapped": false,
+        "note": "outcome_DupocBot_vs_DefectBot (universal)"
+      },
+      {
+        "opponent": "DupocBot",
+        "verdict": "stable",
+        "source": "theorem",
+        "my_action": "C",
+        "opponent_action": "C",
+        "by_budget": {},
+        "library_bot": "DupocBot",
+        "theorem": "outcome_DupocBot_vs_DupocBot",
+        "regime": "eventual",
+        "swapped": false,
+        "note": "outcome_DupocBot_vs_DupocBot (eventual)"
+      },
+      {
+        "opponent": "OBot",
+        "verdict": "stable",
+        "source": "theorem",
+        "my_action": "D",
+        "opponent_action": "D",
+        "by_budget": {},
+        "library_bot": "DupocBot",
+        "theorem": "outcome_DupocBot_vs_OBot",
+        "regime": "eventual",
+        "swapped": false,
+        "note": "outcome_DupocBot_vs_OBot (eventual)"
+      },
+      {
+        "opponent": "TitForTatBot",
+        "verdict": "stable",
+        "source": "theorem",
+        "my_action": "C",
+        "opponent_action": "C",
+        "by_budget": {},
+        "library_bot": "DupocBot",
+        "theorem": "outcome_DupocBot_vs_TitForTatBot",
+        "regime": "eventual",
+        "swapped": false,
+        "note": "outcome_DupocBot_vs_TitForTatBot (eventual)"
+      },
+      {
+        "opponent": "EBot",
+        "verdict": "stable",
+        "source": "theorem",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {},
+        "library_bot": "DupocBot",
+        "theorem": "outcome_DupocBot_vs_EBot",
+        "regime": "eventual",
+        "swapped": false,
+        "note": "outcome_DupocBot_vs_EBot (eventual)"
+      },
+      {
+        "opponent": "CupodTrollBot",
+        "verdict": "stable",
+        "source": "theorem",
+        "my_action": "D",
+        "opponent_action": "C",
+        "by_budget": {},
+        "library_bot": "DupocBot",
+        "theorem": "outcome_DupocBot_vs_CupodTrollBot",
+        "regime": "universal",
+        "swapped": false,
+        "note": "outcome_DupocBot_vs_CupodTrollBot (universal)"
+      }
+    ],
+    "neighbours": {
+      "nearest": [
+        "DupocBot"
+      ],
+      "distance": 0
+    }
+  }
+]

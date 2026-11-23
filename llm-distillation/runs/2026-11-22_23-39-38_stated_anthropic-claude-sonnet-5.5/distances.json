@@ -1,0 +1,28 @@
+{
+  "library": {
+    "StatedBot0": {
+      "CooperateBot": 8,
+      "CupodBot": 3,
+      "CupodTrollBot": 6,
+      "DBot": 8,
+      "DefectBot": 8,
+      "DupocBot": 0,
+      "EBot": 21,
+      "CIMCIC": 5,
+      "DIMCID": 8,
+      "GuardianBot": 5,
+      "JustBot": 3,
+      "JustBot2": 3,
+      "LegibleBot": 4,
+      "PrudentBot": 9,
+      "PrudentBot2": 9,
+      "WaryBot": 3,
+      "MirrorBot": 8,
+      "OBot": 13,
+      "TitForTatBot": 6
+    }
+  },
+  "classes": {
+    "StatedBot0": {}
+  }
+}

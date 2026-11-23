@@ -1,0 +1,82 @@
+[
+  {
+    "index": 0,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff the proof oracle (within budget k) derives that the opponent\nplays C against me; otherwise defect. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self .C) (.const .C) (.const .D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 1,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff the proof oracle can show the opponent cooperates against me (within budget k); otherwise defect. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self .C) (.const .C) (.const .D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 2,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff the proof oracle can show, within budget k, that the opponent cooperates against me; otherwise defect. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self .C) (.const .C) (.const .D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 3,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff the proof oracle can show the opponent cooperates against me (FairBot-style via bounded L\u00f6b); otherwise defect. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 4,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff the proof oracle can show the opponent plays C against me (L\u00f6b-style FairBot). -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self .C) (.const .C) (.const .D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 5,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff the proof oracle (within budget k) shows the opponent cooperates against me; otherwise defect. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 6,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: FairBot \u2014 cooperate iff the proof oracle can derive within budget k that the opponent cooperates against me; otherwise defect. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 7,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff the proof oracle can show the opponent cooperates with me (FairBot). -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 8,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff the proof oracle shows (within budget k) that the opponent plays C against me; otherwise defect. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 9,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff the proof system derives (within budget k) that the opponent cooperates against me; otherwise defect. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 10,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff the proof oracle (within budget k) can show the opponent cooperates against me; otherwise defect. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self .C) (.const .C) (.const .D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 11,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff the proof oracle can show the opponent cooperates against me (FairBot via L\u00f6b); otherwise defect. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 12,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff the proof oracle can show the opponent cooperates against me (FairBot-style). -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 13,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff the proof oracle can show the opponent cooperates against me (FairBot-style). -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 14,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff the proof oracle (within budget k) shows the opponent cooperates against me; otherwise defect. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self .C) (.const .C) (.const .D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 15,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff the proof oracle (budget k) can show the opponent plays C against me; otherwise defect. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 16,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff the proof oracle can show the opponent cooperates against me; otherwise defect. -/\ndef MyBot (k : Nat) : Prog :=\n  Prog.search k (Formula.plays Prog.opp Prog.self Action.C)\n    (Prog.const Action.C) (Prog.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 17,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff the proof oracle can show the opponent cooperates against me; otherwise defect. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self .C) (.const .C) (.const .D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 18,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff the proof oracle can show the opponent cooperates against me (FairBot-style). -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self .C) (.const .C) (.const .D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 19,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff the proof oracle can show (within budget k) that the opponent cooperates against me; otherwise defect. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D)\n\nend PD.Bots\n"
+  }
+]
