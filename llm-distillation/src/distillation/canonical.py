@@ -111,6 +111,7 @@ def _collapse_layout(text: str) -> str:
     if set(_IDENT_RE.findall(body)) & _LAYOUT_KEYWORDS:
         return text
     body = re.sub(r"\s+", " ", body).replace("( ", "(").replace(" )", ")").rstrip()
+    body = re.sub(r"(?<=[\w)])\s*([-+*/])\s*(?=[\w(])", r" \1 ", body)
     return text[:m.end()] + body + "\n" + text[cut:]
 
 

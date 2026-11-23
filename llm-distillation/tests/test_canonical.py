@@ -106,6 +106,11 @@ def test_qualified_constructors_are_the_dot_form():
     assert "Prog.size" in canonicalise("def B : Prog := .const (if Prog.size .self = 0 then .C else .D)")
 
 
+def test_spacing_around_arithmetic_does_not_matter():
+    assert (canonicalise("def B (k : Nat) : Prog := .search (2*k+64) (.box k (.neg (.plays .opp .self .C))) (.const .C) (.const .D)")
+            == canonicalise("def B (k : Nat) : Prog := .search (2 * k + 64) (.box k (.neg (.plays .opp .self .C))) (.const .C) (.const .D)"))
+
+
 def test_program_key_is_one_named_def_whatever_surrounds_it():
     file = ("import X\nnamespace PD.Bots\ndef Helper : Prog := .const .C\n"
             "/-- doc -/\ndef Target (a b : Nat) : Prog :=\n  .const .D\n\nend PD.Bots\n")
