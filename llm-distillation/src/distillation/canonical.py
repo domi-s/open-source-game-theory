@@ -32,6 +32,11 @@ _LAYOUT_KEYWORDS = {"let", "have", "show", "do", "match", "where", "by", "calc",
 _ACTION_SHORTHAND_RE = re.compile(r"(?<![\w.')\]])\.([CD])(?![\w'])")
 """``.C`` / ``.D`` as written without the ``Action`` prefix. Every position that takes an action elaborates both spellings to the same term, so they are rewritten to ``Action.C`` / ``Action.D``. (Not matched: ``x.C`` field access, ``Action.C`` itself, ``.DefectBot``.)"""
 
+_QUALIFIED_CONSTRUCTOR_RE = re.compile(
+    r"(?<![\w.'])(?:PD\.)?(?:Prog\.(const|self|opp|bot|sim|ite|search|tvote|sys|selfIdx)"
+    r"|Formula\.(plays|impl|neg|box|eq|diag))(?![\w'])")
+"""``Prog.search`` / ``Formula.plays`` as written instead of ``.search`` / ``.plays``; rewritten to the dot form, which elaborates to the same constructor. (``nil``/``cons`` are left alone: two list types share them.)"""
+
 _NEXT_COMMAND_RE = re.compile(r"^(?:def|end|namespace|section|theorem|lemma|open|instance)\b",
                               re.MULTILINE)
 """The start of the next top-level command, which ends a def's text."""
@@ -150,6 +155,7 @@ def canonicalise(source: str, name: str = DEFAULT_NAME) -> str:
     """Canonical text of ``source`` with the bot named ``name`` (see module docstring)."""
     
     text = _ACTION_SHORTHAND_RE.sub(r"Action.\1", strip_comments(source))
+    text = _QUALIFIED_CONSTRUCTOR_RE.sub(r".\1\2", text)
     text = _tidy(text)
     m = _HEADER_RE.search(text)
     if m:

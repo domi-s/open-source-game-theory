@@ -98,6 +98,14 @@ def test_action_shorthand_is_the_same_program_but_c_is_not_d():
     assert canonicalise("def B : Prog := .bot .DefectBot") == "def StatedBot : Prog := .bot .DefectBot\n"
 
 
+def test_qualified_constructors_are_the_dot_form():
+    dot = "def B (k : Nat) : Prog := .search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D)"
+    qual = ("def B (k : Nat) : Prog := Prog.search k (Formula.plays Prog.opp PD.Prog.self Action.C) "
+            "(Prog.const Action.C) (Prog.const Action.D)")
+    assert canonicalise(qual) == canonicalise(dot)
+    assert "Prog.size" in canonicalise("def B : Prog := .const (if Prog.size .self = 0 then .C else .D)")
+
+
 def test_program_key_is_one_named_def_whatever_surrounds_it():
     file = ("import X\nnamespace PD.Bots\ndef Helper : Prog := .const .C\n"
             "/-- doc -/\ndef Target (a b : Nat) : Prog :=\n  .const .D\n\nend PD.Bots\n")
