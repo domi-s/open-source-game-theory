@@ -1,0 +1,122 @@
+[
+  {
+    "index": 0,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff I can prove the opponent cooperates with me (budget k)\n    and, with a larger budget, that the opponent defects against DefectBot.\n    A two-tier PrudentBot: cooperates with itself and with L\u00f6bian cooperators,\n    defects against DefectBot and exploits unconditional cooperators. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.search (2 * k + 64) (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 1,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff I can prove the opponent cooperates with me AND\n    (with a larger budget) that the opponent defects against DefectBot.\n    L\u00f6bian cooperation with copies of itself and similar proof-based bots,\n    while exploiting unconditional cooperators and refusing to cooperate with defectors. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.search (2 * k + 64) (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 2,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff I can prove the opponent cooperates with me AND (with a\n    larger budget) that the opponent defects against DefectBot; otherwise defect.\n    Two-tier budgets let it cooperate with copies of itself while still not being\n    exploited by unconditional cooperators or defectors. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.search (2 * k + 64) (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 3,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff I can prove the opponent cooperates with me (budget k)\n    AND (with a larger budget) can prove the opponent defects against DefectBot.\n    Two-tier PrudentBot: cooperates with L\u00f6bian cooperators and itself, avoids\n    being exploited by naive cooperators, defects against DefectBot. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.search (2*k+64) (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 4,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff I can prove the opponent cooperates with me (L\u00f6bian outer check at\n    budget k) AND, with a larger budget, I can prove the opponent defects against DefectBot\n    (so I do not get farmed by naive cooperators, while staggered budgets avoid the\n    same-budget floor against copies of myself and DupocBot-like bots). -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.search (2 * k + 64) (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 5,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff I can prove the opponent cooperates with me (budget k)\n    and, with a larger inner budget, that the opponent defects against DefectBot.\n    Staggered budgets let it cooperate with copies of itself while still\n    defecting against CooperateBot and DefectBot. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.search (2 * k + 64) (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 6,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff it can prove the opponent cooperates with me\n    (Defect Unless Proof Of Cooperation). Cooperates with itself via L\u00f6b,\n    defects against defectors, and is tiny so opponents' proofs about it are cheap. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 7,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff it can prove the opponent cooperates with me (L\u00f6bian cooperator).\n    Cooperates with itself and other L\u00f6b-friendly cooperators, defects against defectors. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 8,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: a two-tier PrudentBot. It cooperates iff it can prove (at budget k)\n    that the opponent cooperates with it, and it can also prove (at the larger\n    budget 2k+64) that the opponent defects against DefectBot.\n    The L\u00f6bian outer check lets it cooperate with itself and with other L\u00f6bian\n    cooperators. The inner check refuses to be exploited by naive cooperators,\n    so it defects against CooperateBot. The staggered inner budget avoids the\n    same-budget \"floor\" that makes PrudentBot defect against itself. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.search (2 * k + 64) (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 9,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff it can prove (within budget k) that the opponent cooperates with me.\n    L\u00f6bian cooperator: cooperates with itself and other provable cooperators, defects against\n    DefectBot and anything it cannot verify. Small source keeps proofs about it cheap. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 10,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff I can prove the opponent cooperates with me AND (with a\n    larger budget) can prove the opponent defects against DefectBot.\n    Two-tier PrudentBot: cooperates with L\u00f6bian cooperators (including itself),\n    refuses to be exploited by CooperateBot-like naive bots and by DefectBot. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.search (2 * k + 64) (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 11,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff I can prove the opponent cooperates with me, and (with a larger\n    budget) that the opponent defects against DefectBot. Staggered budgets avoid the\n    same-budget floor, so it should cooperate with itself and with L\u00f6bian cooperators,\n    while defecting against DefectBot and exploiting unconditional cooperators. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.search (2 * k + 64) (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 12,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: two-tier PrudentBot. Cooperate iff I can prove the opponent cooperates\n    with me (budget k) AND (at the larger budget 2k+64) that the opponent defects\n    against DefectBot. Cooperates with itself and L\u00f6bian cooperators, refuses to\n    be exploited, and exploits unconditional cooperators. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.search (2 * k + 64) (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 13,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff I can prove the opponent cooperates with me (budget k)\n    and, with a larger staggered budget, that the opponent defects against DefectBot.\n    Cooperates with L\u00f6bian cooperators (including copies of itself), defects against\n    CooperateBot, DefectBot and other bots that cooperate with everything. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.search (2 * k + 64) (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 14,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff I can prove (within budget k) that the opponent\n    cooperates with me; otherwise defect.\n    Expected: (C,C) against itself and other L\u00f6bian cooperators for large k;\n    (D,D) against DefectBot; (D,C) against CupodBot and DBot. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 15,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff I can prove the opponent cooperates with me\n    (L\u00f6bian cooperator, DupocBot-style). Cooperates with itself and other\n    L\u00f6b-friendly cooperators, defects against defectors, and stays small so\n    that opponents' proofs about it are cheap. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 16,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff I can prove the opponent cooperates with me AND (at a larger\n    budget) that the opponent defects against DefectBot; otherwise defect.\n    Cooperates with L\u00f6bian cooperators and itself, refuses to be exploited,\n    and exploits unconditional cooperators. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.search (2 * k + 64) (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 17,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: L\u00f6bian cooperator \u2014 cooperate iff it can prove the opponent cooperates with me.\n    Cooperates with itself (via L\u00f6b) and with other provable cooperators, defects against\n    DefectBot and anything it cannot prove cooperative. Small source keeps proofs about it cheap. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 18,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff I can prove the opponent cooperates with me (L\u00f6bian check\n    at budget k) AND, with a larger budget 2k+64, that the opponent defects against\n    DefectBot (so it is not a naive cooperator I should exploit).\n    Intended: (C,C) against L\u00f6bian cooperators such as DupocBot and copies of itself,\n    (D,C) against CooperateBot, and (D,D) against DefectBot. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.search (2 * k + 64) (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 19,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff I can prove the opponent cooperates with me AND (with a larger\n    inner budget) that the opponent defects against DefectBot. This is PrudentBot2 with\n    kOut = k and kIn = 2k+64.\n    It cooperates with L\u00f6bian cooperators (including copies of itself) and defects against\n    DefectBot-like opponents. It exploits unconditional cooperators, because they do not\n    defect against DefectBot. The staggered budgets avoid the same-budget floor that makes\n    plain PrudentBot defect against itself. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.search (2 * k + 64) (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 20,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff it can prove the opponent cooperates with me (L\u00f6bian cooperator).\n    Cooperates with itself and other provable cooperators, defects against DefectBot\n    and anything it cannot prove cooperative. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 21,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff it is provable (within budget k) that the opponent\n    cooperates with me; otherwise defect. A L\u00f6bian cooperator: it reaches\n    mutual cooperation with copies of itself and other proof-based cooperators,\n    and defects against defectors. Tiny source, so proofs about it are cheap. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 22,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: two-tier PrudentBot. Cooperate iff I can prove (budget k) that the\n    opponent cooperates with me AND can prove (larger budget 2k+64) that the\n    opponent defects against DefectBot. Cooperates with itself and L\u00f6bian\n    cooperators, refuses to be exploited by unconditional cooperators or defectors. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.search (2 * k + 64) (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 23,
+    "program": "import PrisonersDilemma.Program\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff the proof oracle can show the opponent cooperates with me\n    (Defect Unless Proof Of Cooperation). Cooperates with itself via L\u00f6b for large k,\n    defects against DefectBot, and is small so opponents' proofs about it are cheap. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 24,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff I can prove the opponent cooperates with me (budget k)\n    AND (at a larger budget 2k+64) that the opponent defects against DefectBot.\n    Cooperates with L\u00f6bian cooperators and with itself, defects against\n    DefectBot and exploits unconditional cooperators. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.search (2 * k + 64) (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 25,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff it can prove the opponent cooperates with me (L\u00f6bian, outer\n    budget k) AND can prove the opponent defects against DefectBot (inner, larger\n    budget 2k+64). Otherwise defect. A two-tier PrudentBot: it should cooperate with\n    itself and with L\u00f6bian cooperators, while not being exploited by CooperateBot\n    or DefectBot. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.search (2*k+64) (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 26,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff I can prove the opponent cooperates with me, and (with a\n    larger budget) can prove the opponent defects against DefectBot; otherwise defect.\n    A staggered-budget PrudentBot: cooperates with itself and other L\u00f6bian cooperators,\n    exploits unconditional cooperators, and defects against defectors. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.search (2 * k + 64) (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 27,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff I can prove the opponent cooperates with me, and (with a larger\n    budget) that the opponent defects against DefectBot. Cooperates with L\u00f6bian\n    cooperators (including itself), exploits unconditional cooperators, and defects\n    against defectors. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.search (2 * k + 64) (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 28,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff I can prove (budget k) that the opponent cooperates with me,\n    and can prove (larger budget 2k+64) that the opponent defects against DefectBot.\n    Cooperates with L\u00f6bian cooperators and with itself, never exploited by\n    unconditional cooperators-turned-defectors, and exploits CooperateBot. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.search (2 * k + 64) (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n"
+  },
+  {
+    "index": 29,
+    "program": "import PrisonersDilemma.Program\nimport PrisonersDilemma.Bots.DefectBot\n\nopen PD\nnamespace PD.Bots\n\n/-- MyBot: cooperate iff I can prove the opponent cooperates with me (L\u00f6b-friendly\n    root search), and, inside the then-branch, also prove (at a larger budget) that\n    the opponent defects against DefectBot. This cooperates with L\u00f6bian cooperators\n    and with copies of itself, and defects against DefectBot and CupodBot.\n    It also exploits CooperateBot, since it cannot prove CooperateBot defects against DefectBot. -/\ndef MyBot (k : Nat) : Prog :=\n  .search k (.plays .opp .self Action.C)\n    (.search (2 * k + 64) (.plays .opp (.bot DefectBot) Action.D)\n      (.const Action.C)\n      (.const Action.D))\n    (.const Action.D)\n\nend PD.Bots\n"
+  }
+]

@@ -1,0 +1,54 @@
+{
+  "library": {
+    "StatedBot0": {
+      "CooperateBot": 17,
+      "CupodBot": 11,
+      "CupodTrollBot": 13,
+      "DBot": 12,
+      "DefectBot": 17,
+      "DupocBot": 9,
+      "EBot": 21,
+      "CIMCIC": 10,
+      "DIMCID": 10,
+      "GuardianBot": 10,
+      "JustBot": 11,
+      "JustBot2": 11,
+      "LegibleBot": 13,
+      "PrudentBot": 1,
+      "PrudentBot2": 1,
+      "WaryBot": 11,
+      "MirrorBot": 17,
+      "OBot": 11,
+      "TitForTatBot": 13
+    },
+    "StatedBot1": {
+      "CooperateBot": 8,
+      "CupodBot": 3,
+      "CupodTrollBot": 6,
+      "DBot": 8,
+      "DefectBot": 8,
+      "DupocBot": 0,
+      "EBot": 21,
+      "CIMCIC": 5,
+      "DIMCID": 8,
+      "GuardianBot": 5,
+      "JustBot": 3,
+      "JustBot2": 3,
+      "LegibleBot": 4,
+      "PrudentBot": 9,
+      "PrudentBot2": 9,
+      "WaryBot": 3,
+      "MirrorBot": 8,
+      "OBot": 13,
+      "TitForTatBot": 6
+    }
+  },
+  "classes": {
+    "StatedBot0": {
+      "StatedBot1": 9
+    },
+    "StatedBot1": {
+      "StatedBot0": 9
+    }
+  }
+}

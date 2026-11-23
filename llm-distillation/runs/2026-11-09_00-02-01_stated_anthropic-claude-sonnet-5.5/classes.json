@@ -1,0 +1,50 @@
+[
+  {
+    "index": 0,
+    "name": "StatedBot0",
+    "indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      8,
+      10,
+      11,
+      12,
+      13,
+      16,
+      18,
+      19,
+      22,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29
+    ],
+    "count": 21,
+    "budget_params": 1,
+    "source": "import PrisonersDilemma.Bots.DefectBot\nimport PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot0 (k : Nat) : Prog := .search k (.plays .opp .self Action.C) (.search (2 * k + 64) (.plays .opp (.bot DefectBot) Action.D) (.const Action.C) (.const Action.D)) (.const Action.D)\nend PD.Bots\n"
+  },
+  {
+    "index": 1,
+    "name": "StatedBot1",
+    "indices": [
+      6,
+      7,
+      9,
+      14,
+      15,
+      17,
+      20,
+      21,
+      23
+    ],
+    "count": 9,
+    "budget_params": 1,
+    "source": "import PrisonersDilemma.Program\nopen PD\nnamespace PD.Bots\ndef StatedBot1 (k : Nat) : Prog := .search k (.plays .opp .self Action.C) (.const Action.C) (.const Action.D)\nend PD.Bots\n"
+  }
+]
